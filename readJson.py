@@ -1,6 +1,6 @@
 import json
 
-jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
+
 
 def readJson(jsonFile):
     with open(jsonFile) as f:
@@ -8,6 +8,14 @@ def readJson(jsonFile):
     return load
 
 
-load=readJson(jsonFileRTE)
-for each in load:
-    print(each)
+
+if __name__=="__main__":
+    jsonFileRTE = ""
+    load=readJson(jsonFileRTE)
+    print(load)
+
+    for each in load:
+        # print(each)
+        print(each['className'])
+        print(each['jField'])
+        print(each['jMethod'])
