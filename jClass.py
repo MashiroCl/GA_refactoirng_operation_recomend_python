@@ -21,12 +21,20 @@ class jClass:
         return self.methodList
 
     def addMethod(self,jMethod):
-        # print(jMethod.getFull())
-        self.methodList.append(jMethod)
-
-
+        if self.hasMethod(jMethod):
+            print("Method already exist in the class")
+        else:
+            self.methodList.append(jMethod)
 
     def deleteMethod(self,jMethod):
-        # print(jMethod.getFull())
-        # print(self.methodList)
-        self.methodList.remove(jMethod)
+        if self.hasMethod(jMethod):
+            self.methodList.remove(jMethod)
+        else:
+            print("Method being moved doesn't exist in the class")
+
+
+    def hasMethod(self,jMethod):
+        if jMethod in self.methodList:
+            return 1
+        else:
+            return 0
