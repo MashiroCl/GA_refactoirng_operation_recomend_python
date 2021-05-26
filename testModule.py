@@ -15,7 +15,8 @@ def test_jClass():
     #     print(each.getField())
     for each in jClist:
         print("___________________")
-
+        print("Class Name",each.getClassName())
+        print("Field",each.getField())
         for each2 in each.getMethod():
             print(each2.getFull())
 
@@ -71,6 +72,7 @@ def test_addMethod():
 
 def test_DAM():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
+    jsonFileRTE = "/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -91,15 +93,18 @@ def test_CIS_NOM():
         print("CIS = ",CIS(each))
         print("NOM = ",NOM(each))
 
+def test_MOA():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    for each in jClist:
+        print(MOA(jClist,each))
+
 # test_jClass()
 # test_addMethod()
 # test_DAM()
-test_CIS_NOM()
-# s=1
-# a=2
-# b=3
-# list=[s,a,b]
-#
-# d=1
-# list.remove(d)
-# print(list)
+# test_CIS_NOM()
+test_MOA()

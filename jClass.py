@@ -14,6 +14,8 @@ class jClass:
 
     def getClass(self):
         return self.classInfo
+    def getClassName(self):
+        return self.classInfo.split("#")[1]
 
     def getField(self):
         return self.fieldList

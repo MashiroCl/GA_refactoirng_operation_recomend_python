@@ -23,8 +23,20 @@ def DCC():
 def CAM():
     pass
 
-def MOA():
-    pass
+#Number of user defined class variables in field
+def MOA(jClassList,jClass):
+    MOA=0
+    classNameList=[]
+    for eachC in jClassList:
+        classNameList.append(eachC.getClassName())
+    field=jClass.getField()
+    for each in field:
+        variable=jVariable(each)
+        if variable.getType() in classNameList:
+            print(variable.getName()+variable.getType()+" ")
+            MOA=MOA+1
+    return MOA
+
 
 def MFA():
     pass
