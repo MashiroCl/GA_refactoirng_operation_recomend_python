@@ -7,7 +7,6 @@ class jClass:
         self.fieldList=[]
         self.methodList=[]
         for each in self.load['jField']:
-
             self.fieldList.append(each)
         for each in self.load['jMethod']:
             self.methodList.append(jMethod(each))
@@ -16,6 +15,9 @@ class jClass:
         return self.classInfo
     def getClassName(self):
         return self.classInfo.split("#")[1]
+
+    def getParameters(self):
+        pass
 
     def getField(self):
         return self.fieldList

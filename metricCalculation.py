@@ -1,4 +1,8 @@
 from jVariable import jVariable
+from jMethod import jMethod
+
+def ANA():
+    pass
 
 # in each Field,
 def DAM(jClass):
@@ -17,8 +21,57 @@ def DAM(jClass):
     DAM=molecular/denominator
     return DAM
 
-def DCC():
-    pass
+
+def getFPType(jClass):
+    cPType=[]
+    cFType=[]
+    for eachMethod in jClass.getMethod():
+        for each2 in eachMethod.getParameterType():
+            cPType.append(each2.split(".")[-1])
+    cField=jClass.getField()
+    for eachCField in cField:
+        cFType.append(jVariable(eachCField).getType().split(".")[-1])
+    return cPType,cFType
+
+def isIn(l1,l2):
+    lTemp=[]
+    for each in l1:
+        if each in l2:
+            lTemp.append(each)
+    return lTemp
+
+def DCC(jClassList):
+    DCC=0
+
+    for each in jClassList:
+        # if each.getClassName() == "ClassMetricsTest":
+        #     cPType1, cFType1 = getFPType(each)
+        #     print(cPType1, cFType1)
+        cPType,cFType=getFPType(each)
+        cDict={}
+        cList=[]
+        for each2 in jClassList:
+            if each2==each:
+                pass
+            elif each2.getClassName() in cPType:
+                cList.append(each2.getClassName())
+            elif each2.getClassName() in cFType:
+                cList.append(each2.getClassName())
+            # PType,FType=getFPType(each2)
+            # lP=isIn(cPType,PType)
+            # lF=isIn(cFType,FType)
+            # # print("lP ",lP)
+            # # print("lF", lF)
+            # for lPEach in lP:
+            #     cDict[lPEach]=each2.getClassName()
+            # for lFEach in lF:
+            #     cDict[lFEach]=each2.getClassName()
+        DCC=DCC+len(cList)
+        if len(cList)!=0:
+            cDict[each.getClassName()]=cList
+
+
+    return DCC
 
 def CAM():
     pass
@@ -41,6 +94,8 @@ def MOA(jClassList,jClass):
 def MFA():
     pass
 
+
+#number of polymorphic
 def NOP():
     pass
 

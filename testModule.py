@@ -14,11 +14,16 @@ def test_jClass():
     # for each in jClist:
     #     print(each.getField())
     for each in jClist:
-        print("___________________")
-        print("Class Name",each.getClassName())
-        print("Field",each.getField())
+
+        # print("Class Name",each.getClassName())
+        # print("Field",each.getField())
+        # for each2 in each.getMethod():
+        #     print(each2.getFull())
         for each2 in each.getMethod():
+            print("___________________")
             print(each2.getFull())
+            for each3 in each2.getParameterType():
+                print(each3+" ")
 
 
 
@@ -103,8 +108,33 @@ def test_MOA():
     for each in jClist:
         print(MOA(jClist,each))
 
+def test_getFPType():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    for each in jClist:
+        a,b=getFPType(each)
+        print("a   ",a)
+        print("b   ",b)
+
+def test_DCC():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    return DCC(jClist)
+
+
+
 # test_jClass()
 # test_addMethod()
 # test_DAM()
 # test_CIS_NOM()
-test_MOA()
+# test_MOA()
+# test_getFPType()
+print(test_DCC())

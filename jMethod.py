@@ -25,7 +25,7 @@ class jMethod():
     def getParameterType(self):
         type=[]
         for each in self.parameter:
-            type.append(each.split("@")[0])
+            type.append(each.split("@")[1])
         return type
 
     def getFull(self):
