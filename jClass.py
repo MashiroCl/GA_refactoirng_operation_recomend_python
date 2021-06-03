@@ -6,10 +6,17 @@ class jClass:
         self.classInfo = self.load['className']
         self.fieldList=[]
         self.methodList=[]
+        self.childrenList=[]
+        self.superClassList=[]
         for each in self.load['jField']:
             self.fieldList.append(each)
         for each in self.load['jMethod']:
             self.methodList.append(jMethod(each))
+        # for each in self.load['children']:
+        #     self.childrenList.append(each)
+        for each in self.load['superClass']:
+            self.superClassList.append(each)
+
 
     def getClass(self):
         return self.classInfo
@@ -23,6 +30,11 @@ class jClass:
         return self.fieldList
     def getMethod(self):
         return self.methodList
+
+    def getChildren(self):
+        return self.childrenList
+    def getSuperClass(self):
+        return self.superClassList
 
     def addMethod(self,jMethod):
         if self.hasMethod(jMethod):

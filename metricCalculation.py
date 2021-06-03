@@ -1,5 +1,6 @@
 from jVariable import jVariable
 from jMethod import jMethod
+from jClass import jClass
 
 def ANA():
     pass
@@ -91,9 +92,42 @@ def MOA(jClassList,jClass):
     return MOA
 
 
-def MFA():
-    pass
+def ignore(mlist):
+    ign=0
+    return ign
+def getNumOfMethods(jc):
+    #When the java.lang.Object is the parent
+    #we do not analyze the parent's methods
+    if type(jc) is jClass:
+        if "Object" in jc.getClassName():
+            return 0
+        else:
+            mlist=jc.getMethod()
+            return len(mlist)-ignore(mlist)
+    else:
+        className=jc[0]
+        methodL=jc[1]
+        return len(methodL)-ignore(methodL)
 
+
+
+
+
+def MFA(jc):
+    MFA=0
+    pNumOfMeth=0
+    parents=jc.getSuperClass()
+    for each in parents:
+        pNumOfMeth=pNumOfMeth+getNumOfMethods(each)
+
+    cNumofMeth=getNumOfMethods(jc)
+
+    if(cNumofMeth+pNumOfMeth==0):
+        result=0
+    else:
+        result=pNumOfMeth/(cNumofMeth+pNumOfMeth)
+
+    return result
 
 #number of polymorphic
 def NOP():

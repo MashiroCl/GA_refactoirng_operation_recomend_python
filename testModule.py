@@ -129,6 +129,17 @@ def test_DCC():
         jClist.append(jClass(load=each))
     return DCC(jClist)
 
+def test_MFA():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    MFAl=[]
+    for each in jClist:
+        MFAl.append(MFA(each))
+    return MFAl
 
 
 # test_jClass()
@@ -137,4 +148,5 @@ def test_DCC():
 # test_CIS_NOM()
 # test_MOA()
 # test_getFPType()
-print(test_DCC())
+# print(test_DCC())
+print(test_MFA())
