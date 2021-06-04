@@ -153,6 +153,17 @@ def test_CAM():
         CAMl.append(CAM(each))
     return CAMl
 
+def test_NOP():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    NOPl=[]
+    for each in jClist:
+        NOPl.append(NOP(each))
+    return NOPl
 # test_jClass()
 # test_addMethod()
 # test_DAM()
@@ -161,4 +172,8 @@ def test_CAM():
 # test_getFPType()
 # print(test_DCC())
 # print(test_MFA())
-print(test_CAM())
+# print(test_CAM())
+# a="[[1,2,3],[4,5,6]]"
+# b=list(a)
+# print(b)
+print(test_NOP())

@@ -137,23 +137,25 @@ def ignore(mlist):
 def getNumOfMethods(jc):
     #When the java.lang.Object is the parent
     #we do not analyze the parent's methods
-    if type(jc) is jClass:
-        if "Object" in jc.getClassName():
-            return 0
-        else:
-            mlist=jc.getMethod()
-            return len(mlist)-ignore(mlist)
+    if "Object" in jc.getClassName():
+        return 0
     else:
-        className=jc[0]
-        methodL=jc[1]
-        return len(methodL)-ignore(methodL)
+        mlist=jc.getMethod()
+        return len(mlist)-ignore(mlist)
+
+def getNumOfPCMethods(jc):
+    className = jc[0]
+    methodL = jc[1]
+    # print(className)
+    # print("methodL is ", methodL)
+    return len(methodL) - ignore(methodL)
 
 def MFA(jc):
     MFA=0
     pNumOfMeth=0
     parents=jc.getSuperClass()
     for each in parents:
-        pNumOfMeth=pNumOfMeth+getNumOfMethods(each)
+        pNumOfMeth=pNumOfMeth+getNumOfPCMethods(each)
 
     cNumofMeth=getNumOfMethods(jc)
 
@@ -164,10 +166,40 @@ def MFA(jc):
 
     return result
 
-#number of polymorphic
-def NOP():
-    pass
+#modifier,name, return type of method is a fingerPrint
+def getFingerPrint(jm):
+    fingerPrint=jm.getModifier()+"@"+jm.getName()+"@"+jm.getReturnType()
+    # fingerPrint=1
+    return fingerPrint
 
+#number of polymorphic
+def NOP(jc):
+    # check each superclass
+      #check each method
+         #if superMethod has the same modifier,name,
+    NOP=0
+    parentClasses=jc.getSuperClass()
+    cMethodList=jc.getMethod()
+    #get fingerprint of the current class
+    cMethodListFingerPrint=[]
+    for each in cMethodList:
+        cMethodListFingerPrint.append(getFingerPrint(each))
+
+    for pClass in parentClasses:
+        # get fingerprint of the parent class
+        pMethodListFingerPrint = []
+        pMethodList=[]
+        for each in pClass[1]:
+            pMethodList.append(jMethod(each))
+        for pEachMethod in pMethodList:
+            pMethodListFingerPrint.append(getFingerPrint(pEachMethod))
+        #Compare method finger print of parent class and current class
+        for eachCMFP in cMethodListFingerPrint:
+            if eachCMFP in pMethodListFingerPrint:
+                NOP=NOP+1
+                break
+
+    return NOP
 def CIS(jClass):
     CISNum=0
     methodList=jClass.getMethod()
