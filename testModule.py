@@ -141,6 +141,17 @@ def test_MFA():
         MFAl.append(MFA(each))
     return MFAl
 
+def test_CAM():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    CAMl=[]
+    for each in jClist:
+        CAMl.append(CAM(each))
+    return CAMl
 
 # test_jClass()
 # test_addMethod()
@@ -149,4 +160,5 @@ def test_MFA():
 # test_MOA()
 # test_getFPType()
 # print(test_DCC())
-print(test_MFA())
+# print(test_MFA())
+print(test_CAM())

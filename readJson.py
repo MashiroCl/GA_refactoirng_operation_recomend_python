@@ -18,6 +18,5 @@ if __name__=="__main__":
         # print(each)
         print(each['className'])
         # print(each['jField'])
-        # print(each['jMethod'])
-        # print("children ",each['children'])
+        print(each['jMethod'])
         # print("parent ",each['superClass'])

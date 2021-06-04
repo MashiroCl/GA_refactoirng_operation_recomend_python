@@ -2,9 +2,6 @@ from jVariable import jVariable
 from jMethod import jMethod
 from jClass import jClass
 
-def ANA():
-    pass
-
 # in each Field,
 def DAM(jClass):
     field=jClass.getField()
@@ -74,8 +71,50 @@ def DCC(jClassList):
 
     return DCC
 
-def CAM():
-    pass
+def ignore2(method):
+    ign=0
+    return ign
+def isStatic(jm):
+    type=jm.getModifier();
+    #static== 8 (1000)   15 (1111)
+    #between 8 and 15 it should contains static
+    static=0
+    if(int(type)>=8 and int(type)<=15):
+        static=1
+    return static
+
+def getArgsTypes(jm):
+    result=set()
+    if(ignore2(jm)):
+        return result
+    #Whether the method is static
+    if not (isStatic(jm)):
+        result.add("this")
+    #Detect the parmeter typs of method
+    pType=jm.getParameterType()
+    for each in pType:
+        result.add(each)
+
+    return result
+
+def CAM(jc):
+    CAM=0
+    types=set()
+    methods=jc.getMethod()
+    numerator=0
+    denominator=0
+    #collect data about method arguments
+    for each in methods:
+        types=types.union(getArgsTypes(each))
+    #count the metric
+    for each in methods:
+        if not ignore2(each):
+            numerator=numerator+len(getArgsTypes(each))
+            denominator=denominator+len(types)
+    if(denominator==0):
+        denominator=1
+    CAM=numerator/denominator
+    return CAM
 
 #Number of user defined class variables in field
 def MOA(jClassList,jClass):
@@ -108,10 +147,6 @@ def getNumOfMethods(jc):
         className=jc[0]
         methodL=jc[1]
         return len(methodL)-ignore(methodL)
-
-
-
-
 
 def MFA(jc):
     MFA=0
