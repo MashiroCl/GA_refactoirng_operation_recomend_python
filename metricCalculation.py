@@ -71,6 +71,7 @@ def DCC(jClassList):
 
     return DCC
 
+#ignore <clinit>
 def ignore2(method):
     ign=0
     return ign
@@ -130,7 +131,7 @@ def MOA(jClassList,jClass):
             MOA=MOA+1
     return MOA
 
-
+#ignore <init> and <clinit>
 def ignore(mlist):
     ign=0
     return ign
@@ -211,3 +212,10 @@ def CIS(jClass):
 def NOM(jClass):
     methodNum=len(jClass.getMethod())
     return methodNum
+
+def DSC():
+    return 0
+def NOH():
+    return 0
+def ANA():
+    return 0
