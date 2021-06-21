@@ -2,6 +2,9 @@ from jClass import *
 from readJson import readJson
 from metricCalculation import *
 from moveMethod import moveMethod
+from RefactoringOperation import Solution,MoveMethod
+
+
 
 def test_jClass():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
@@ -164,6 +167,28 @@ def test_NOP():
     for each in jClist:
         NOPl.append(NOP(each))
     return NOPl
+
+
+def test_RefactoringOperation():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    jMethod=[]
+    for each in jClist:
+        for each2 in each.getMethod():
+            jMethod.append(each2)
+    s=Solution("test")
+    mDict,cDict=s.binaryEncoding(jMethod,jClist)
+
+    print(mDict)
+    print(cDict)
+
+
+
+
 # test_jClass()
 # test_addMethod()
 # test_DAM()
@@ -176,4 +201,5 @@ def test_NOP():
 # a="[[1,2,3],[4,5,6]]"
 # b=list(a)
 # print(b)
-print(test_NOP())
+# print(test_NOP())
+test_RefactoringOperation()
