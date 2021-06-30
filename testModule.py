@@ -3,7 +3,7 @@ from readJson import readJson
 from metricCalculation import *
 from moveMethod import moveMethod
 from RefactoringOperation import Solution,MoveMethod
-
+from Qmood import Qmood
 
 
 def test_jClass():
@@ -19,7 +19,7 @@ def test_jClass():
     for each in jClist:
 
         # print("Class Name",each.getClassName())
-        # print("Field",each.getField())
+        # print("Field",each.getField())/Users/leichen/Code/CKJM-extended
         # for each2 in each.getMethod():
         #     print(each2.getFull())
         for each2 in each.getMethod():
@@ -180,15 +180,26 @@ def test_RefactoringOperation():
     for each in jClist:
         for each2 in each.getMethod():
             jMethod.append(each2)
+
     s=Solution("test")
     mDict,cDict=s.binaryEncoding(jMethod,jClist)
 
     print(mDict)
     print(cDict)
 
+def test_calculateQmood():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
 
-
-
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    # for each in jClist:
+    #     print(each.getClassName())
+    print(jClist[4].getClassName())
+    qmood=Qmood()
+    qmood.calculateQmood(jClist[4],jClist)
+    print(qmood.MOA)
 # test_jClass()
 # test_addMethod()
 # test_DAM()
@@ -202,4 +213,5 @@ def test_RefactoringOperation():
 # b=list(a)
 # print(b)
 # print(test_NOP())
-test_RefactoringOperation()
+# test_RefactoringOperation()
+test_calculateQmood()

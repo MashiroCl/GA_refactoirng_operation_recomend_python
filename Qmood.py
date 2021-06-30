@@ -42,7 +42,6 @@ class Qmood():
         self.Effectiveness = 0.2*self.ANA+0.2*self.DAM+0.2*self.MOA+0.2*self.MFA+0.2*self.NOP
 
 
-
     def getResusability(self):
         return self.Resusability
     def getFlexibility(self):
@@ -55,3 +54,8 @@ class Qmood():
         return self.Extendibility
     def getEffectiveness(self):
         return self.Effectiveness
+
+if __name__=="__main__":
+    print("test Qmood calculation")
+    qmood=Qmood()
+    qmood.calculateQmood()

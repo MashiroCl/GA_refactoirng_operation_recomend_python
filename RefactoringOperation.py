@@ -37,10 +37,18 @@ class Solution():
         return mDict,cDict
 
     def getmDictValue(self,c:jClass):
-        pass
+        for each in self.cDict:
+            if jClass==each:
+                return self.cDict[each]
 
     def getcDictValue(self,m:jMethod):
-        pass
+        for each in self.mDict:
+            if jMethod == each:
+                return self.mDict[each]
+
+    def getcDict(self,encoding:str):
+        for idx,value in self.cDict.items():
+            pass
 
 class MoveMethod(Solution):
     def __init__(self,method:jMethod,c1:jClass,c2:jClass):
@@ -67,4 +75,7 @@ if __name__ =="__main__":
     print(4*"0")
     print(mm.binaryEncoding(m,C))
 
+    a={"1":123,"2":234}
+    for idx,value in a.items():
+        print(value)
     #

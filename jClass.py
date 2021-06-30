@@ -8,6 +8,7 @@ class jClass:
         self.methodList=[]
         self.childrenList=[]
         self.superClassList=[]
+        self.package=self.load['jPackage']
         for each in self.load['jField']:
             self.fieldList.append(each)
         for each in self.load['jMethod']:
@@ -54,3 +55,5 @@ class jClass:
             return 1
         else:
             return 0
+    def getPackage(self):
+        return self.package
