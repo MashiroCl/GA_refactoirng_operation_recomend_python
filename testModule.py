@@ -1,7 +1,7 @@
 from jClass import *
 from readJson import readJson
 from metricCalculation import *
-from moveMethod import moveMethod
+from executeRO import ExecuteRO
 from RefactoringOperation import Solution,MoveMethod
 from Qmood import Qmood
 
@@ -66,8 +66,8 @@ def test_addMethod():
         print(each.getFull())
 
     print("__________________________")
-
-    moveMethod(testMethod,jClist[0],jClist[3])
+    eRO=ExecuteRO()
+    eRO.moveMethod(testMethod,jClist[0],jClist[3])
     for each in jClist[0].getMethod():
         print(each.getFull())
     for each in jClist[3].getMethod():
@@ -109,7 +109,7 @@ def test_MOA():
     for each in load:
         jClist.append(jClass(load=each))
     for each in jClist:
-        print(MOA(jClist,each))
+        print(MOA(each,jClist))
 
 def test_getFPType():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
@@ -130,7 +130,9 @@ def test_DCC():
     jClist=[]
     for each in load:
         jClist.append(jClass(load=each))
-    return DCC(jClist)
+    for each in jClist:
+        print(DCC(each,jClist))
+    return DCC(jClist[0],jClist)
 
 def test_MFA():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
@@ -196,17 +198,21 @@ def test_calculateQmood():
         jClist.append(jClass(load=each))
     # for each in jClist:
     #     print(each.getClassName())
-    print(jClist[4].getClassName())
     qmood=Qmood()
-    qmood.calculateQmood(jClist[4],jClist)
-    print(qmood.MOA)
+    temp=jClist[4]
+    print(temp.getClassName())
+    qmood.calculateQmood(temp,jClist)
+    print("DAM: ",qmood.DAM)
+    print("MOA: ", qmood.MOA)
+    print("MFA: ", qmood.MFA)
+    print("CAM: ", qmood.CAM)
 # test_jClass()
 # test_addMethod()
 # test_DAM()
 # test_CIS_NOM()
 # test_MOA()
 # test_getFPType()
-# print(test_DCC())
+print(test_DCC())
 # print(test_MFA())
 # print(test_CAM())
 # a="[[1,2,3],[4,5,6]]"
@@ -214,4 +220,4 @@ def test_calculateQmood():
 # print(b)
 # print(test_NOP())
 # test_RefactoringOperation()
-test_calculateQmood()
+# test_calculateQmood()

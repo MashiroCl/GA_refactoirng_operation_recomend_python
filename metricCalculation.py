@@ -38,35 +38,50 @@ def isIn(l1,l2):
             lTemp.append(each)
     return lTemp
 
-def DCC(jClassList):
+def DCC(jClass,jClassList):
     DCC=0
+    'cPType:Type of parameters of current class'
+    'cPType:Type of field of current class'
+    cPType,cFType=getFPType(jClass)
+    cDict={}
+    cList=[]
+    for each2 in jClassList:
+        if each2==jClass:
+            pass
+        elif each2.getClassName() in cPType:
+            cList.append(each2.getClassName())
+        elif each2.getClassName() in cFType:
+            cList.append(each2.getClassName())
+    DCC=DCC+len(cList)
+    if len(cList)!=0:
+        cDict[jClass.getClassName()]=cList
 
-    for each in jClassList:
-        # if each.getClassName() == "ClassMetricsTest":
-        #     cPType1, cFType1 = getFPType(each)
-        #     print(cPType1, cFType1)
-        cPType,cFType=getFPType(each)
-        cDict={}
-        cList=[]
-        for each2 in jClassList:
-            if each2==each:
-                pass
-            elif each2.getClassName() in cPType:
-                cList.append(each2.getClassName())
-            elif each2.getClassName() in cFType:
-                cList.append(each2.getClassName())
-            # PType,FType=getFPType(each2)
-            # lP=isIn(cPType,PType)
-            # lF=isIn(cFType,FType)
-            # # print("lP ",lP)
-            # # print("lF", lF)
-            # for lPEach in lP:
-            #     cDict[lPEach]=each2.getClassName()
-            # for lFEach in lF:
-            #     cDict[lFEach]=each2.getClassName()
-        DCC=DCC+len(cList)
-        if len(cList)!=0:
-            cDict[each.getClassName()]=cList
+    # for each in jClassList:
+    #     # if each.getClassName() == "ClassMetricsTest":
+    #     #     cPType1, cFType1 = getFPType(each)
+    #     #     print(cPType1, cFType1)
+    #     cPType,cFType=getFPType(each)
+    #     cDict={}
+    #     cList=[]
+    #     for each2 in jClassList:
+    #         if each2==each:
+    #             pass
+    #         elif each2.getClassName() in cPType:
+    #             cList.append(each2.getClassName())
+    #         elif each2.getClassName() in cFType:
+    #             cList.append(each2.getClassName())
+    #         # PType,FType=getFPType(each2)
+    #         # lP=isIn(cPType,PType)
+    #         # lF=isIn(cFType,FType)
+    #         # # print("lP ",lP)
+    #         # # print("lF", lF)
+    #         # for lPEach in lP:
+    #         #     cDict[lPEach]=each2.getClassName()
+    #         # for lFEach in lF:
+    #         #     cDict[lFEach]=each2.getClassName()
+    #     DCC=DCC+len(cList)
+    #     if len(cList)!=0:
+    #         cDict[each.getClassName()]=cList
 
 
     return DCC
@@ -118,7 +133,7 @@ def CAM(jc):
     return CAM
 
 #Number of user defined class variables in field
-def MOA(jClassList,jClass):
+def MOA(jClass,jClassList):
     MOA=0
     classNameList=[]
     for eachC in jClassList:
@@ -147,17 +162,15 @@ def getNumOfMethods(jc):
 def getNumOfPCMethods(jc):
     className = jc[0]
     methodL = jc[1]
-    # print(className)
-    # print("methodL is ", methodL)
+    print(className)
+    print("methodL is ", methodL)
     return len(methodL) - ignore(methodL)
 
 def MFA(jc):
-    MFA=0
     pNumOfMeth=0
     parents=jc.getSuperClass()
     for each in parents:
         pNumOfMeth=pNumOfMeth+getNumOfPCMethods(each)
-
     cNumofMeth=getNumOfMethods(jc)
 
     if(cNumofMeth+pNumOfMeth==0):
