@@ -4,7 +4,7 @@ from metricCalculation import *
 from executeRO import ExecuteRO
 from RefactoringOperation import Solution,MoveMethod
 from Qmood import Qmood
-
+from Encoding import Encoding
 
 def test_jClass():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
@@ -199,20 +199,46 @@ def test_calculateQmood():
     # for each in jClist:
     #     print(each.getClassName())
     qmood=Qmood()
-    temp=jClist[4]
-    print(temp.getClassName())
-    qmood.calculateQmood(temp,jClist)
-    print("DAM: ",qmood.DAM)
-    print("MOA: ", qmood.MOA)
-    print("MFA: ", qmood.MFA)
-    print("CAM: ", qmood.CAM)
+    # temp=jClist[4]
+    # print(temp.getClassName())
+    # qmood.calculateSingleQmood(temp,jClist)
+    # print("DAM: ",qmood.DAM)
+    # print("MOA: ", qmood.MOA)
+    # print("MFA: ", qmood.MFA)
+    # print("CAM: ", qmood.CAM)
+    result=qmood.calculateQmood(jClist)
+    for idx,value in enumerate(result):
+        print(idx,value,result[value])
+
+def testEncoding():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    e = Encoding()
+    jClist=[]
+    Dc=dict()
+    Dm=dict()
+    for each in load:
+        jClist.append(jClass(load=each))
+
+
+    bClass=e.binaryEncoding(jClist)
+    for i in range(len(jClist)):
+        Dc[bClass[i]]=jClist[i]
+        methods=jClist[i].getMethod()
+        bMethod=e.binaryEncoding(methods)
+        for j in range(len(methods)):
+            Dm[bClass[i]+bMethod[j]]=methods[j]
+    return Dm,Dc
+
+
 # test_jClass()
 # test_addMethod()
 # test_DAM()
 # test_CIS_NOM()
 # test_MOA()
 # test_getFPType()
-print(test_DCC())
+# print(test_DCC())
 # print(test_MFA())
 # print(test_CAM())
 # a="[[1,2,3],[4,5,6]]"
@@ -221,3 +247,8 @@ print(test_DCC())
 # print(test_NOP())
 # test_RefactoringOperation()
 # test_calculateQmood()
+a=[1,2,3,4]
+print("".join(str(x) for x in (a)))
+Dm,Dc=testEncoding()
+print(Dm)
+print(Dc)
