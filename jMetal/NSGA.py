@@ -23,7 +23,7 @@ problem=FindOperations(Qmood,s,jClist)
 
 algorithm = NSGAII(
     problem=problem,
-    population_size=100,
+    population_size=1000,
     offspring_population_size=100,
     mutation=BitFlipMutation(probability=1.0 / problem.number_of_variables),
     # mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
