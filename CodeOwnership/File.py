@@ -38,7 +38,7 @@ class File():
         self.commits=commits
         self.commitNum=len(commits)
 
-    def commitAuthorCount(self)->dict:
+    def commitAuthorCount(self):
         for each in self.commits:
             if each.authorName in self.authorCommitDict.keys():
                 self.authorCommitDict[each.authorName] += 1
@@ -46,7 +46,7 @@ class File():
                 self.authorCommitDict[each.authorName] =1
 
 
-    def commitAuthorRatio(self)->dict:
+    def commitAuthorRatio(self):
         for each in self.authorCommitDict:
             self.authorCommitDictRatio[each]=self.authorCommitDict[each]/self.commitNum
 

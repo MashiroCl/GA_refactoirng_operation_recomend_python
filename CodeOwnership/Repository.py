@@ -33,11 +33,13 @@ class Repository():
                 temp.append(eachFile.name)
                 temp.append(each2)
                 temp.append(eachFile.authorCommitDictRatio[each2])
+                temp.append(eachFile.authorCommitDict[each2])
+                temp.append(eachFile.commitNum)
                 result.append(temp)
         csvPath=str(outputPath+"/"+self.name+".csv")
         with open(csvPath,"w") as csvfile:
             writer=csv.writer(csvfile)
-            writer.writerow(["File Path","File Name","Author Name","Ownership"])
+            writer.writerow(["File Path","File Name","Author Name","Ownership","commits","total commits"])
             writer.writerows(result)
         self.csvPath=csvPath
 
