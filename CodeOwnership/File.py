@@ -1,7 +1,7 @@
 'File Class represent a java file'
 import os
 import json
-from Commit import Commit
+from CodeOwnership.Commit import Commit
 class File():
     def __init__(self,path:str):
         self.path=path

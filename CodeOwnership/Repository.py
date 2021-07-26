@@ -1,4 +1,4 @@
-from File import File
+from CodeOwnership.File import File
 import glob
 import csv
 class Repository():
@@ -44,7 +44,7 @@ class Repository():
         self.csvPath=csvPath
 
 
-    def getOwnership(self,filePath:str)->list:
+    def getCSVLine(self,filePath:str)->list:
         with open(self.csvPath) as f:
             reader=csv.reader(f)
             rows=[row for row in reader]
@@ -53,6 +53,22 @@ class Repository():
             if each[0]==filePath:
                 result.append(each)
         return result
+
+    def getOwnership(self,filePath:str,name:str)->float:
+        lists=self.getCSVLine(filePath)
+        for each in lists:
+            if each[2]==name:
+                return each[3]
+        return 0
+    def getContribution(self,filePath:str,name:str)->int:
+        lists=self.getCSVLine(filePath)
+        for each in lists:
+            if each[2]==name:
+                return each[4]
+        return 0
+    def getTotalCommits(self,filePath:str)->int:
+        lists=self.getCSVLine(filePath)
+        return lists[0][5]
 
 if __name__=="__main__":
     path="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
