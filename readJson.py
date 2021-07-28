@@ -1,7 +1,4 @@
 import json
-
-
-
 def readJson(jsonFile):
     with open(jsonFile) as f:
         load=json.load(f)

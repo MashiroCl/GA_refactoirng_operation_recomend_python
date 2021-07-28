@@ -231,6 +231,15 @@ def testEncoding():
             Dm[bClass[i]+bMethod[j]]=methods[j]
     return Dm,Dc
 
+def testFilePath():
+    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    load=readJson(jsonFileRTE)
+
+    jClist=[]
+    for each in load:
+        jClist.append(jClass(load=each))
+    for each in jClist:
+        print(each.filePath)
 
 # test_jClass()
 # test_addMethod()
@@ -247,8 +256,4 @@ def testEncoding():
 # print(test_NOP())
 # test_RefactoringOperation()
 # test_calculateQmood()
-a=[1,2,3,4]
-print("".join(str(x) for x in (a)))
-Dm,Dc=testEncoding()
-print(Dm)
-print(Dc)
+testFilePath()

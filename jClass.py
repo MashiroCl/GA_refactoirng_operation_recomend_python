@@ -17,6 +17,7 @@ class jClass:
         #     self.childrenList.append(each)
         for each in self.load['superClass']:
             self.superClassList.append(each)
+        self.filePath=self.load['filePath']
 
 
     def getClass(self):
@@ -44,6 +45,7 @@ class jClass:
             self.methodList.append(jMethod)
 
     def deleteMethod(self,jMethod):
+        'Precondition: the source class has the method to be moved'
         if self.hasMethod(jMethod):
             self.methodList.remove(jMethod)
         else:
@@ -57,3 +59,9 @@ class jClass:
             return 0
     def getPackage(self):
         return self.package
+
+    def setFilePath(self,filePath:str):
+        self.filePath=filePath
+
+    def getFilePath(self)->str:
+        return self.filePath

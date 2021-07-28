@@ -1,6 +1,7 @@
 from CodeOwnership.File import File
 import glob
 import csv
+from utils import create_folder
 class Repository():
     def __init__(self,path:str):
         self.path=path
@@ -13,16 +14,13 @@ class Repository():
             self.files.append(File(each))
 
     def countAuthorCommit(self,outputPath:str):
+        create_folder(outputPath)
         self.findJavaFiles()
         for each in self.files:
             each.getCommit(outputPath)
             each.json2Commit()
             each.commitAuthorCount()
             each.commitAuthorRatio()
-
-        # for each in self.files:
-        #     print(each.name)
-        #     print(each.authorCommitDictRatio)
 
     def writeCSV(self,outputPath:str):
         result=[]

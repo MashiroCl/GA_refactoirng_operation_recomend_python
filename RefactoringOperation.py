@@ -118,6 +118,17 @@ class Solution():
             if each==encodedM:
                 return self.mDict[each]
 
+    def bool2str(self,s:str):
+        'RO is in True, False form'
+        temp = ""
+        for each in s:
+            if each == True:
+                temp += "1"
+            else:
+                temp += "0"
+        return temp
+
+
 class MoveMethod(Solution):
     def __init__(self,method:jMethod,c1:jClass,c2:jClass):
         super(MoveMethod, self).__init__("MoveMethod")
@@ -146,28 +157,10 @@ if __name__ =="__main__":
 
     s=Solution()
     s.binaryEncoding(jClist)
-    print(s.getEncodingbyC(jClist[0]))
-    print(s.getEncodingbyC(jClist[1]))
-    method=jClist[0].getMethod()[0]
-    print(s.getEncodingbyM(method))
-    # mm=MoveMethod(method,jClist[0],jClist[1])
-    # mm.execute()
-    #
-    # print(jClist[0].getMethod())
-    # print(jClist[1].getMethod())
+    RO=[False, True, False, True, True, True, False, True, True, False, False, True, False, False]
+    m,c1,c2=s.binaryDecoding(s.bool2str(RO))
+    print(m.getName(),c1.getClassName(),c2.getClassName())
 
-    print("__________________________")
-    string="00000000000001"
-    m,c1,c2=s.binaryDecoding(string)
-    mm=MoveMethod(m,c1,c2)
-    print(m)
-    print(c1.getMethod())
-    print(c2.getMethod())
-
-    print("__________________________")
-    mm.execute()
-    print(c1.getMethod())
-    print(c2.getMethod())
 
 
 
