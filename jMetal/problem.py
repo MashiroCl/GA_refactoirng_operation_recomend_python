@@ -6,7 +6,7 @@ import random
 
 #a binary array representing whethever the ith element of one RO is selected or not?
 class FindOperations(BinaryProblem):
-    def __init__(self,Qmood:float,s:Solution,jClist:list):
+    def __init__(self,Qmood:float,s:Solution,jClist:list,userName:str,repo):
         super(FindOperations,self).__init__()
         'solution which contains method dictionary and class dictionary'
         self.s=s
@@ -16,11 +16,13 @@ class FindOperations(BinaryProblem):
         self.number_of_bits=self.s.len
         '7 objectives: Qmood, code ownership'
         #todo firstly only Qmood
-        self.number_of_objectives=6
+        self.number_of_objectives=7
         'Length of refactoring operation sequence (This should be difference according to the  scale of the rpository)'
         # self.number_of_variables=3
         self.number_of_variables=1
         self.number_of_constraints=0
+        self.userName=userName
+        self.repo=repo
 
         'Qmood: maximize    code ownership: maximize'
         #todo Qmood should be 6 metrics or not?
@@ -40,9 +42,28 @@ class FindOperations(BinaryProblem):
                 s.append(1)
         return s
 
-    def executeSolutions(self,solutions):
+    def decoding(self,variables)->list:
         #todo number of variables will be changed
-        for each in solutions:
+        result=[]
+        for each in variables:
+            #todo execute RO, considering different type of RO
+            oneSolution="".join(str(x) for x in (self.boolTo01(each)))
+            #todo other type of refactoring operations
+            #if one Solution is MoveMethod:
+            print("oneSolution",oneSolution)
+            temp=self.s.binaryDecoding(oneSolution)
+            result.append(temp)
+        return result
+
+    def executeMoveMethod(self,variables):
+        results=self.decoding(variables)
+        for result in results:
+            mm=MoveMethod(result[0],result[1],result[2])
+            mm.execute()
+
+    def executeSolutions(self,variables):
+        #todo number of variables will be changed
+        for each in variables:
             #todo execute RO, considering different type of RO
             oneSolution="".join(str(x) for x in (self.boolTo01(each)))
 
@@ -53,7 +74,40 @@ class FindOperations(BinaryProblem):
             mm=MoveMethod(result[0],result[1],result[2])
             mm.execute()
 
+    #todo consider ownership
+    def evaluateOwnership(self,variables):
+        '''
+        一个solution里涉及到class的ownership都需要
+        怎么使用多个ownership呢
+        Supports a user u is going to refactor code with MORCO and RO includeds java file A, java file B
+        1. u appears in A and B
+        2. u appears in A not B
+        3. u appears in not A or B
 
+        Two solutions:
+        1.simply add ownership in this two files
+        2.use total amount of commits and commit contribute by user u, and calculate ownership again
+        '''
+        '''simply add version'''
+        results=self.decoding(variables)
+        ownership=0
+        for result in results:
+            ownership += float(self.repo.getOwnership(result[1].filePath,self.userName))
+            ownership += float(self.repo.getOwnership(result[2].filePath, self.userName))
+        return ownership
+
+    def evaluateOwnership2(self,variables):
+        results = self.decoding(variables)
+        totalCommits=0
+        commits=0
+        for result in results:
+            commits += self.repo.getContribution(result[1].filePath, self.userName)
+            commits += self.repo.getContribution(result[2].filePath, self.userName)
+            totalCommits += self.repo.getTotalCommits(result[1].filePath)
+            totalCommits += self.repo.getTotalCommits(result[2].filePath)
+        if totalCommits==0:
+            totalCommits=1
+        return commits/totalCommits
 
     def evaluate(self, solution: BinarySolution) -> BinarySolution:
         '''
@@ -63,7 +117,8 @@ class FindOperations(BinaryProblem):
         'Execute refactoring operations'
         print("Execute solutions")
         print(solution)
-        self.executeSolutions(solution.variables)
+        self.executeMoveMethod(solution.variables)
+        #self.executeSolutions(solution.variables)
 
         'Calculate qmood on the whole projects'
         qmood=Qmood()
@@ -86,9 +141,9 @@ class FindOperations(BinaryProblem):
 
         'Calculate code ownership'
         #todo how to calculate, in which form
-        ownership=0
+        ownership=self.evaluateOwnership(solution.variables)
 
-
+        solution.objectives[6]=-1.0 * ownership
         # solution.objectives[6]=-1.0*ownership
         return solution
 
