@@ -6,20 +6,42 @@ from jmetal.util.termination_criterion import StoppingByEvaluations
 from readJson import readJson
 from jClass import jClass
 from RefactoringOperation import Solution
+from CodeOwnership.Repository import Repository
+from Jxplatform2.Jxplatform2 import Jxplatform2
+
+'use Jxplatform2 extract repository'
+j = "/Users/leichen/Code/pythonProject/pythonProject/salabResearch/Jxplatform2/JxplatformExtract.jar"
+t = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
+c = t
+jsonPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/jmbassador.json"
+jxplatform2=Jxplatform2(j,t,c,jsonPath)
+jxplatform2.extractInfo()
 
 'Read Jxplatform2 extraction result'
-jsonFileRTE = "/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
-load = readJson(jsonFileRTE)
+#jsonFileRTE = "/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+load = readJson(jsonPath)
 jClist = []
 for each in load:
     jClist.append(jClass(load=each))
+
+
+userName="Benjamin Diedrichsen"
+
+'get ownership csv'
+path = t
+outputPath = t+"/output"
+
+repo = Repository(path)
+repo.countAuthorCommit(outputPath=outputPath)
+repo.writeCSV(t+"/csv")
+
 
 'Encoding'
 s = Solution()
 s.binaryEncoding(jClist)
 s.setSoltuionLen()
 Qmood=0
-problem=FindOperations(Qmood,s,jClist)
+problem=FindOperations(Qmood,s,jClist,userName,repo)
 
 algorithm = NSGAII(
     problem=problem,
