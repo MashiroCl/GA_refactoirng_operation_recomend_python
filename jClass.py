@@ -8,14 +8,14 @@ class jClass:
         self.methodList=[]
         self.childrenList=[]
         self.superClassList=[]
-        self.package=self.load['jPackage']
-        for each in self.load['jField']:
+        self.package=self.load['javaPackage']
+        for each in self.load['javaFields']:
             self.fieldList.append(each)
-        for each in self.load['jMethod']:
+        for each in self.load['javaMethods']:
             self.methodList.append(jMethod(each))
         # for each in self.load['children']:
         #     self.childrenList.append(each)
-        for each in self.load['superClass']:
+        for each in self.load['superClasses']:
             self.superClassList.append(each)
         self.filePath=self.load['filePath']
 

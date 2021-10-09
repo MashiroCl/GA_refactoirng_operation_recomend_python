@@ -8,6 +8,7 @@ from Encoding import Encoding
 
 def test_jClass():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
+    jsonFileRTE="/Users/leichen/Desktop/res.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -136,6 +137,7 @@ def test_DCC():
 
 def test_MFA():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    jsonFileRTE="/Users/leichen/Desktop/res.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -160,6 +162,7 @@ def test_CAM():
 
 def test_NOP():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    jsonFileRTE = "/Users/leichen/Desktop/res.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -256,4 +259,5 @@ def testFilePath():
 # print(test_NOP())
 # test_RefactoringOperation()
 # test_calculateQmood()
-testFilePath()
+# testFilePath()
+print(test_MFA())

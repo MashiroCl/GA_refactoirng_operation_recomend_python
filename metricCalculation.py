@@ -161,8 +161,8 @@ def getNumOfMethods(jc):
 def getNumOfPCMethods(jc):
     className = jc[0]
     methodL = jc[1]
-    # print(className)
-    # print("methodL is ", methodL)
+    print(className)
+    print("methodL is ", methodL)
     return len(methodL) - ignore(methodL)
 
 #todo modify MFA
