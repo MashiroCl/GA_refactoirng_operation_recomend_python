@@ -7,6 +7,7 @@ from readJson import readJson
 from jClass import jClass
 from RefactoringOperation import Solution
 from CodeOwnership.Repository import Repository
+
 from Jxplatform2.Jxplatform2 import Jxplatform2
 
 'use Jxplatform2 extract repository'

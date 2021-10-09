@@ -23,38 +23,6 @@ class Solution():
     def setcDict(self, cDict):
         self.cDict=cDict
 
-    # def binaryEncoding(self,methodList:list,classList:list):
-    #     # length of "0b" is 2
-    #     mBinaryLen=len(bin(len(methodList)))-2
-    #     cBinaryLen=len(bin(len(classList)))-2
-    #     mDict=dict()
-    #     cDict=dict()
-    #     for i in range(len(methodList)):
-    #         body=bin(i).split("0b")[1]
-    #         head=(mBinaryLen-len(body))*"0"
-    #         mDict[methodList[i]]=head+body
-    #     for i in range(len(classList)):
-    #         body=bin(i).split("0b")[1]
-    #         head=(mBinaryLen-len(body))*"0"
-    #         cDict[classList[i]]=head+body
-    #     self.setmDict(mDict)
-    #     self.setcDict(cDict)
-    #     return mDict,cDict
-
-    # def binaryEncoding(self,jClist):
-    #     eC,eM = Encoding(),Encoding()
-    #     dC,dM = dict(),dict()
-    #     bClass = eC.binaryEncoding(jClist)
-    #     for i in range(len(jClist)):
-    #         dC[bClass[i]] = jClist[i]
-    #         methods = jClist[i].getMethod()
-    #         bMethod = eM.binaryEncoding(methods)
-    #         for j in range(len(methods)):
-    #             dM[bClass[i] + bMethod[j]] = methods[j]
-    #     self.setcDict(dC)
-    #     self.setmDict(dM)
-    #     return eC,eM
-
     def setSoltuionLen(self):
         self.len=self.len=self.mLen+self.cLen+self.cLen
 
