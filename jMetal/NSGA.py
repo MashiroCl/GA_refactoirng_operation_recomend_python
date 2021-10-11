@@ -1,10 +1,10 @@
 from problem import FindOperations
 from jmetal.util.solution import get_non_dominated_solutions, print_function_values_to_file, print_variables_to_file
 from jmetal.algorithm.multiobjective import NSGAII
-from jmetal.operator import SBXCrossover, PolynomialMutation,BitFlipMutation,SPXCrossover
+from jmetal.operator import BitFlipMutation,SPXCrossover
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from readJson import readJson
-from jClass import jClass
+from utils import readJson
+from Jxplatform2.jClass import jClass
 from RefactoringOperation import Solution
 from CodeOwnership.Repository import Repository
 
@@ -39,7 +39,7 @@ repo.writeCSV(t+"/csv")
 
 'Encoding'
 s = Solution()
-s.binaryEncoding(jClist)
+s.binaryEncodingFixedLength(jClist)
 s.setSoltuionLen()
 Qmood=0
 problem=FindOperations(Qmood,s,jClist,userName,repo)

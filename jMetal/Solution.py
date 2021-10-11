@@ -1,7 +1,7 @@
-from jClass import jClass
-from jMethod import jMethod
-from readJson import readJson
-from Encoding import Encoding
+from Jxplatform2.jClass import jClass
+from Jxplatform2.jMethod import jMethod
+from utils import readJson
+from Encoding.Encoding import Encoding
 
 #represent refactoring operations
 class Solution():
@@ -24,7 +24,7 @@ class Solution():
         self.cDict=cDict
 
     def setSoltuionLen(self):
-        self.len=self.len=self.mLen+self.cLen+self.cLen
+        self.len=self.mLen+self.cLen+self.cLen
 
     def binaryEncoding(self,jClist):
 
@@ -41,9 +41,9 @@ class Solution():
         lenC=len(jClist)
         num=0
         for i in range(len(jClist)):
-            dC[e.binaryEncoding(lenC,i)]=jClist[i]
+            dC[e.binaryEncodingFixedLength(lenC, i)]=jClist[i]
             for each in jClist[i].getMethod():
-                dM[e.binaryEncoding(lenM,num)]=each
+                dM[e.binaryEncodingFixedLength(lenM, num)]=each
                 num+=1
         self.setmDict(dM)
         self.setcDict(dC)
@@ -54,9 +54,8 @@ class Solution():
         'only works for structure like MoveMethod(m, C , C)'
 
         l=[self.mLen,self.cLen,self.cLen]
-        # print(" l is ",l)
         eTemp=Encoding()
-        result=eTemp.binaryDecoding(str,l)
+        result=eTemp.divideBinarySequence(str, l)
         method=self.getMbyEncoding(result[0])
         # print("result[1] is ",result[1])
         C1 = self.getCbyEncoding(result[1])

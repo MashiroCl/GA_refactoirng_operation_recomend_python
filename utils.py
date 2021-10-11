@@ -1,3 +1,4 @@
+import json
 import os
 def create_folder(folder):
     path=folder
@@ -11,3 +12,9 @@ def create_folder(folder):
 
 def execute(command):
     os.system(command)
+
+
+def readJson(jsonFile):
+    with open(jsonFile) as f:
+        load=json.load(f)
+    return load

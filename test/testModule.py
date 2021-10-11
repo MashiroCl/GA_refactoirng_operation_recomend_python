@@ -1,9 +1,9 @@
-from jClass import *
-from readJson import readJson
-from metricCalculation import *
+from Jxplatform2.jClass import *
+from utils import readJson
+from QMOOD.metricCalculation import *
 from executeRO import ExecuteRO
-from RefactoringOperation import Solution,MoveMethod
-from Qmood import Qmood
+from RefactoringOperation import Solution
+from QMOOD.Qmood import Qmood
 from Encoding import Encoding
 
 def test_jClass():
@@ -187,7 +187,7 @@ def test_RefactoringOperation():
             jMethod.append(each2)
 
     s=Solution("test")
-    mDict,cDict=s.binaryEncoding(jMethod,jClist)
+    mDict,cDict=s.binaryEncodingFixedLength(jMethod, jClist)
 
     print(mDict)
     print(cDict)
@@ -225,11 +225,11 @@ def testEncoding():
         jClist.append(jClass(load=each))
 
 
-    bClass=e.binaryEncoding(jClist)
+    bClass=e.binaryEncodingFixedLength(jClist)
     for i in range(len(jClist)):
         Dc[bClass[i]]=jClist[i]
         methods=jClist[i].getMethod()
-        bMethod=e.binaryEncoding(methods)
+        bMethod=e.binaryEncodingFixedLength(methods)
         for j in range(len(methods)):
             Dm[bClass[i]+bMethod[j]]=methods[j]
     return Dm,Dc

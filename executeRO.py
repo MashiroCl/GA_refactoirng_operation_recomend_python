@@ -1,4 +1,3 @@
-from jClass import jClass
 #Use result of Jxplatform2 to simulate moving method
 class ExecuteRO():
     def __init__(self):

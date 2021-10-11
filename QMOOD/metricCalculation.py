@@ -1,5 +1,5 @@
-from jVariable import jVariable
-from jMethod import jMethod
+from Jxplatform2.jVariable import jVariable
+from Jxplatform2.jMethod import jMethod
 
 # in each Field,
 def DAM(jClass):
