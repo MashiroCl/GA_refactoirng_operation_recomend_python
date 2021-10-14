@@ -12,8 +12,9 @@ class Jxplatform2:
 
 if __name__ == "__main__":
     j="/Users/leichen/Code/pythonProject/pythonProject/salabResearch/Jxplatform2/JxplatformExtract.jar"
-    t="/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
+    # t="/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
+    t="/Users/leichen/JAVA/CKJM_ext/CKJM-extended"
     c=t
-    outputPath="/Users/leichen/Desktop/jedis.json"
+    outputPath="/Users/leichen/Desktop/ckjm_ext.json"
     jx=Jxplatform2(j,t,c,outputPath)
     jx.extractInfo()

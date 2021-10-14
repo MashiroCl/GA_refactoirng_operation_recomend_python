@@ -1,4 +1,4 @@
-from metricCalculation import *
+from .metricCalculation import *
 
 class Qmood():
     def __init__(self):

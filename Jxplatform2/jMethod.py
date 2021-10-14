@@ -1,4 +1,4 @@
-class jMethod():
+class jMethod:
     def __init__(self,method):
         self.method=method
         self.modifier=method.split("@")[0]

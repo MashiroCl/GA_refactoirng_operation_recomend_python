@@ -4,6 +4,7 @@ from Jxplatform2.jMethod import jMethod
 # in each Field,
 def DAM(jClass):
     field=jClass.getField()
+    print(field)
     variableList=[]
     for each in field:
         variableList.append(jVariable(each))
@@ -55,34 +56,6 @@ def DCC(jClass,jClassList):
     if len(cList)!=0:
         cDict[jClass.getClassName()]=cList
 
-    # for each in jClassList:
-    #     # if each.getClassName() == "ClassMetricsTest":
-    #     #     cPType1, cFType1 = getFPType(each)
-    #     #     print(cPType1, cFType1)
-    #     cPType,cFType=getFPType(each)
-    #     cDict={}
-    #     cList=[]
-    #     for each2 in jClassList:
-    #         if each2==each:
-    #             pass
-    #         elif each2.getClassName() in cPType:
-    #             cList.append(each2.getClassName())
-    #         elif each2.getClassName() in cFType:
-    #             cList.append(each2.getClassName())
-    #         # PType,FType=getFPType(each2)
-    #         # lP=isIn(cPType,PType)
-    #         # lF=isIn(cFType,FType)
-    #         # # print("lP ",lP)
-    #         # # print("lF", lF)
-    #         # for lPEach in lP:
-    #         #     cDict[lPEach]=each2.getClassName()
-    #         # for lFEach in lF:
-    #         #     cDict[lFEach]=each2.getClassName()
-    #     DCC=DCC+len(cList)
-    #     if len(cList)!=0:
-    #         cDict[each.getClassName()]=cList
-
-
     return DCC
 
 #ignore <clinit>
@@ -133,6 +106,7 @@ def CAM(jc):
 
 #Number of user defined class variables in field
 def MOA(jClass,jClassList):
+    # print("class is:",jClass.getClass())
     MOA=0
     classNameList=[]
     for eachC in jClassList:
@@ -161,8 +135,8 @@ def getNumOfMethods(jc):
 def getNumOfPCMethods(jc):
     className = jc[0]
     methodL = jc[1]
-    print(className)
-    print("methodL is ", methodL)
+    # print(className)
+    # print("methodL is ", methodL)
     return len(methodL) - ignore(methodL)
 
 #todo modify MFA
@@ -177,7 +151,9 @@ def MFA(jc):
         result=0
     else:
         result=pNumOfMeth/(cNumofMeth+pNumOfMeth)
-
+    # print(jc.getClassName())
+    if(jc.getClassName()=="AbstractClassVisitor"):
+        print(jc.getSuperClass())
     return result
 
 #modifier,name, return type of method is a fingerPrint

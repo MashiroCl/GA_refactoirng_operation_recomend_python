@@ -1,5 +1,4 @@
-from jMethod import jMethod
-
+from .jMethod import jMethod
 class jClass:
     def __init__(self,load):
         self.load = load
@@ -18,6 +17,9 @@ class jClass:
         for each in self.load['superClasses']:
             self.superClassList.append(each)
         self.filePath=self.load['filePath']
+
+        "If this class is a test class"
+        self.testClass=self.isTestClass()
 
 
     def getClass(self):
@@ -65,3 +67,8 @@ class jClass:
 
     def getFilePath(self)->str:
         return self.filePath
+
+    def isTestClass(self):
+        if self.classInfo.split("#")[0] == str(0):
+            return True
+        return False
