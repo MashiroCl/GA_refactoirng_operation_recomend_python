@@ -1,4 +1,7 @@
 class EncodingDict():
+    '''
+    class contains binary encoding for a java project
+    '''
     def __init__(self):
         self.encodingDict = {"class":{}}
     def addClass(self,value,classInfo):

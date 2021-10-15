@@ -1,12 +1,14 @@
 from .EncodingDict import EncodingDict
+from .ROTypeDict import ROTypeDict
 class BinaryEncoding():
     def __init__(self):
         self.chromosomeLen=0
-        self.ROtypeLen = 3
         self.classLen = 0
         self.fieldLen = 0
         self.methodLen = 0
         self.encodingDict = EncodingDict()
+        self.ROTypeDict = ROTypeDict()
+        self.ROtypeLen = self.ROTypeDict.ROTypeLen
     def encoding(self,projectInfo)->str:
         '''
         Encode a list of jClass entities into binary sequences which represent refactoring operations
