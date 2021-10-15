@@ -20,9 +20,10 @@ class SearchROProblemBinary(BinaryProblem):
 
         #todo
         self.projectInfo = projectInfo
-        BinaryEncoding.encoding(BinaryEncoding(),self.projectInfo)
-        self.projectInfo.binaryEncoding()
-        self.number_of_bits = self.projectInfo.choromosomeLen
+        binaryEncoding = BinaryEncoding()
+        choromosomeLen=binaryEncoding.encoding(self.projectInfo)
+
+        self.number_of_bits = choromosomeLen
 
     def evaluate(self, solution: BinarySolution) -> BinarySolution:
         pass
