@@ -58,8 +58,42 @@ class BinaryEncoding():
         self.chromosomeLen = self.ROtypeLen + self.classLen*2 + self.fieldLen*2 + self.methodLen*2
         return self.chromosomeLen
 
-    def decoding(self):
-        pass
+    def decoding(self,encodedSequences):
+        '''
+        decode sequences of encoded binary sequence to jCLass,jField,jMethod
+        :param encodedSequences:
+        :return: refactoring operation type and its parameters
+        '''
+        encodedResults=[]
+        for encodedSequence in encodedSequences:
+            count = 0
+            count+=self.ROtypeLen
+            ROType2 = encodedSequence[0:count]
+            class12 = encodedSequence[count:count+self.classLen]
+            count+=self.classLen
+            class1field2 = encodedSequence[count:count+self.fieldLen]
+            count+=self.fieldLen
+            class1method2 = encodedSequence[count:count+self.methodLen]
+            count+=self.methodLen
+            class22 = encodedSequence[count:count+self.classLen]
+            count+=self.classLen
+            class2field2 = encodedSequence[count:count+self.fieldLen]
+            count+=self.fieldLen
+            class2method2 = encodedSequence[count:count+self.methodLen]
+            count+=self.methodLen
+
+            ROType = self.ROTypeDict.findROType(ROType2)
+            class1 = self.encodingDict.findClass(class12)
+            class1field = self.encodingDict.findField(class12,class1field2)
+            class1method = self.encodingDict.findMethod(class12,class1method2)
+            class2 = self.encodingDict.findClass(class22)
+            class2field = self.encodingDict.findField(class22,class2field2)
+            class2method = self.encodingDict.findMethod(class22,class2method2)
+
+            encodedResults.append([ROType,class1,class1field,class1method,class2,class2field,class2method])
+
+        return encodedResults
+
 
     def toBinarySequence(self,value,length):
         '''

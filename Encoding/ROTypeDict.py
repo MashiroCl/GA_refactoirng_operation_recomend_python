@@ -3,8 +3,10 @@ class ROTypeDict():
     def __init__(self):
         self.ROTypeDict = {}
         self.ROTypeLen = len(bin(len(RefactoringOperationEnum)).split("0b")[1])
+        count=0
         for each in RefactoringOperationEnum:
-            self.ROTypeDict[self.toBinarySequence(each.value-1,self.ROTypeLen)]=each
+            self.ROTypeDict[self.toBinarySequence(count,self.ROTypeLen)]=each
+            count=count+1
 
     def toBinarySequence(self,value,length):
         '''
@@ -17,3 +19,10 @@ class ROTypeDict():
         head = (length - len(body)) * "0"
         result = head + body
         return result
+
+    def findROType(self,value):
+        try:
+            res = self.ROTypeDict[value]
+        except KeyError:
+            res = None
+        return res
