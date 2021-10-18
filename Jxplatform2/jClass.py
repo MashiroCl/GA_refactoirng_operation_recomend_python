@@ -46,15 +46,16 @@ class jClass:
         else:
             self.methodList.append(jMethod)
 
-    def deleteMethod(self,jMethod):
+    def removeMethod(self, jMethod):
         'Precondition: the source class has the method to be moved'
         if self.hasMethod(jMethod):
             self.methodList.remove(jMethod)
         else:
-            print("Method being moved doesn't exist in the class")
+            print(jMethod," doesn't exist in the class")
 
 
     def hasMethod(self,jMethod):
+        'Use '
         if jMethod in self.methodList:
             return 1
         else:
@@ -72,3 +73,17 @@ class jClass:
         if self.classInfo.split("#")[0] == str(0):
             return True
         return False
+
+    def hasField(self,field):
+        if field in self.fieldList:
+            return True
+        return False
+
+    def addField(self,field):
+        self.fieldList.append(field)
+
+    def removeField(self,field):
+        if field in self.fieldList:
+            self.fieldList.remove(field)
+        else:
+            print(field," doesn't exist in the class")
