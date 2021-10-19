@@ -1,11 +1,15 @@
-from Jxplatform2.jClass import *
+from Jxplatform2.jClass import jClass
 from utils import readJson
 from QMOOD.metricCalculation import *
 from executeRO import ExecuteRO
-from RefactoringOperation import Solution
+from jMetal.Solution import Solution
 from QMOOD.Qmood import Qmood
 from Encoding import Encoding
-
+from jMetal.SearchROProblemBinary import SearchROProblemBinary
+from Encoding.BinaryEncoding import BinaryEncoding
+from Encoding.ROTypeDict import ROTypeDict
+from RefactoringOperation.RefactoringOperationEnum import *
+from RefactoringOperation.RefactoringOperationDispatcher import *
 def test_jClass():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
     jsonFileRTE="/Users/leichen/Desktop/res.json"
@@ -81,7 +85,7 @@ def test_addMethod():
 
 def test_DAM():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
-    jsonFileRTE = "/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    jsonFileRTE = "/Users/leichen/Desktop/ckjm_ext.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -90,6 +94,7 @@ def test_DAM():
         jClist.append(jClass(load=each))
     for each in jClist:
         print(DAM(each))
+
 
 def test_CIS_NOM():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
@@ -104,6 +109,7 @@ def test_CIS_NOM():
 
 def test_MOA():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    jsonFileRTE = "/Users/leichen/Desktop/ckjm_ext.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -137,7 +143,7 @@ def test_DCC():
 
 def test_MFA():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
-    jsonFileRTE="/Users/leichen/Desktop/res.json"
+    jsonFileRTE="/Users/leichen/Desktop/ckjm_ext.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -149,7 +155,7 @@ def test_MFA():
     return MFAl
 
 def test_CAM():
-    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    jsonFileRTE="/Users/leichen/Desktop/ckjm_ext.json"
     load=readJson(jsonFileRTE)
 
     jClist=[]
@@ -193,23 +199,34 @@ def test_RefactoringOperation():
     print(cDict)
 
 def test_calculateQmood():
-    jsonFileRTE="/Users/leichen/Code/jxplatform2Json/CKJM_EXT.json"
+    jsonFileRTE="/Users/leichen/Desktop/ckjm_ext.json"
     load=readJson(jsonFileRTE)
-
     jClist=[]
     for each in load:
-        jClist.append(jClass(load=each))
-    # for each in jClist:
-    #     print(each.getClassName())
+        javaClass=jClass(each)
+        if not javaClass.testClass:
+            jClist.append(javaClass)
+
+    for each in jClist:
+        if(each.classInfo=="1025#AbstractClassVisitor"):
+            abstractClassVisitor=each
+            print(each.getPackage())
+        print(each.classInfo)
     qmood=Qmood()
     # temp=jClist[4]
     # print(temp.getClassName())
     # qmood.calculateSingleQmood(temp,jClist)
-    # print("DAM: ",qmood.DAM)
-    # print("MOA: ", qmood.MOA)
-    # print("MFA: ", qmood.MFA)
-    # print("CAM: ", qmood.CAM)
-    result=qmood.calculateQmood(jClist)
+
+    result=qmood.calculateQmood([abstractClassVisitor])
+    print("DAM: ",qmood.DAM)
+    print("DCC: ", qmood.DCC)
+    print("MOA: ", qmood.MOA)
+    print("CAM: ", qmood.CAM)
+    print("NOP: ",qmood.NOP)
+    print("NOM: ", qmood.NOM)
+    print("MFA: ", qmood.MFA)
+    print("CIS: ", qmood.CIS)
+
     for idx,value in enumerate(result):
         print(idx,value,result[value])
 
@@ -244,6 +261,48 @@ def testFilePath():
     for each in jClist:
         print(each.filePath)
 
+def testSearchROProblemBinary():
+    jsonFileRTE="/Users/leichen/Desktop/ckjm_ext.json"
+    load=readJson(jsonFileRTE)
+    jClist=[]
+    for each in load:
+        javaClass=jClass(each)
+        if not javaClass.testClass:
+            jClist.append(javaClass)
+    # print(jClist)
+    sropb = SearchROProblemBinary(jClist)
+    print(sropb.number_of_bits)
+
+
+def testBinaryEncoding():
+    jsonFileRTE="/Users/leichen/Desktop/ckjm_ext.json"
+    load=readJson(jsonFileRTE)
+    jClist=[]
+    for each in load:
+        javaClass=jClass(each)
+        if not javaClass.testClass:
+            jClist.append(javaClass)
+    be = BinaryEncoding()
+    be.encoding(jClist)
+    # # for each in be.encodingDict.getEncodingDict()["class"]:
+    # #     print(be.encodingDict.getEncodingDict()["class"][each]["field"])
+    # print(be.encodingDict.getEncodingDict()["class"])
+    # print(be.chromosomeLen)
+    decoded = be.decoding(["0"*21+"1"*16])
+    print(decoded)
+    print(decoded[0]["class1"])
+    print(decoded[0]["class1method"])
+    print(decoded[0]["class1"]["method"])
+    print(decoded[0]["class1"]["method"].values())
+    print(decoded[0]["class2"]["classInfo"].getMethod()[0].getSignature())
+
+def testROTypeDict():
+    rotd = ROTypeDict()
+    print(rotd.ROTypeDict)
+
+def testDispatch():
+    dispatch(RefactoringOperationEnum.NULL.value)("1","Hello")
+
 # test_jClass()
 # test_addMethod()
 # test_DAM()
@@ -260,4 +319,11 @@ def testFilePath():
 # test_RefactoringOperation()
 # test_calculateQmood()
 # testFilePath()
-print(test_MFA())
+# print(test_MFA())
+# test_MOA()
+# testSearchROProblemBinary()
+# testBinaryEncoding()
+# testROTypeDict()
+# testDispatch()
+dict ={'ROType': 2, 'class1': None, 'class1field': None, 'class1method': None, 'class2': None, 'class2field': None, 'class2method': None}
+print(None in dict.values())

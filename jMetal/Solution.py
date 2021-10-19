@@ -111,7 +111,7 @@ class MoveMethod(Solution):
     MoveMethod(method,sourceClass,TargetClass)
     '''
     def execute(self):
-        self.sourceClass.deleteMethod(self.method)
+        self.sourceClass.removeMethod(self.method)
         self.targetClass.addMethod(self.method)
 
 

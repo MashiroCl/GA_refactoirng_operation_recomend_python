@@ -30,3 +30,6 @@ class jMethod:
 
     def getFull(self):
         return self.method
+
+    def getSignature(self):
+        return self.method

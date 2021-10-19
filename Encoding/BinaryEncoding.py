@@ -66,6 +66,8 @@ class BinaryEncoding():
         '''
         encodedResults=[]
         for encodedSequence in encodedSequences:
+            encodedSequence = self.bool2Binary(encodedSequence)
+            print(encodedSequence)
             count = 0
             count+=self.ROtypeLen
             ROType2 = encodedSequence[0:count]
@@ -90,7 +92,15 @@ class BinaryEncoding():
             class2field = self.encodingDict.findField(class22,class2field2)
             class2method = self.encodingDict.findMethod(class22,class2method2)
 
-            encodedResults.append([ROType,class1,class1field,class1method,class2,class2field,class2method])
+            resDict = {}
+            resDict["ROType"]=ROType
+            resDict["class1"]=class1
+            resDict["class1field"]=class1field
+            resDict["class1method"]=class1method
+            resDict["class2"]=class2
+            resDict["class2field"]=class2field
+            resDict["class2method"]=class2method
+            encodedResults.append(resDict)
 
         return encodedResults
 
@@ -106,3 +116,13 @@ class BinaryEncoding():
         head = (length - len(body)) * "0"
         result = head + body
         return result
+
+    def bool2Binary(self,boolList):
+        'convert bool list into a zero-one binary string'
+        res = ""
+        for each in boolList:
+            if each:
+                res=res+"1"
+            if not each:
+                res= res+"0"
+        return res

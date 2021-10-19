@@ -2,7 +2,7 @@ from RefactoringOperation.RefactoringOperationEnum import RefactoringOperationEn
 class ROTypeDict():
     def __init__(self):
         self.ROTypeDict = {}
-        self.ROTypeLen = len(bin(len(RefactoringOperationEnum)).split("0b")[1])
+        self.ROTypeLen = len(bin(len(RefactoringOperationEnum)-1).split("0b")[1])
         count=0
         for each in RefactoringOperationEnum:
             self.ROTypeDict[self.toBinarySequence(count,self.ROTypeLen)]=each

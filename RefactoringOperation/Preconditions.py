@@ -16,9 +16,10 @@ def moveMethodPreCondition(decodedBinarySequence,projectInfo):
     :param projectInfo:
     :return: if contains return false
     '''
+    'method1 is contained by class1'
     if decodedBinarySequence["class1method"] not in decodedBinarySequence["class1"]["method"].values:
         return False
-
+    'class1 and class2 is not the same class'
     if decodedBinarySequence["class1"]==decodedBinarySequence["class2"]:
         return False
 
@@ -26,14 +27,15 @@ def moveMethodPreCondition(decodedBinarySequence,projectInfo):
 
 def moveFieldPreCondition(decodedBinarySequence,projectInfo):
     '''
-    class1 contains field 1 &&cclass1 and class 2 is not the same class
+    class1 contains field 1 &&class1 and class 2 is not the same class
     :param decodedBinarySequence:
     :param projectInfo:
     :return:
     '''
+    'check class1 contains field1'
     if decodedBinarySequence["class1field"] not in decodedBinarySequence["class1"]["field"].values:
         return False
-
+    'check class1 and class2 is not the same class'
     if decodedBinarySequence["class1"]==decodedBinarySequence["class2"]:
         return False
 

@@ -1,6 +1,6 @@
 from jmetal.core.problem import BinaryProblem
 from jmetal.core.solution import BinarySolution
-from RefactoringOperation import Solution, MoveMethod
+from Solution import Solution, MoveMethod
 from QMOOD.Qmood import Qmood
 import random
 
