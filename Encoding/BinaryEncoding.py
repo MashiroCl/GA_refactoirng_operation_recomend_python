@@ -67,7 +67,6 @@ class BinaryEncoding():
         encodedResults=[]
         for encodedSequence in encodedSequences:
             encodedSequence = self.bool2Binary(encodedSequence)
-            print(encodedSequence)
             count = 0
             count+=self.ROtypeLen
             ROType2 = encodedSequence[0:count]
@@ -101,6 +100,9 @@ class BinaryEncoding():
             resDict["class2field"]=class2field
             resDict["class2method"]=class2method
             encodedResults.append(resDict)
+
+            print("decoding ", encodedSequence)
+
 
         return encodedResults
 

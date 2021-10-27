@@ -12,4 +12,4 @@ class Commit():
         self.commiterName = self.jsonStr["commiter"]["name"]
         self.commiterEmail=self.jsonStr["commiter"]["email"]
         self.commitData=self.jsonStr["commiter"]["date"]
-        self.subject = self.jsonStr["subject"]
+        # self.subject = self.jsonStr["subject"]

@@ -138,7 +138,7 @@ def doNothing(decodedBinarySequence,projectInfo):
     :param projectInfo:
     :return:
     '''
-    print("do Nothing, ",decodedBinarySequence,projectInfo)
+    print("do Nothing, ",decodedBinarySequence)
     pass
 
 def moveAMethod(sourceCLass,targetClass,method):

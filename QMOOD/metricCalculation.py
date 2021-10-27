@@ -4,7 +4,7 @@ from Jxplatform2.jMethod import jMethod
 # in each Field,
 def DAM(jClass):
     field=jClass.getField()
-    print(field)
+    # print(field)
     variableList=[]
     for each in field:
         variableList.append(jVariable(each))
@@ -152,8 +152,6 @@ def MFA(jc):
     else:
         result=pNumOfMeth/(cNumofMeth+pNumOfMeth)
     # print(jc.getClassName())
-    if(jc.getClassName()=="AbstractClassVisitor"):
-        print(jc.getSuperClass())
     return result
 
 #modifier,name, return type of method is a fingerPrint

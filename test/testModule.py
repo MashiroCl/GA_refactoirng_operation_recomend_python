@@ -10,6 +10,7 @@ from Encoding.BinaryEncoding import BinaryEncoding
 from Encoding.ROTypeDict import ROTypeDict
 from RefactoringOperation.RefactoringOperationEnum import *
 from RefactoringOperation.RefactoringOperationDispatcher import *
+from CodeOwnership.Repository import Repository
 def test_jClass():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
     jsonFileRTE="/Users/leichen/Desktop/res.json"
@@ -276,6 +277,7 @@ def testSearchROProblemBinary():
 
 def testBinaryEncoding():
     jsonFileRTE="/Users/leichen/Desktop/ckjm_ext.json"
+    jsonFileRTE = "/Users/leichen/Desktop/jedis.json"
     load=readJson(jsonFileRTE)
     jClist=[]
     for each in load:
@@ -286,15 +288,15 @@ def testBinaryEncoding():
     be.encoding(jClist)
     # # for each in be.encodingDict.getEncodingDict()["class"]:
     # #     print(be.encodingDict.getEncodingDict()["class"][each]["field"])
-    # print(be.encodingDict.getEncodingDict()["class"])
+    print(be.encodingDict.getEncodingDict()["class"])
     # print(be.chromosomeLen)
-    decoded = be.decoding(["0"*21+"1"*16])
-    print(decoded)
-    print(decoded[0]["class1"])
-    print(decoded[0]["class1method"])
-    print(decoded[0]["class1"]["method"])
-    print(decoded[0]["class1"]["method"].values())
-    print(decoded[0]["class2"]["classInfo"].getMethod()[0].getSignature())
+    # decoded = be.decoding(["100000101111100001110111010100000001010111001101010001111"])
+    # print(decoded)
+    # print(decoded[0]["class1"])
+    # print(decoded[0]["class1method"])
+    # print(decoded[0]["class1"]["method"])
+    # print(decoded[0]["class1"]["method"].values())
+    # print(decoded[0]["class2"]["classInfo"].getMethod()[0].getSignature())
 
 def testROTypeDict():
     rotd = ROTypeDict()
@@ -302,6 +304,7 @@ def testROTypeDict():
 
 def testDispatch():
     dispatch(RefactoringOperationEnum.NULL.value)("1","Hello")
+
 
 # test_jClass()
 # test_addMethod()
@@ -322,8 +325,7 @@ def testDispatch():
 # print(test_MFA())
 # test_MOA()
 # testSearchROProblemBinary()
-# testBinaryEncoding()
+testBinaryEncoding()
 # testROTypeDict()
 # testDispatch()
-dict ={'ROType': 2, 'class1': None, 'class1field': None, 'class1method': None, 'class2': None, 'class2field': None, 'class2method': None}
-print(None in dict.values())
+
