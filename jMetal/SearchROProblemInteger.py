@@ -23,6 +23,8 @@ class SearchROProblemInteger(IntegerProblem):
         # todo: Research on what are contraints for
         "No contraints"
         self.number_of_constraints = 0
+        "number of chromosome"
+        self.number_of_choromosome = 100
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
@@ -45,22 +47,22 @@ class SearchROProblemInteger(IntegerProblem):
         self.codeOwnership = CodeOwnership(repoPath)
         self.integerEncoding = IntegerEncoding()
         self.integerEncoding.encoding(self.projectInfo)
-        self.lower_bound=[1, 1, 1, 1]
+        self.lower_bound=[1, 1, 1, 1] *self.number_of_choromosome
         self.upper_bound=[self.integerEncoding.ROTypeNum,
                           self.integerEncoding.classNum,
                           self.integerEncoding.classNum,
-                          self.integerEncoding.N]
-        print(self.upper_bound)
+                          self.integerEncoding.N]*self.number_of_choromosome
+        # print(self.upper_bound)
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
         # print(solution.variables)
         'Decode and execute'
         decodedIntegerSequences = self.integerEncoding.decoding(solution.variables)
         "Execute corressponding refactoring operations"
+
         projectInfo = copy.deepcopy(self.projectInfo)
-        #todo: self.projectInfo should be copy for one here
         for each in decodedIntegerSequences:
-            print("Refactoring Operation: ", each)
+            # print("Refactoring Operation: ", each)
             dispatch(each["ROType"].value)(each, projectInfo)
 
         'calculate QMOOD  after executed refactoring operations'
@@ -101,7 +103,7 @@ class SearchROProblemInteger(IntegerProblem):
 
         newSolution.variables = \
             [int(random.uniform(self.lower_bound[i] * 1.0, self.upper_bound[i] * 1.0))
-             for i in range(self.number_of_variables)]
+             for i in range(self.number_of_variables*self.number_of_choromosome)]
 
         return newSolution
 

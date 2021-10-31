@@ -21,7 +21,7 @@ def inlineClass(decodedSequence,projectInfo):
         moveAField(decodedSequence["class1"],
                     decodedSequence["class2"],
                    eachField)
-    print(decodedSequence)
+    # print(decodedSequence)
     # projectInfo.remove(decodedSequence["class1"])
 
 
@@ -130,7 +130,7 @@ def doNothing(decodedSequence,projectInfo):
     :param projectInfo:
     :return:
     '''
-    print("do Nothing, ",decodedSequence)
+    # print("do Nothing, ",decodedSequence)
     pass
 
 def moveAMethod(sourceCLass,targetClass,method):

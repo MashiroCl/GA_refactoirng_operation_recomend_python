@@ -7,7 +7,7 @@ from QMOOD.Qmood import Qmood
 from Encoding import Encoding
 from jMetal.SearchROProblemBinary import SearchROProblemBinary
 from Encoding.BinaryEncoding import BinaryEncoding
-from Encoding.ROTypeDict import ROTypeDict
+from Encoding.BinaryROTypeDict import ROTypeDict
 from RefactoringOperation.RefactoringOperationEnum import *
 from RefactoringOperation.RefactoringOperationDispatcher import *
 from CodeOwnership.Repository import Repository
@@ -325,7 +325,15 @@ def testDispatch():
 # print(test_MFA())
 # test_MOA()
 # testSearchROProblemBinary()
-testBinaryEncoding()
+# testBinaryEncoding()
 # testROTypeDict()
 # testDispatch()
-
+# jsonFileRTE="/Users/leichen/Desktop/jedis.json"
+# load = readJson(jsonFileRTE)
+# jClist = []
+# for each in load:
+#     jClist.append(jClass(load=each))
+#
+# print(jClist[0].getMethod()[0])
+test = [1,1,1,1] *4
+print(test)

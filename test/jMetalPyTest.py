@@ -1,33 +1,38 @@
+from IntegerEncoding import SubsetSum
 from jmetal.algorithm.multiobjective.nsgaii import NSGAII
 from jmetal.operator import BitFlipMutation, SPXCrossover
 from jmetal.problem import OneMax
 from jmetal.util.comparator import DominanceComparator
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
+
+
+from jmetal.algorithm.singleobjective.genetic_algorithm import GeneticAlgorithm
+from jmetal.operator import IntegerPolynomialMutation
+from jmetal.operator.selection import BinaryTournamentSelection
+from jmetal.operator.crossover import IntegerSBXCrossover
 from jmetal.util.termination_criterion import StoppingByEvaluations
 
 if __name__ == '__main__':
-    binary_string_length = 512
-    problem = OneMax(binary_string_length)
+    C = 9
+    W = [3,34,4,12,5,2]
 
-    max_evaluations = 20000
+    problem = SubsetSum(C, W)
 
-    algorithm = NSGAII(
+    algorithm = GeneticAlgorithm(
         problem=problem,
-        population_size=100,
-        offspring_population_size=1,
-        mutation=BitFlipMutation(probability=1.0 / binary_string_length),
-        crossover=SPXCrossover(probability=1.0),
-        termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations),
-        dominance_comparator=DominanceComparator()
+        population_size=50,
+        offspring_population_size=50,
+        mutation=IntegerPolynomialMutation(probability=0.5),
+        crossover=IntegerSBXCrossover(probability=0.5),
+        selection=BinaryTournamentSelection(),
+        termination_criterion=StoppingByEvaluations(max_evaluations=25000)
     )
 
     algorithm.run()
-    front = algorithm.get_result()
+    subset = algorithm.get_result()
 
-    # Save results to file
-    print_function_values_to_file(front, 'FUN.'+ algorithm.get_name()+"-"+problem.get_name())
-    print_variables_to_file(front, 'VAR.' + algorithm.get_name()+"-"+problem.get_name())
-
-    print('Algorithm (continuous problem): ' + algorithm.get_name())
-    print('Problem: ' + problem.get_name())
-    print('Computing time: ' + str(algorithm.total_computing_time))
+    print('Algorithm: {}'.format(algorithm.get_name()))
+    print('Problem: {}'.format(problem.get_name()))
+    print('Solution: {}'.format(subset.variables))
+    print('Fitness: {}'.format(subset.objectives[0]))
+    print('Computing time: {}'.format(algorithm.total_computing_time))
