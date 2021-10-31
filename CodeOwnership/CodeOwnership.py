@@ -14,8 +14,8 @@ class CodeOwnership:
         filePath = []
         for decodedBinarySequence in decodedBinarySequences:
             try:
-                filePath.append(decodedBinarySequence["class1"]["classInfo"].getFilePath())
-                filePath.append(decodedBinarySequence["class2"]["classInfo"].getFilePath())
+                filePath.append(decodedBinarySequence["class1"].getFilePath())
+                filePath.append(decodedBinarySequence["class2"].getFilePath())
             except KeyError:
                 pass
             except TypeError:

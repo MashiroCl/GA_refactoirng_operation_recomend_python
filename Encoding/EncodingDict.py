@@ -1,6 +1,6 @@
 class EncodingDict():
     '''
-    class contains binary encoding for a java project
+    class contains encoding result for a java project
     '''
     def __init__(self):
         self.encodingDict = {"class":{}}
