@@ -17,7 +17,7 @@ def moveMethodPreCondition(decodedBinarySequence,projectInfo):
     :return: if contains return false
     '''
     'method1 is contained by class1'
-    if decodedBinarySequence["class1method"] not in decodedBinarySequence["class1"]["method"].values:
+    if decodedBinarySequence["class1method"] not in decodedBinarySequence["class1"].getMethod():
         return False
     'class1 and class2 is not the same class'
     if decodedBinarySequence["class1"]==decodedBinarySequence["class2"]:
@@ -33,7 +33,7 @@ def moveFieldPreCondition(decodedBinarySequence,projectInfo):
     :return:
     '''
     'check class1 contains field1'
-    if decodedBinarySequence["class1field"] not in decodedBinarySequence["class1"]["field"].values:
+    if decodedBinarySequence["class1field"] not in decodedBinarySequence["class1"].getField():
         return False
     'check class1 and class2 is not the same class'
     if decodedBinarySequence["class1"]==decodedBinarySequence["class2"]:
@@ -49,9 +49,9 @@ def pushDownMethodPreCondition(decodedBinarySequence,projectInfo):
     :param projectInfo:
     :return:
     '''
-    if decodedBinarySequence["class1method"] not in decodedBinarySequence["class1"]["method"].values:
+    if decodedBinarySequence["class1method"] not in decodedBinarySequence["class1"].getMethod():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"]["classInfo"].getSuperClass():
+    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
@@ -63,9 +63,9 @@ def pushDownFieldPreCondition(decodedBinarySequence,projectInfo):
     :param projectInfo:
     :return:
     '''
-    if decodedBinarySequence["class1field"] not in decodedBinarySequence["class1"]["field"].values:
+    if decodedBinarySequence["class1field"] not in decodedBinarySequence["class1"].getField():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"]["classInfo"].getSuperClass():
+    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
@@ -77,9 +77,9 @@ def pullUpMethodPreCondition(decodedBinarySequence,projectInfo):
     :param projectInfo:
     :return:
     '''
-    if decodedBinarySequence["class2method"] not in decodedBinarySequence["class2"]["method"].values:
+    if decodedBinarySequence["class2method"] not in decodedBinarySequence["class2"].getMethod():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"]["classInfo"].getSuperClass():
+    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
@@ -91,9 +91,9 @@ def pullUpFieldPreCondition(decodedBinarySequence,projectInfo):
     :param projectInfo:
     :return:
     '''
-    if decodedBinarySequence["class2field"] not in decodedBinarySequence["class2"]["field"].values:
+    if decodedBinarySequence["class2field"] not in decodedBinarySequence["class2"].getField():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"]["classInfo"].getSuperClass():
+    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
