@@ -1,5 +1,5 @@
 from .EncodingDict import EncodingDict
-from .ROTypeDict import ROTypeDict
+from .BinaryROTypeDict import ROTypeDict
 class BinaryEncoding():
     def __init__(self):
         self.chromosomeLen=0
@@ -101,7 +101,7 @@ class BinaryEncoding():
             resDict["class2method"]=class2method
             encodedResults.append(resDict)
 
-            print("decoding ", encodedSequence)
+            # print("decoding ", encodedSequence)
 
 
         return encodedResults
