@@ -45,6 +45,7 @@ class SearchROProblemBinary(BinaryProblem):
         self.binaryEncoding = BinaryEncoding()
         choromosomeLen=self.binaryEncoding.encoding(self.projectInfo)
 
+        self.reference_front=[]
         self.number_of_bits = choromosomeLen
 
     def evaluate(self, solution: BinarySolution) -> BinarySolution:
@@ -57,7 +58,6 @@ class SearchROProblemBinary(BinaryProblem):
             dispatch(each["ROType"].value)(each, self.projectInfo)
 
         'calculate QMOOD  after executed refactoring operations'
-        #todo: projectInfo.calculateQMood()
         qmood = Qmood()
         qmood.calculateQmood(self.projectInfo)
         effectiveness=qmood.getEffectiveness()
@@ -80,6 +80,8 @@ class SearchROProblemBinary(BinaryProblem):
         # print("numOfCommiters: ",numOfCommiters)
         solution.objectives[6] = -1.0 * highestOwnership
         solution.objectives[7] = -1.0 * numOfCommiters
+
+        self.reference_front.append(solution)
 
         return solution
 
