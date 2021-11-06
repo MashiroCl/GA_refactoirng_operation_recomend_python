@@ -1,4 +1,3 @@
-from jmetal.algorithm.singleobjective.genetic_algorithm import GeneticAlgorithm
 from jmetal.operator import IntegerPolynomialMutation
 from jmetal.operator.selection import BinaryTournamentSelection
 from jmetal.operator.crossover import IntegerSBXCrossover
@@ -10,13 +9,12 @@ from utils import readJson
 from Jxplatform2.jClass import jClass
 from SearchROProblemInteger import SearchROProblemInteger
 from jmetal.lab.visualization import Plot,InteractivePlot
-
+import time
 
 'Read Jxplatform2 extraction result'
 jsonFile = "/Users/leichen/Desktop/jedis.json"
 repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
-# jsonFile = "/Users/leichen/Desktop/studentTest.json"
-# repoPath = "/Users/leichen/Desktop/Student"
+
 load = readJson(jsonFile)
 jClist = []
 for each in load:
@@ -25,17 +23,24 @@ print(jClist)
 
 problem = SearchROProblemInteger(jClist,repoPath)
 
-algorithm = GeneticAlgorithm(
+time_start = time.time()
+algorithm = NSGAII(
     problem=problem,
     population_size=50,
-    offspring_population_size=50,
-    mutation=IntegerPolynomialMutation(probability=0.5),
-    crossover=IntegerSBXCrossover(probability=0.5),
+    offspring_population_size=26,
+    mutation=IntegerPolynomialMutation(probability=0.8),
+    crossover=IntegerSBXCrossover(probability=0.03),
     selection=BinaryTournamentSelection(),
-    termination_criterion=StoppingByEvaluations(max_evaluations=25000)
+    termination_criterion=StoppingByEvaluations(max_evaluations=5000)
 )
 algorithm.run()
-
+time_end = time.time()
+t = time_end - time_start
+h = t // 3600
+m = (t - h * 3600) // 60
+s = t - h * 3600 - m * 60
+tResult = 'time cost:  {:.0f}h {:.0f}min {:.0f}s'.format(h, m, s)
+print(tResult)
 # front = get_non_dominated_solutions(algorithm.get_result())
 
 front = problem.reference_front

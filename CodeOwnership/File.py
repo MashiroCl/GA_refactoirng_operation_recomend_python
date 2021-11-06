@@ -12,7 +12,9 @@ class File():
         self.commitNum=0
         self.authorCommitDict=dict()
         self.authorCommitDictRatio=dict()
-    def setParentPath(self)->str:
+
+
+    def _setParentPath(self)->str:
         paths=self.path.split("/")
         temp=""
         for i in range(len(paths)-1):
@@ -26,12 +28,8 @@ class File():
         :param outputPath: output path for git log json file
         :return:
         '''
-        self.setParentPath()
+        self._setParentPath()
         self.log=outputPath+"/"+self.name.split(".")[0]+".json"
-        # print(self.path)
-        # print(self.name)
-        # print(self.log)
-        # prettyFormat="--pretty=format:\'{%n  \"commit\": \"%H\",%n \"subject\": \"%s\",%n \"author\": {%n    \"name\": \"%aN\",%n    \"email\": \"%aE\",%n    \"date\": \"%aD\"%n  },%n  \"commiter\": {%n    \"name\": \"%cN\",%n    \"email\": \"%cE\",%n    \"date\": \"%cD\"%n  }%n},\'"
         prettyFormat="--pretty=format:\'{%n  \"commit\": \"%H\",%n \"author\": {%n    \"name\": \"%aN\",%n    \"email\": \"%aE\",%n    \"date\": \"%aD\"%n  },%n  \"commiter\": {%n    \"name\": \"%cN\",%n    \"email\": \"%cE\",%n    \"date\": \"%cD\"%n  }%n},\'"
         command="cd "+self.parentPath+" && "+"git log "+prettyFormat+" --follow "+self.name +" >"+ self.log
         os.system(command)
@@ -49,37 +47,40 @@ class File():
         self.commits=commits
         self.commitNum=len(commits)
 
-    def commitAuthorCount(self):
+    def countAuthorCommitDict(self):
         '''
-        count number of each authors' appearence in current file and save results in authorCommitDict
+        filled author commit dict with dict like {authorName: {commitId 1, commitId 2}}
+        using git log info in cur file
         :return:
         '''
         for each in self.commits:
-            if each.authorName in self.authorCommitDict.keys():
-                self.authorCommitDict[each.authorName] += 1
-            else:
-                self.authorCommitDict[each.authorName] =1
+            if each.authorName not in self.authorCommitDict.keys():
+                self.authorCommitDict[each.authorName] = set()
+            self.authorCommitDict[each.authorName].add(each.commitID)
 
 
-    def commitAuthorRatio(self):
-        '''
-        calculate each authors' ownership ratio in crrent file and save results in authorCommitDictRatio
-        :return:
-        '''
-        for each in self.authorCommitDict:
-            self.authorCommitDictRatio[each]=self.authorCommitDict[each]/self.commitNum
+    # def commitAuthorCount(self):
+    #     '''
+    #     count number of each authors' appearence in current file and save results in authorCommitDict
+    #     :return:
+    #     '''
+    #     for each in self.commits:
+    #         if each.authorName in self.authorCommitDict.keys():
+    #             self.authorCommitDict[each.authorName] += 1
+    #         else:
+    #             self.authorCommitDict[each.authorName] =1
 
 
-    def getHighestOwnership(self)->float:
-        '''
-        find the highest ratio of ownership
-        :return: highest ratio
-        '''
-        max = -1
-        for each in self.authorCommitDictRatio:
-            if self.authorCommitDictRatio[each] > max:
-                max = self.authorCommitDictRatio[each]
-        return max
+    # def commitAuthorRatio(self):
+    #     '''
+    #     calculate each authors' ownership ratio in crrent file and save results in authorCommitDictRatio
+    #     :return:
+    #     '''
+    #     for each in self.authorCommitDict:
+    #         self.authorCommitDictRatio[each]=self.authorCommitDict[each]/self.commitNum
+
+
+
 
 if __name__ =="__main__":
     path="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/src/main/java/net/engio/mbassy/bus/BusRuntime.java"

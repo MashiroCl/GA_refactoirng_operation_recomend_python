@@ -24,7 +24,7 @@ class SearchROProblemInteger(IntegerProblem):
         "No contraints"
         self.number_of_constraints = 0
         "number of chromosome"
-        self.number_of_choromosome = 100
+        self.number_of_choromosome = 10
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
@@ -88,8 +88,6 @@ class SearchROProblemInteger(IntegerProblem):
         # print("numOfCommiters: ",numOfCommiters)
         solution.objectives[6] = -1.0 * highestOwnership
         solution.objectives[7] = -1.0 * numOfCommiters
-
-        print(solution.objectives)
 
         self.reference_front.append(solution)
 

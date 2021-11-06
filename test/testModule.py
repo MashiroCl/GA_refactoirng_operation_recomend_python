@@ -335,5 +335,7 @@ def testDispatch():
 #     jClist.append(jClass(load=each))
 #
 # print(jClist[0].getMethod()[0])
-test = [1,1,1,1] *4
-print(test)
+a={1,2,3}
+b={4}
+a=a.union(b)
+print(a)

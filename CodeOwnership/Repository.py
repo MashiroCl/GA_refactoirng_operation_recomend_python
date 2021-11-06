@@ -8,6 +8,8 @@ class Repository():
         self.name=path.split("/")[-1]
         self.files=[]
         self.csvPath=""
+        self._findJavaFiles()
+
     def _findJavaFiles(self)->list:
         '''
         find all .java files in current directory
@@ -25,13 +27,14 @@ class Repository():
         :return:
         '''
         create_folder(outputPath)
-        self._findJavaFiles()
         for each in self.files:
             each.getCommit(outputPath)
             each.json2Commit()
-            each.commitAuthorCount()
-            each.commitAuthorRatio()
+            each.countAuthorCommitDict()
+            # each.commitAuthorCount()
+            # each.commitAuthorRatio()
 
+    @DeprecationWarning
     def writeCSV(self,outputPath:str):
         '''
         wirte extraction info of all files into a csv file
@@ -56,7 +59,7 @@ class Repository():
             writer.writerows(result)
         self.csvPath=csvPath
 
-
+    @DeprecationWarning
     def _getCSVLine(self,filePath:str)->list:
         with open(self.csvPath) as f:
             reader=csv.reader(f)
@@ -97,12 +100,12 @@ class Repository():
         :return: author commit dict
         '''
         'Find file of filePath'
-        aCD = {}
+        aCD = dict()
         for eachFile in self.files:
             if eachFile.path in filePath:
                 for eachCommiter in eachFile.authorCommitDict:
                     if eachCommiter in aCD:
-                        aCD[eachCommiter]+=eachFile.authorCommitDict[eachCommiter]
+                        aCD[eachCommiter] = aCD[eachCommiter].union(eachFile.authorCommitDict[eachCommiter])
                     else:
                         aCD[eachCommiter] = eachFile.authorCommitDict[eachCommiter]
         return  aCD
