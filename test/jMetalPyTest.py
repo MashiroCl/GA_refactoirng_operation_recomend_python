@@ -1,11 +1,4 @@
 from IntegerEncoding import SubsetSum
-from jmetal.algorithm.multiobjective.nsgaii import NSGAII
-from jmetal.operator import BitFlipMutation, SPXCrossover
-from jmetal.problem import OneMax
-from jmetal.util.comparator import DominanceComparator
-from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-
-
 from jmetal.algorithm.singleobjective.genetic_algorithm import GeneticAlgorithm
 from jmetal.operator import IntegerPolynomialMutation
 from jmetal.operator.selection import BinaryTournamentSelection
@@ -20,12 +13,12 @@ if __name__ == '__main__':
 
     algorithm = GeneticAlgorithm(
         problem=problem,
-        population_size=50,
-        offspring_population_size=50,
+        population_size=4,
+        offspring_population_size=4,
         mutation=IntegerPolynomialMutation(probability=0.5),
         crossover=IntegerSBXCrossover(probability=0.5),
         selection=BinaryTournamentSelection(),
-        termination_criterion=StoppingByEvaluations(max_evaluations=25000)
+        termination_criterion=StoppingByEvaluations(max_evaluations=5*10)
     )
 
     algorithm.run()

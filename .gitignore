@@ -1,6 +1,10 @@
 .idea
 test
-jMetal/FUN.NSGAII.SubsetSum
+jMetal/FUN.NSGAII.SearchRO
 jMetal/jmetalpy.log
-jMetal/VAR.NSGAII.SubsetSum
+jMetal/VAR.NSGAII.SearchRO
+jMetal/FrontData
+jMetal/NSGAII.eps
+jMetal/solutionObjectives.txt
+Visiualize
 ResultGraph

@@ -24,7 +24,7 @@ class SearchROProblemInteger(IntegerProblem):
         "No contraints"
         self.number_of_constraints = 0
         "number of chromosome"
-        self.number_of_choromosome = 10
+        self.number_of_choromosome = 50
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
@@ -32,6 +32,7 @@ class SearchROProblemInteger(IntegerProblem):
                              self.MAXIMIZE,
                              self.MAXIMIZE,
                              self.MAXIMIZE,
+
                              self.MAXIMIZE,
                              self.MAXIMIZE,
                              self.MAXIMIZE]
@@ -52,6 +53,7 @@ class SearchROProblemInteger(IntegerProblem):
                           self.integerEncoding.classNum,
                           self.integerEncoding.classNum,
                           self.integerEncoding.N]*self.number_of_choromosome
+        self.initial_front= []
         # print(self.upper_bound)
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
@@ -75,22 +77,22 @@ class SearchROProblemInteger(IntegerProblem):
         resusability = qmood.getResusability()
         understandability = qmood.getUnderstandability()
 
-        solution.objectives[0] = -1.0 * effectiveness
-        solution.objectives[1] = -1.0 * extendibility
-        solution.objectives[2] = -1.0 * flexibility
-        solution.objectives[3] = -1.0 * functionality
-        solution.objectives[4] = -1.0 * resusability
-        solution.objectives[5] = -1.0 * understandability
+        minus = 1.0
+        solution.objectives[0] = minus * effectiveness
+        solution.objectives[1] = minus * extendibility
+        solution.objectives[2] = minus * flexibility
+        solution.objectives[3] = minus * functionality
+        solution.objectives[4] = minus * resusability
+        solution.objectives[5] = minus * understandability
 
         'calculate ownership on refactoring operations applied files'
         highestOwnership, numOfCommiters = self.codeOwnership.calculateOwnership(decodedIntegerSequences)
         # print("highestOwnership: ",highestOwnership)
         # print("numOfCommiters: ",numOfCommiters)
-        solution.objectives[6] = -1.0 * highestOwnership
-        solution.objectives[7] = -1.0 * numOfCommiters
+        solution.objectives[6] = minus * highestOwnership
+        solution.objectives[7] = minus * numOfCommiters
 
-        self.reference_front.append(solution)
-
+        # self.initial_solution.append(solution.objectives)
         return solution
 
     def create_solution(self) -> IntegerSolution:
@@ -102,7 +104,7 @@ class SearchROProblemInteger(IntegerProblem):
         newSolution.variables = \
             [int(random.uniform(self.lower_bound[i] * 1.0, self.upper_bound[i] * 1.0))
              for i in range(self.number_of_variables*self.number_of_choromosome)]
-
+        self.initial_front.append(self.evaluate(newSolution))
         return newSolution
 
     def get_name(self) -> str:
