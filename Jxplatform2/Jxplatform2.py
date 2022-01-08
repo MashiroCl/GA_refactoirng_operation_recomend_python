@@ -16,7 +16,7 @@ if __name__ == "__main__":
     repoName = sys.argv[1]
     # j="/Users/leichen/Code/pythonProject/pythonProject/salabResearch/Jxplatform2/JxplatformExtract.jar"
     # j="/Users/leichen/Desktop/JxplatformExtract.jar"
-    j = "/home/chenlei/MORCO/Jxplatform2/JxplatformExtract.jar"
+    j = "/home/chenlei/MORCO/MORCOpy/Jxplatform2/JxplatformExtract.jar"
     # t="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
     # t="/Users/leichen/ResearchAssistant/InteractiveRebase/data/ganttproject-1.10.2"
     t="/home/chenlei/MORCO/data/"+repoName
