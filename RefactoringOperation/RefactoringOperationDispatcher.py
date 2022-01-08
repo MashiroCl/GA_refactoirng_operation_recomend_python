@@ -3,7 +3,7 @@ from RefactoringOperation.RefactoringOperations import *
 
 def dispatch(index:int):
     return {
-        RefactoringOperationEnum.INCLINECLASS.value: inlineClass,
+        RefactoringOperationEnum.INLINECLASS.value: inlineClass,
         RefactoringOperationEnum.MOVEMETHOD.value: moveMethod,
         RefactoringOperationEnum.MOVEFIELD.value: moveField,
         RefactoringOperationEnum.PUSHDOWNMETHOD.value:pushDownMethod,

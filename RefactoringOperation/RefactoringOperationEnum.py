@@ -2,7 +2,7 @@ import enum
 
 
 class RefactoringOperationEnum(enum.Enum):
-    INCLINECLASS = 1
+    INLINECLASS = 1
     MOVEMETHOD = 2
     MOVEFIELD = 3
     PUSHDOWNMETHOD = 4

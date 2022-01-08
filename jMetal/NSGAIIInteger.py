@@ -1,7 +1,5 @@
 from jmetal.operator import IntegerPolynomialMutation
-from jmetal.operator.selection import BinaryTournamentSelection
 from jmetal.operator.crossover import IntegerSBXCrossover
-from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.solution import get_non_dominated_solutions, print_function_values_to_file, print_variables_to_file
 from jmetal.algorithm.multiobjective import NSGAII
 from jmetal.util.termination_criterion import StoppingByEvaluations
@@ -10,11 +8,20 @@ from Jxplatform2.jClass import jClass
 from SearchROProblemInteger import SearchROProblemInteger
 from jmetal.lab.visualization import Plot,InteractivePlot
 from jmetal.util.observer import WriteFrontToFileObserver,PlotFrontToFileObserver,ProgressBarObserver,BasicObserver
-
+import sys
 
 'Read Jxplatform2 extraction result'
-jsonFile = "/Users/leichen/Desktop/jedis.json"
-repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
+# jsonFile = "/Users/leichen/Desktop/jedis.json"
+# repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
+# temp = "ganttproject-1.10.2"
+repoName = sys.argv[1]
+max_evaluations = sys.argv[2]
+# jsonFile = "/Users/leichen/Desktop/" +temp +".json"
+# repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + temp
+
+jsonFile = "/home/chenlei/MORCO/extractResult/"+repoName+".json"
+repoPath = "/home/chenlei/MORCO/data/"+repoName
+outputPath = "/home/chenlei/MORCO/output/"
 
 load = readJson(jsonFile)
 jClist = []
@@ -24,7 +31,7 @@ print(jClist)
 
 problem = SearchROProblemInteger(jClist,repoPath)
 
-max_evaluations=5000
+# max_evaluations=5000
 algorithm = NSGAII(
     problem=problem,
     population_size=50,
@@ -40,7 +47,7 @@ algorithm = NSGAII(
 algorithm.observable.register(observer=BasicObserver())
 algorithm.observable.register(observer=ProgressBarObserver(max=max_evaluations))
 algorithm.observable.register(observer=WriteFrontToFileObserver(
-    output_directory="/Users/leichen/Code/pythonProject/pythonProject/salabResearch/jMetal/FrontData"))
+    output_directory=outputPath+repoName+"/front"))
 algorithm.run()
 
 front = algorithm.get_result()
@@ -48,16 +55,17 @@ front = algorithm.get_result()
 # with open(solutionObjectives,"w") as f:
 #     json.dump(problem.mySolutions,f)
 
-problem.reference_front = problem.initial_front
-plot_front = Plot(title='Pareto front approximation'
-                  , axis_labels=problem.obj_labels
-                  , reference_front=problem.reference_front)
-plot_front.plot(front, label='NSGAII', filename=algorithm.get_name())
+
+# problem.reference_front = problem.initial_front
+# plot_front = Plot(title='Pareto front approximation'
+#                   , axis_labels=problem.obj_labels
+#                   , reference_front=problem.reference_front)
+# plot_front.plot(front, label='NSGAII', filename=algorithm.get_name())
 
 
 # save to files
-print_function_values_to_file(front, 'FUN.NSGAII.SearchRO')
-print_variables_to_file(front, 'VAR.NSGAII.SearchRO')
+print_function_values_to_file(front, outputPath+repoName+'/FUN.NSGAII.SearchRO')
+print_variables_to_file(front, outputPath+repoName+'VAR.NSGAII.SearchRO')
 
 print('Algorithm (continuous problem): ' + algorithm.get_name())
 print('Problem: ' + problem.get_name())

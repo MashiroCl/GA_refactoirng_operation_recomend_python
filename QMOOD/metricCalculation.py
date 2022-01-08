@@ -106,7 +106,6 @@ def CAM(jc):
 
 #Number of user defined class variables in field
 def MOA(jClass,jClassList):
-    # print("class is:",jClass.getClass())
     MOA=0
     classNameList=[]
     for eachC in jClassList:
@@ -139,8 +138,14 @@ def getNumOfPCMethods(jc):
     # print("methodL is ", methodL)
     return len(methodL) - ignore(methodL)
 
-#todo modify MFA
+
 def MFA(jc):
+    '''
+    For a class A, whose parents named as Ca, MFA=(#methods of Ca/#methods of Ca+#methods of A)
+    Only developer defined class is considered beacuse Jxplatform2 cannot extract info from library class
+    :param jc:
+    :return:
+    '''
     pNumOfMeth=0
     parents=jc.getSuperClass()
     for each in parents:
@@ -200,9 +205,34 @@ def NOM(jClass):
     methodNum=len(jClass.getMethod())
     return methodNum
 
-def DSC():
-    return 0
-def NOH():
-    return 0
-def ANA():
-    return 0
+def DSC(jClassList):
+    '''
+    Count of the total number of classes in design
+    :param jClassList:
+    :return: total number of classes in design
+    '''
+    return len(jClassList)
+
+
+def NOH(jClassList):
+    '''
+    Count of the number of class hierarchies in the design
+    If one class has only child classes without parent class (Class Object excleded, library class excluded -> only developer self-defined classes considered) is considered to be a root
+	NOH = number of root
+	As the Class Object has been filtered in the json file obtained from JXplatform2
+	Other java.lang/java.util classes are temporaly not considered
+    :return:
+    '''
+    count = 0
+    for each in jClassList:
+        if len(each.getSuperClass())==0 and len(each.getChildren())>0:
+            count = count +1
+    return count
+
+def ANA(jClassList):
+    '''
+    Average number of classes from which a class inherits information
+    :return:
+    '''
+    classWithChildClasses = [eachClass for eachClass in jClassList if len(eachClass.getChildren())>0]
+    return len(classWithChildClasses)/len(jClassList)

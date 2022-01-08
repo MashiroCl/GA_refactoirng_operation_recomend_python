@@ -6,6 +6,7 @@ def inlineClass(decodedSequence,projectInfo):
     :param projectInfo:
     :return:
     '''
+    return
 
     'check precondition'
     if not inlineClassPreCondition(decodedSequence,projectInfo):
@@ -21,9 +22,8 @@ def inlineClass(decodedSequence,projectInfo):
         moveAField(decodedSequence["class1"],
                     decodedSequence["class2"],
                    eachField)
-    # print(decodedSequence)
-    # projectInfo.remove(decodedSequence["class1"])
-
+    print(decodedSequence)
+    projectInfo.remove(decodedSequence["class1"])
 
 def moveMethod(decodedSequence,projectInfo):
     '''

@@ -24,7 +24,7 @@ class SearchROProblemInteger(IntegerProblem):
         "No contraints"
         self.number_of_constraints = 0
         "number of chromosome"
-        self.number_of_choromosome = 50
+        self.number_of_choromosome = 150
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
@@ -32,7 +32,6 @@ class SearchROProblemInteger(IntegerProblem):
                              self.MAXIMIZE,
                              self.MAXIMIZE,
                              self.MAXIMIZE,
-
                              self.MAXIMIZE,
                              self.MAXIMIZE,
                              self.MAXIMIZE]
@@ -53,7 +52,7 @@ class SearchROProblemInteger(IntegerProblem):
                           self.integerEncoding.classNum,
                           self.integerEncoding.classNum,
                           self.integerEncoding.N]*self.number_of_choromosome
-        self.initial_front= []
+        # self.initial_front= []
         # print(self.upper_bound)
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
@@ -77,7 +76,7 @@ class SearchROProblemInteger(IntegerProblem):
         resusability = qmood.getResusability()
         understandability = qmood.getUnderstandability()
 
-        minus = 1.0
+        minus = -1.0
         solution.objectives[0] = minus * effectiveness
         solution.objectives[1] = minus * extendibility
         solution.objectives[2] = minus * flexibility
@@ -104,7 +103,7 @@ class SearchROProblemInteger(IntegerProblem):
         newSolution.variables = \
             [int(random.uniform(self.lower_bound[i] * 1.0, self.upper_bound[i] * 1.0))
              for i in range(self.number_of_variables*self.number_of_choromosome)]
-        self.initial_front.append(self.evaluate(newSolution))
+        # self.initial_front.append(self.evaluate(newSolution))
         return newSolution
 
     def get_name(self) -> str:

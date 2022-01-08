@@ -21,10 +21,9 @@ class Qmood():
         self.Effectiveness = 0
 
     def calculateSingleQmood(self,jClass,jClassList):
-        self.DSC=DSC()
-        self.NOH=NOH()
-        self.ANA=ANA()
-
+        self.DSC=DSC(jClassList)
+        self.NOH=NOH(jClass)
+        self.ANA=ANA(jClassList)
         self.DAM=DAM(jClass)
         self.DCC=DCC(jClassList)
         self.CAM=CAM(jClass)
@@ -42,13 +41,12 @@ class Qmood():
         self.Effectiveness = 0.2*self.ANA+0.2*self.DAM+0.2*self.MOA+0.2*self.MFA+0.2*self.NOP
 
     def calculateQmood(self,jClassList):
-        self.DSC=DSC()
-        self.NOH=NOH()
-        self.ANA=ANA()
-
         'obtain metrics for all classes and calculate the average value '
-        sDAM, sDCC, sCAM, sMOA, sMFA, sNOP, sCIS, sNOM = 0,0,0,0,0,0,0,0
+        sDSC, sNOH, sANA, sDAM, sDCC, sCAM, sMOA, sMFA, sNOP, sCIS, sNOM = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         for each in jClassList:
+            sDSC+=DSC(jClassList)
+            sNOH+=NOH(jClassList)
+            sANA+=ANA(jClassList)
             sDAM+=DAM(each)
             sDCC+=DCC(each,jClassList)
             sCAM+=CAM(each)
@@ -58,6 +56,9 @@ class Qmood():
             sCIS+=CIS(each)
             sNOM+=NOM(each)
         lenJCL=len(jClassList)
+        self.DSC=sDSC/lenJCL
+        self.NOH=sNOH/lenJCL
+        self.ANA=sANA/lenJCL
         self.DAM=sDAM/lenJCL
         self.DCC=sDCC/lenJCL
         self.CAM=sCAM/lenJCL
@@ -66,6 +67,8 @@ class Qmood():
         self.NOP=sNOP/lenJCL
         self.CIS=sCIS/lenJCL
         self.NOM=sNOM/lenJCL
+
+        # print(self.DSC,self.NOH,self.ANA,self.DAM,self.DCC,self.CAM,self.MOA,self.MFA,self.NOP,self.CIS,self.NOM)
 
         self.Resusability = -0.25*self.DCC+0.25*self.CAM+0.5*self.CIS+0.5*self.DSC
         self.Flexibility = 0.25*self.DAM-0.25*self.DCC+0.5*self.MOA+0.5*self.NOP

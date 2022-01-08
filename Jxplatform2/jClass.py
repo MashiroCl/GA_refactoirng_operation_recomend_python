@@ -5,7 +5,7 @@ class jClass:
         self.classInfo = self.load['className']
         self.fieldList=[]
         self.methodList=[]
-        self.childrenList=[]
+        self.childrenList=self.load['childClasses']
         self.superClassList=[]
         self.package=self.load['javaPackage']
         for each in self.load['javaFields']:
@@ -39,6 +39,7 @@ class jClass:
         return self.childrenList
     def getSuperClass(self):
         return self.superClassList
+
 
     def addMethod(self,jMethod):
         if self.hasMethod(jMethod):

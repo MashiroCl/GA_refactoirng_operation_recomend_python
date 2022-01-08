@@ -60,7 +60,7 @@ class IntegerEncoding():
         resDict["class2method"]=None
         element = self._getElementOfN(ROType,class1Info,class2Info,n)
 
-        if(ROType == RefactoringOperationEnum.INCLINECLASS):
+        if(ROType == RefactoringOperationEnum.INLINECLASS):
             pass
         elif(ROType == RefactoringOperationEnum.MOVEMETHOD):
             resDict["class1method"]=element
@@ -91,7 +91,7 @@ class IntegerEncoding():
         :param n: N
         :return:
         '''
-        if(ROType == RefactoringOperationEnum.INCLINECLASS):
+        if(ROType == RefactoringOperationEnum.INLINECLASS):
             pass
         elif(ROType == RefactoringOperationEnum.MOVEMETHOD):
             if len(class1Info.getMethod()) !=0:
