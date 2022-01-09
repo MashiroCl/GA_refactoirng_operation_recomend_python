@@ -17,14 +17,21 @@ from jmetal.util.observer import WriteFrontToFileObserver,PlotFrontToFileObserve
 # repoName = "ganttproject-1.10.2"
 repoName = sys.argv[1]
 max_evaluations = sys.argv[2]
-# max_evaluations = 500
-# jsonFile = "/Users/leichen/Desktop/" +repoName +".json"
-# repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
-# outputPath = "/Users/leichen/Desktop/output"
+platform = sys.argv[3]
 
-jsonFile = "/home/chenlei/MORCO/extractResult/"+repoName+".json"
-repoPath = "/home/chenlei/MORCO/data/"+repoName
-outputPath = "/home/chenlei/MORCO/output/"
+if platform == "1":
+    'Local'
+    max_evaluations = 500
+    repoName = "ganttproject-1.10.2"
+    jsonFile = "/Users/leichen/Desktop/" +repoName +".json"
+    repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
+    outputPath = "/Users/leichen/Desktop/output"
+
+elif platform == "2":
+    'Server'
+    jsonFile = "/home/chenlei/MORCO/extractResult/" + repoName + ".json"
+    repoPath = "/home/chenlei/MORCO/data/" + repoName
+    outputPath = "/home/chenlei/MORCO/output_all_objectives_negative/"
 
 
 load = readJson(jsonFile)
