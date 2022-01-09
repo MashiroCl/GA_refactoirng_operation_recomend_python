@@ -6,5 +6,6 @@ jMetal/VAR.NSGAII.SearchRO
 jMetal/FrontData
 jMetal/NSGAII.eps
 jMetal/solutionObjectives.txt
-Visiualize
+Visiualize/.ipynb_checkpoints
 ResultGraph
+.gitignore
