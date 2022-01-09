@@ -31,7 +31,7 @@ elif platform == "2":
     'Server'
     jsonFile = "/home/chenlei/MORCO/extractResult/" + repoName + ".json"
     repoPath = "/home/chenlei/MORCO/data/" + repoName
-    outputPath = "/home/chenlei/MORCO/output_all_objectives_negative/"
+    outputPath = "/home/chenlei/MORCO/output_all_objectives_positive/"
 
 
 load = readJson(jsonFile)

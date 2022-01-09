@@ -85,13 +85,13 @@ class SearchROProblemInteger(IntegerProblem):
         # solution.objectives[4] = minus * resusability
         # solution.objectives[5] = minus * understandability
 
-        solution.objectives[0] = minus * effectiveness if effectiveness>0 else effectiveness
-        solution.objectives[1] = minus * extendibility if extendibility>0 else extendibility
-        solution.objectives[2] = minus * flexibility if flexibility>0 else flexibility
-        solution.objectives[3] = minus * functionality if functionality>0 else functionality
-        solution.objectives[4] = minus * resusability if resusability>0 else resusability
-        solution.objectives[5] = minus * understandability if understandability>0 else understandability
-        print(solution)
+        solution.objectives[0] = minus * effectiveness if effectiveness<0 else effectiveness
+        solution.objectives[1] = minus * extendibility if extendibility<0 else extendibility
+        solution.objectives[2] = minus * flexibility if flexibility<0 else flexibility
+        solution.objectives[3] = minus * functionality if functionality<0 else functionality
+        solution.objectives[4] = minus * resusability if resusability<0 else resusability
+        solution.objectives[5] = minus * understandability if understandability<0 else understandability
+        # print(solution)
 
         'calculate ownership on refactoring operations applied files'
         highestOwnership, numOfCommiters = self.codeOwnership.calculateOwnership(decodedIntegerSequences)
