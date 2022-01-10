@@ -15,7 +15,7 @@ class MonoObjectiveRS(IntegerProblem):
         :param repository: repository of project being processed, used to do code ownership related manipulation,
         should be a entity of class Repository
         '''
-        super(SearchROProblemInteger,self).__init__()
+        super(MonoObjectiveRS,self).__init__()
         "8 objectives: QMOOD 6 metrics + highest ownership+# of commiters"
         # self.number_of_objectives = 8
         self.number_of_objectives = 1

@@ -11,6 +11,7 @@ from SearchROProblemInteger import SearchROProblemInteger
 from jmetal.lab.visualization import Plot,InteractivePlot
 from jmetal.util.observer import WriteFrontToFileObserver,PlotFrontToFileObserver,ProgressBarObserver,BasicObserver
 
+
 'Read Jxplatform2 extraction result'
 # jsonFile = "/Users/leichen/Desktop/jedis.json"
 # repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
@@ -47,9 +48,8 @@ algorithm = NSGAII(
     problem=problem,
     population_size=50,
     offspring_population_size=50,
-    mutation=IntegerPolynomialMutation(probability=0.5),
-    crossover=IntegerSBXCrossover(probability=0.5),
-    # selection=BinaryTournamentSelection(),
+    mutation=IntegerPolynomialMutation(probability=1.0/problem.number_of_variables),
+    crossover=IntegerSBXCrossover(probability=1.0),
     termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
 )
 # algorithm.observable.register(observer=PlotFrontToFileObserver('dynamic_front_vis'))
