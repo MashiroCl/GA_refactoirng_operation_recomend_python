@@ -17,14 +17,15 @@ class SearchROProblemInteger(IntegerProblem):
         '''
         super(SearchROProblemInteger,self).__init__()
         "8 objectives: QMOOD 6 metrics + highest ownership+# of commiters"
-        self.number_of_objectives = 8
+        # self.number_of_objectives = 8
+        self.number_of_objectives = 6
         "Length represents chromosome length"
         self.number_of_variables = 4
         # todo: Research on what are contraints for
         "No contraints"
         self.number_of_constraints = 0
         "number of chromosome"
-        self.number_of_choromosome = 150
+        self.number_of_choromosome = 30
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
@@ -86,27 +87,27 @@ class SearchROProblemInteger(IntegerProblem):
 
         minus = -1.0
 
-        # solution.objectives[0] = minus * effectiveness
-        # solution.objectives[1] = minus * extendibility
-        # solution.objectives[2] = minus * flexibility
-        # solution.objectives[3] = minus * functionality
-        # solution.objectives[4] = minus * resusability
-        # solution.objectives[5] = minus * understandability
+        solution.objectives[0] = minus * effectiveness
+        solution.objectives[1] = minus * extendibility
+        solution.objectives[2] = minus * flexibility
+        solution.objectives[3] = minus * functionality
+        solution.objectives[4] = minus * resusability
+        solution.objectives[5] = minus * understandability
 
-        solution.objectives[0] = minus * effectiveness if effectiveness<0 else effectiveness
-        solution.objectives[1] = minus * extendibility if extendibility<0 else extendibility
-        solution.objectives[2] = minus * flexibility if flexibility<0 else flexibility
-        solution.objectives[3] = minus * functionality if functionality<0 else functionality
-        solution.objectives[4] = minus * resusability if resusability<0 else resusability
-        solution.objectives[5] = minus * understandability if understandability<0 else understandability
+        # solution.objectives[0] = minus * effectiveness if effectiveness<0 else effectiveness
+        # solution.objectives[1] = minus * extendibility if extendibility<0 else extendibility
+        # solution.objectives[2] = minus * flexibility if flexibility<0 else flexibility
+        # solution.objectives[3] = minus * functionality if functionality<0 else functionality
+        # solution.objectives[4] = minus * resusability if resusability<0 else resusability
+        # solution.objectives[5] = minus * understandability if understandability<0 else understandability
         # print(solution)
 
-        'calculate ownership on refactoring operations applied files'
-        highestOwnership, numOfCommiters = self.codeOwnership.calculateOwnership(decodedIntegerSequences)
-        # print("highestOwnership: ",highestOwnership)
-        # print("numOfCommiters: ",numOfCommiters)
-        solution.objectives[6] = minus * highestOwnership
-        solution.objectives[7] = minus * numOfCommiters
+        # 'calculate ownership on refactoring operations applied files'
+        # highestOwnership, numOfCommiters = self.codeOwnership.calculateOwnership(decodedIntegerSequences)
+        # # print("highestOwnership: ",highestOwnership)
+        # # print("numOfCommiters: ",numOfCommiters)
+        # solution.objectives[6] = minus * highestOwnership
+        # solution.objectives[7] = minus * numOfCommiters
 
         # self.initial_solution.append(solution.objectives)
         return solution

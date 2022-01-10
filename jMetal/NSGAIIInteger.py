@@ -47,8 +47,8 @@ algorithm = NSGAII(
     problem=problem,
     population_size=50,
     offspring_population_size=50,
-    mutation=IntegerPolynomialMutation(probability=1.0/problem.number_of_variables),
-    crossover=IntegerSBXCrossover(probability=1.0),
+    mutation=IntegerPolynomialMutation(probability=0.5),
+    crossover=IntegerSBXCrossover(probability=0.5),
     # selection=BinaryTournamentSelection(),
     termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
 )
