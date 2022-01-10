@@ -27,14 +27,22 @@ class SearchROProblemInteger(IntegerProblem):
         self.number_of_choromosome = 150
 
         'Qmood: maximize    code ownership: maximize'
-        self.obj_directions=[self.MAXIMIZE,
-                             self.MAXIMIZE,
-                             self.MAXIMIZE,
-                             self.MAXIMIZE,
-                             self.MAXIMIZE,
-                             self.MAXIMIZE,
-                             self.MAXIMIZE,
-                             self.MAXIMIZE]
+        # self.obj_directions=[self.MAXIMIZE,
+        #                      self.MAXIMIZE,
+        #                      self.MAXIMIZE,
+        #                      self.MAXIMIZE,
+        #                      self.MAXIMIZE,
+        #                      self.MAXIMIZE,
+        #                      self.MAXIMIZE,
+        #                      self.MAXIMIZE]
+        self.obj_directions=[self.MINIMIZE,
+                             self.MINIMIZE,
+                             self.MINIMIZE,
+                             self.MINIMIZE,
+                             self.MINIMIZE,
+                             self.MINIMIZE,
+                             self.MINIMIZE,
+                             self.MINIMIZE]
         self.obj_labels=['Effectiveness',
                          'Extendibility',
                          'Flexibility',
