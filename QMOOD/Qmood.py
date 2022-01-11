@@ -43,6 +43,8 @@ class Qmood():
     def calculateQmood(self,jClassList):
         'obtain metrics for all classes and calculate the average value '
         sDSC, sNOH, sANA, sDAM, sDCC, sCAM, sMOA, sMFA, sNOP, sCIS, sNOM = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        NOP_not0_count = 0
+        NOM_not0_count = 0
         for each in jClassList:
             sDSC+=DSC(jClassList)
             sNOH+=NOH(jClassList)
@@ -52,9 +54,17 @@ class Qmood():
             sCAM+=CAM(each)
             sMOA+=MOA(each,jClassList)
             sMFA+=MFA(each)
-            sNOP+=NOP(each)
+            # sNOP+=NOP(each)
+            curNOP = NOP(each)
+            if curNOP!=0:
+                sNOP+=curNOP
+                NOP_not0_count+=1
             sCIS+=CIS(each)
-            sNOM+=NOM(each)
+            # sNOM=NOM(each)
+            curNOM = NOM(each)
+            if curNOM!=0:
+                sNOM+=curNOM
+                NOM_not0_count+=1
         lenJCL=len(jClassList)
         self.DSC=sDSC/lenJCL
         self.NOH=sNOH/lenJCL
@@ -64,11 +74,11 @@ class Qmood():
         self.CAM=sCAM/lenJCL
         self.MOA=sMOA/lenJCL
         self.MFA=sMFA/lenJCL
-        self.NOP=sNOP/lenJCL
+        self.NOP=sNOP/NOP_not0_count
         self.CIS=sCIS/lenJCL
-        self.NOM=sNOM/lenJCL
+        self.NOM=sNOM/NOM_not0_count
 
-        # print(self.DSC,self.NOH,self.ANA,self.DAM,self.DCC,self.CAM,self.MOA,self.MFA,self.NOP,self.CIS,self.NOM)
+        print("DSC:{},NOH:{},ANA:{},DAM:{},DCC:{},CAM:{},MOA:{},MFA:{},NOP:{},CIS:{},NOM:{}".format(self.DSC,self.NOH,self.ANA,self.DAM,self.DCC,self.CAM,self.MOA,self.MFA,self.NOP,self.CIS,self.NOM))
 
         self.Resusability = -0.25*self.DCC+0.25*self.CAM+0.5*self.CIS+0.5*self.DSC
         self.Flexibility = 0.25*self.DAM-0.25*self.DCC+0.5*self.MOA+0.5*self.NOP
