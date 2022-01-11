@@ -74,8 +74,12 @@ class Qmood():
         self.CAM=sCAM/lenJCL
         self.MOA=sMOA/lenJCL
         self.MFA=sMFA/lenJCL
+        if NOP_not0_count==0:
+            NOP_not0_count=1
         self.NOP=sNOP/NOP_not0_count
         self.CIS=sCIS/lenJCL
+        if NOM_not0_count==0:
+            NOM_not0_count=1
         self.NOM=sNOM/NOM_not0_count
 
         print("DSC:{},NOH:{},ANA:{},DAM:{},DCC:{},CAM:{},MOA:{},MFA:{},NOP:{},CIS:{},NOM:{}".format(self.DSC,self.NOH,self.ANA,self.DAM,self.DCC,self.CAM,self.MOA,self.MFA,self.NOP,self.CIS,self.NOM))
