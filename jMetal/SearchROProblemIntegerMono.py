@@ -7,7 +7,7 @@ from RefactoringOperation.RefactoringOperationDispatcher import dispatch
 from QMOOD.Qmood import Qmood
 import copy
 
-class MonoObjectiveRS(IntegerProblem):
+class SearchROProblemIntegerMono(IntegerProblem):
     def __init__(self,projectInfo,repoPath):
         '''
         set basic parameters and encode current project
@@ -15,7 +15,7 @@ class MonoObjectiveRS(IntegerProblem):
         :param repository: repository of project being processed, used to do code ownership related manipulation,
         should be a entity of class Repository
         '''
-        super(MonoObjectiveRS,self).__init__()
+        super(SearchROProblemIntegerMono,self).__init__()
         "8 objectives: QMOOD 6 metrics + highest ownership+# of commiters"
         # self.number_of_objectives = 8
         self.number_of_objectives = 1
