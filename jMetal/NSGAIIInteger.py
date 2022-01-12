@@ -48,8 +48,8 @@ algorithm = NSGAII(
     problem=problem,
     population_size=50,
     offspring_population_size=50,
-    mutation=IntegerPolynomialMutation(probability=1.0/problem.number_of_variables),
-    crossover=IntegerSBXCrossover(probability=1.0),
+    mutation=IntegerPolynomialMutation(probability=0.15),
+    crossover=IntegerSBXCrossover(probability=0.8),
     termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
 )
 # algorithm.observable.register(observer=PlotFrontToFileObserver('dynamic_front_vis'))

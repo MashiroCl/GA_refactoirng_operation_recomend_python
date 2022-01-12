@@ -25,7 +25,7 @@ class SearchROProblemInteger(IntegerProblem):
         "No contraints"
         self.number_of_constraints = 0
         "number of chromosome"
-        self.number_of_choromosome = 50
+        self.number_of_choromosome = 100
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
