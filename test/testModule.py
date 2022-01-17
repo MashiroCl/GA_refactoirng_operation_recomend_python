@@ -336,6 +336,3 @@ def testDispatch():
 #     jClist.append(jClass(load=each))
 # print(len(jClist))
 # print(jClist[0].getMethod()[0])
-fileList=["1.3","3.1","1.2.2","3.4.7"]
-fileList.sort(key = lambda s:s.split(".")[-1])
-print(fileList)
