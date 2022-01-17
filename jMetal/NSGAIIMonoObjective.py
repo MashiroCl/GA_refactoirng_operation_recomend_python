@@ -1,16 +1,16 @@
-from jmetal.algorithm.singleobjective.genetic_algorithm import GeneticAlgorithm
 import sys
 sys.path.append('../')
+from jmetal.algorithm.singleobjective.genetic_algorithm import GeneticAlgorithm
 from jmetal.operator import IntegerPolynomialMutation
 from jmetal.operator.crossover import IntegerSBXCrossover
 from jmetal.util.solution import get_non_dominated_solutions, print_function_values_to_file, print_variables_to_file
-from jmetal.algorithm.multiobjective import NSGAII
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from utils import readJson
 from Jxplatform2.jClass import jClass
-from monoObjectiveRS import MonoObjectiveRS
+from SearchROProblemIntegerMono import SearchROProblemIntegerMono
 from jmetal.lab.visualization import Plot,InteractivePlot
 from jmetal.util.observer import WriteFrontToFileObserver,BasicObserver
+from jmetal.operator.selection import BinaryTournamentSelection
 
 repoName = sys.argv[1]
 max_evaluations = sys.argv[2]
@@ -37,7 +37,7 @@ for each in load:
     jClist.append(jClass(load=each))
 # print(jClist)
 
-problem = MonoObjectiveRS(jClist,repoPath)
+problem = SearchROProblemIntegerMono(jClist,repoPath)
 
 # max_evaluations=5000
 algorithm = GeneticAlgorithm(
@@ -46,6 +46,7 @@ algorithm = GeneticAlgorithm(
     offspring_population_size=50,
     mutation=IntegerPolynomialMutation(probability=1.0/problem.number_of_variables),
     crossover=IntegerSBXCrossover(probability=1.0),
+    selection = BinaryTournamentSelection,
     termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
 )
 algorithm.observable.register(observer=BasicObserver())

@@ -18,7 +18,7 @@ if __name__ == '__main__':
         mutation=IntegerPolynomialMutation(probability=0.5),
         crossover=IntegerSBXCrossover(probability=0.5),
         selection=BinaryTournamentSelection(),
-        termination_criterion=StoppingByEvaluations(max_evaluations=5*10)
+        termination_criterion=StoppingByEvaluations(max_evaluations=5*100)
     )
 
     algorithm.run()

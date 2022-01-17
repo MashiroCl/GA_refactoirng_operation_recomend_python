@@ -7,5 +7,10 @@ jMetal/FrontData
 jMetal/NSGAII.eps
 jMetal/solutionObjectives.txt
 Visiualize/.ipynb_checkpoints
+Visiualize/test_Plot.py
 ResultGraph
 .gitignore
+*.pyc
+*.DS_Store
+CodeOwnership/test_PullRequestService.py
+
