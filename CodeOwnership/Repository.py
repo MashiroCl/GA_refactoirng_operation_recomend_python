@@ -1,16 +1,18 @@
-from CodeOwnership.File import File
+from File import File
 import glob
 import csv
 from utils import create_folder
+from os.path import join
 class Repository():
     def __init__(self,path:str):
         self.path=path
         self.name=path.split("/")[-1]
-        self.files=[]
+        self.files=list()
+        # self.files = [each for each in glob.glob(self.path+'/**/*.java',recursive=True)]
         self.csvPath=""
         self._findJavaFiles()
 
-    def _findJavaFiles(self)->list:
+    def _findJavaFiles(self):
         '''
         find all .java files in current directory
         :return:
@@ -18,6 +20,7 @@ class Repository():
         javaFiles=glob.glob(self.path+'/**/*.java',recursive=True)
         for each in javaFiles:
             self.files.append(File(each))
+        return self
 
     def countAuthorCommit(self,outputPath:str):
         '''
@@ -26,44 +29,43 @@ class Repository():
         :param outputPath:
         :return:
         '''
-        create_folder(outputPath)
         for each in self.files:
-            each.getCommit(outputPath)
-            each.json2Commit()
-            each.countAuthorCommitDict()
-            # each.commitAuthorCount()
-            # each.commitAuthorRatio()
+            each.logCommit(outputPath).json2Commit().fillAuthorCommitDict()
 
-    @DeprecationWarning
-    def writeCSV(self,outputPath:str):
+        return self
+
+    def authorCommitDict2CSV(self, csvPath:str, csvName:str):
         '''
         wirte extraction info of all files into a csv file
         :param outputPath: output path for csv file
         :return:
         '''
+        create_folder(csvPath)
+        csvPath=join(csvPath,csvName)
         result=[]
         for eachFile in self.files:
-            for each2 in eachFile.authorCommitDictRatio:
+            for eachAuthor in eachFile.authorCommitDict:
                 temp = []
                 temp.append(eachFile.path)
                 temp.append(eachFile.name)
-                temp.append(each2)
-                temp.append(eachFile.authorCommitDictRatio[each2])
-                temp.append(eachFile.authorCommitDict[each2])
+                temp.append(eachAuthor)
+                temp.append(float(len(eachFile.authorCommitDict[eachAuthor]))/float(eachFile.commitNum))
+                temp.append(len(eachFile.authorCommitDict[eachAuthor]))
                 temp.append(eachFile.commitNum)
                 result.append(temp)
-        csvPath=str(outputPath+"/"+self.name+".csv")
         with open(csvPath,"w") as csvfile:
             writer=csv.writer(csvfile)
             writer.writerow(["File Path","File Name","Author Name","Ownership","commits","total commits"])
             writer.writerows(result)
         self.csvPath=csvPath
 
-    @DeprecationWarning
     def _getCSVLine(self,filePath:str)->list:
-        with open(self.csvPath) as f:
-            reader=csv.reader(f)
-            rows=[row for row in reader]
+        try:
+            with open(self.csvPath) as f:
+                reader=csv.reader(f)
+                rows=[row for row in reader]
+        except FileNotFoundError:
+            print("No such file as {}".format(filePath))
         result=[]
         for each in rows[1:]:
             if each[0]==filePath:
@@ -82,13 +84,26 @@ class Repository():
             if each[2]==name:
                 return each[3]
         return 0
+
     def getContribution(self,filePath:str,name:str)->int:
+        '''
+        return number of commit $name commits in file $filePath
+        :param filePath:
+        :param name:
+        :return:
+        '''
         lists=self._getCSVLine(filePath)
         for each in lists:
             if each[2]==name:
                 return each[4]
         return 0
+
     def getTotalCommits(self,filePath:str)->int:
+        '''
+        return total number of commits in file $filePath
+        :param filePath:
+        :return:
+        '''
         lists=self._getCSVLine(filePath)
         return lists[0][5]
 
@@ -110,24 +125,4 @@ class Repository():
                         aCD[eachCommiter] = eachFile.authorCommitDict[eachCommiter]
         return  aCD
 
-if __name__=="__main__":
-    path="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
-    outputPath="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/outputTest"
-    repo=Repository(path)
-    repo.countAuthorCommit(outputPath=outputPath)
-    repo.writeCSV("/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/csv")
-    filePath1="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/src/test/java/net/engio/mbassy/common/MessageManager.java"
-    filePath2="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/src/test/java/net/engio/mbassy/common/AssertSupport.java"
-    result = repo.getHighestOwnership(filePath1,filePath2)
-    result2 = repo.getNumOfCommiters(filePath1,filePath2)
-    print(result)
-    print(result2)
-    '''
-    user输入名字，存储到solution中作为一个值solution.user
-    然后RO涉及到的两个文件中是否有solution.user对应的ownership
-        有的话就在evaluation里当一个值,
-        没有的话就是0
-    
-    class jClass里需要有java文件路径信息
-    
-    '''
+
