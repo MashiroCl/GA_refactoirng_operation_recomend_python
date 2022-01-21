@@ -46,6 +46,12 @@ class DeveloperGraph():
                 value = self.calculate_edges(i,each_pull_request)
                 'update both developer edge value'
                 self.update(value,each_pull_request.proposer,each_pull_request.commentators[i])
+        'for relationship between authour and him/herself, set the highest value that appears in self.vertices'
+        maximum =0
+        for each in self.vertices:
+            maximum = max(max(self.vertices[each].values()),maximum)
+        for each in self.vertices:
+            self.vertices[each][each] = maximum
 
         return self
 
