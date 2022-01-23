@@ -100,7 +100,8 @@ def CAM(jc):
             numerator=numerator+len(getArgsTypes(each))
             denominator=denominator+len(types)
     if(denominator==0):
-        denominator=1
+        denominator = 1
+        numerator = 1
     CAM=numerator/denominator
     return CAM
 
@@ -153,7 +154,7 @@ def MFA(jc):
     cNumofMeth=getNumOfMethods(jc)
 
     if(cNumofMeth+pNumOfMeth==0):
-        result=0
+        result=1
     else:
         result=pNumOfMeth/(cNumofMeth+pNumOfMeth)
     # print(jc.getClassName())
