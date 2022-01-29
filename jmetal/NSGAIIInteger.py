@@ -23,7 +23,7 @@ platform = sys.argv[3]
 
 if platform == "1":
     'Local'
-    max_evaluations = 20
+    max_evaluations = 1000
     repoName = "mbassador"
     jsonFile = "/Users/leichen/Desktop/" +repoName +".json"
     repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
@@ -51,8 +51,8 @@ problem = SearchROProblemInteger(jClist,repoPath,developerGraph)
 # max_evaluations=5000
 algorithm = NSGAII(
     problem=problem,
-    population_size=10,
-    offspring_population_size=1,
+    population_size=100,
+    offspring_population_size=100,
     mutation=IntegerPolynomialMutation(probability=0.5),
     crossover=IntegerSBXCrossover(probability=1),
     termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))

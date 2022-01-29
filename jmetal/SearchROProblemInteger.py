@@ -26,7 +26,7 @@ class SearchROProblemInteger(IntegerProblem):
         "No contraints"
         self.number_of_constraints = 0
         "number of chromosome"
-        self.number_of_refactorings = 1
+        self.number_of_refactorings = 10
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
@@ -53,11 +53,14 @@ class SearchROProblemInteger(IntegerProblem):
         self.developerGraph = developerGraph
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
+        projectInfo = copy.deepcopy(self.projectInfo)
+        self.integerEncoding.encoding(projectInfo)
+
         'Decode and execute'
         decodedIntegerSequences = self.integerEncoding.decoding(solution.variables)
         "Execute corressponding refactoring operations"
 
-        projectInfo = copy.deepcopy(self.projectInfo)
+
         for each in decodedIntegerSequences:
             dispatch(each["ROType"].value)(each, projectInfo)
 
@@ -67,21 +70,9 @@ class SearchROProblemInteger(IntegerProblem):
         minus = -1
         qmood_metrics_list = ["Effectiveness", "Extendibility", "Flexibility", "Functionality", "Resusability",
                               "Understandability"]
-        qmood_metrics_list = ["Resusability"]
+        # qmood_metrics_list = ["Resusability"]
 
-        print(solution.variables,end=" ")
-        code_quality = 0
-        for i in range(len(qmood_metrics_list)):
-            if i==0:
-                code_quality += -1*(qmood_metrics_value[qmood_metrics_list[i]]-self.initial_objectives[qmood_metrics_list[i]])
-            else:
-                code_quality += -1*0.01*(qmood_metrics_value[qmood_metrics_list[i]]-self.initial_objectives[qmood_metrics_list[i]])
-
-        # print([-1*(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
-        # print(minus * sum([qmood_metrics_value[metric] - self.initial_objectives[metric] for metric in qmood_metrics_list]))
-
-        # solution.objectives[0] = minus * sum([(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
-        # solution.objectives[0] = minus * (qmood_metrics_value["Understandability"] - self.initial_objectives["Understandability"])
+        code_quality = minus * sum([(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
 
         print(code_quality)
         solution.objectives[0] = code_quality

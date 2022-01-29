@@ -17,9 +17,7 @@ class MyTestCase(unittest.TestCase):
             jClist.append(jClass(load=each))
         self.projectInfo = jClist
         repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
-
         self.integerEncoding = IntegerEncoding()
-        self.integerEncoding.encoding(self.projectInfo)
 
     def test_MoveMethod(self):
         self.encoding()
@@ -35,18 +33,11 @@ class MyTestCase(unittest.TestCase):
 
     def test_MoveField(self):
         self.encoding()
-        decodedIntegerSequences = self.integerEncoding.decoding([3,1,2,0,3,1,2,1])
-        for each in decodedIntegerSequences:
-            print(each)
-
         projectInfo = copy.deepcopy(self.projectInfo)
-        self.integerEncoding.encoding(projectInfo)
-        decodedIntegerSequences = self.integerEncoding.decoding([3,1,2,0,3,1,2,1])
-        for each in decodedIntegerSequences:
-            print(each)
 
-        print(projectInfo[0])
-        print(self.projectInfo[0])
+        self.integerEncoding.encoding(projectInfo)
+        decodedIntegerSequences = self.integerEncoding.decoding([3,1,2,0])
+
         for each in decodedIntegerSequences:
             dispatch(each["ROType"].value)(each, projectInfo)
 
@@ -54,6 +45,9 @@ class MyTestCase(unittest.TestCase):
         print([each for each in self.projectInfo[0].getField()])
         print(self.projectInfo[1].getClass())
         print([each for each in self.projectInfo[1].getField()])
+
+        self.assertEqual(list(),[each for each in self.projectInfo[1].getField()])
+        self.assertEqual("['2#runtime@java.lang.Runtime']",str([each for each in projectInfo[1].getField()]))
         # self.assertEqual("['2#runtime@java.lang.Runtime']",str([each for each in self.projectInfo[1].getField()]))
 
     def test_RefactoringOperaations(self):
