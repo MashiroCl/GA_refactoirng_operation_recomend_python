@@ -1,4 +1,4 @@
-from PullRequestService import PullRequest
+from code_ownership.PullRequestService import PullRequest
 from typing import List
 from datetime import date
 

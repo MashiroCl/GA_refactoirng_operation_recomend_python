@@ -1,9 +1,9 @@
 from jmetal.core.problem import BinaryProblem
 from jmetal.core.solution import BinarySolution
-from Encoding.BinaryEncoding import BinaryEncoding
-from RefactoringOperation.RefactoringOperationDispatcher import dispatch
-from QMOOD.Qmood import Qmood
-from CodeOwnership.CodeOwnership import CodeOwnership
+from encoding.BinaryEncoding import BinaryEncoding
+from refactoring_operation.RefactoringOperationDispatcher import dispatch
+from qmood.Qmood import Qmood
+from code_ownership.CodeOwnership import CodeOwnership
 import random
 
 class SearchROProblemBinary(BinaryProblem):

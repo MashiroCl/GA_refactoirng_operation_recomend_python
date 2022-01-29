@@ -1,4 +1,4 @@
-from File import File
+from code_ownership.File import File
 import glob
 import csv
 from utils import create_folder

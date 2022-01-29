@@ -1,4 +1,4 @@
-from Repository import Repository
+from code_ownership.Repository import Repository
 import os
 
 class CodeOwnership:
@@ -8,9 +8,9 @@ class CodeOwnership:
         self.commitOutputPath = os.path.join(self.repoPath,"MORCOoutput")
         self.csvOutputPath = os.path.join(self.repoPath,"MORCOoutput","csv")
         self.csvName = "ownership.csv"
-        self.authorSet = set()
+        self.authorPairList = list()
 
-    def findAuthorSet(self, decodedBinarySequences):
+    def findAuthorPairList(self, decodedBinarySequences):
         '''
         author set is like {{dev1,dev2},{dev2,dev3}}
         one set of 2 developers are the developer who owns the highest ownership for files on which refactoring is applied to
@@ -28,12 +28,11 @@ class CodeOwnership:
                 pass
         with open(os.path.join(self.csvOutputPath,self.csvName)) as f:
             lines = f.readlines()
+        lines = [each.split(",") for each in lines]
         i = 0
-        while i < range(len(filePaths)-1):
+        while i < len(filePaths)-1:
             relatedDeveloper = [self._findHighest(filePaths[i], lines), self._findHighest(filePaths[i + 1], lines)]
-            'sort to count [A,B] & [B,A] as the same one to avoid duplicate calculation when calculating relationship'
-            relatedDeveloper.sort()
-            self.authorSet.add(tuple(relatedDeveloper))
+            self.authorPairList.append(relatedDeveloper)
             i = i + 2
         return self
 
@@ -43,8 +42,9 @@ class CodeOwnership:
         :param filePath:
         :return:
         '''
-        candidates = [each for each in ownershipLines if each[0]==filePath]
-        return candidates.sort(key=lambda x:x[2])[0][2]
+        candidates = [each for each in ownershipLines if each[0].strip()==filePath.strip()]
+        candidates.sort(key=lambda x: x[2])
+        return candidates[0][2]
 
 
     def calculateRelationship(self, developerGraph):
@@ -55,14 +55,14 @@ class CodeOwnership:
         :return:
         '''
         relationship = 0
-        for each in self.authorSet:
+        for each in self.authorPairList:
             developerA = each[0]
             developerB = each[1]
             if developerA in developerGraph.vertices.keys():
                 if developerB in developerGraph.vertices[developerA].keys():
                     relationship += developerGraph.vertices[developerA][developerB]
 
-        return relationship/len(self.authorSet)
+        return relationship/(len(self.authorPairList) if len(self.authorPairList)!=0 else 1)
 
 
 

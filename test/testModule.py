@@ -1,16 +1,16 @@
-from Jxplatform2.jClass import jClass
+from jxplatform2.jClass import jClass
 from utils import readJson
-from QMOOD.metricCalculation import *
+from qmood.metricCalculation import *
 from executeRO import ExecuteRO
-from jMetal.Solution import Solution
-from QMOOD.Qmood import Qmood
-from Encoding import Encoding
-from jMetal.SearchROProblemBinary import SearchROProblemBinary
-from Encoding.BinaryEncoding import BinaryEncoding
-from Encoding.BinaryROTypeDict import ROTypeDict
-from RefactoringOperation.RefactoringOperationEnum import *
-from RefactoringOperation.RefactoringOperationDispatcher import *
-from CodeOwnership.Repository import Repository
+from jmetal.Solution import Solution
+from qmood.Qmood import Qmood
+from encoding import Encoding
+from jmetal.SearchROProblemBinary import SearchROProblemBinary
+from encoding.BinaryEncoding import BinaryEncoding
+from encoding.BinaryROTypeDict import ROTypeDict
+from refactoring_operation.RefactoringOperationEnum import *
+from refactoring_operation.RefactoringOperationDispatcher import *
+from code_ownership.Repository import Repository
 def test_jClass():
     jsonFileRTE="/Users/leichen/Code/jxplatform2Json/RTE.json"
     jsonFileRTE="/Users/leichen/Desktop/res.json"
@@ -336,3 +336,4 @@ def testDispatch():
 #     jClist.append(jClass(load=each))
 # print(len(jClist))
 # print(jClist[0].getMethod()[0])
+print(-1*[0.0007956597480072158, -0.009292397124675555, -0.0032199862463240803, -0.00540425914667253, -0.01568925296905377, -0.019112094498495935])

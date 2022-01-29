@@ -1,4 +1,4 @@
-from RefactoringOperation.RefactoringOperationEnum import RefactoringOperationEnum
+from refactoring_operation.RefactoringOperationEnum import RefactoringOperationEnum
 class IntegerEncoding():
     def __init__(self):
         self.chromosomeLen=4

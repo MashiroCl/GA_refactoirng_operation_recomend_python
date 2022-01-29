@@ -1,7 +1,7 @@
 from jmetal.core.problem import BinaryProblem
 from jmetal.core.solution import BinarySolution
 from Solution import Solution, MoveMethod
-from QMOOD.Qmood import Qmood
+from qmood.Qmood import Qmood
 import random
 
 #a binary array representing whethever the ith element of one RO is selected or not?

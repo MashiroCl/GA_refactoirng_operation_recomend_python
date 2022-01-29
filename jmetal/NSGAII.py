@@ -3,7 +3,7 @@ from jmetal.algorithm.multiobjective import NSGAII
 from jmetal.operator import BitFlipMutation,SPXCrossover
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from utils import readJson
-from Jxplatform2.jClass import jClass
+from jxplatform2.jClass import jClass
 from SearchROProblemBinary import SearchROProblemBinary
 from jmetal.lab.visualization import Plot,InteractivePlot
 

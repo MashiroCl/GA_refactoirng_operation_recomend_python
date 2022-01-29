@@ -1,7 +1,7 @@
 import csv
 from DeveloperGraph import DeveloperGraph
 from PullRequestService import PullRequestService
-from CodeOwnership import CodeOwnership
+from code_ownership import CodeOwnership
 
 class CSVoperation:
     '''

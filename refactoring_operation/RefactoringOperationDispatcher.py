@@ -1,5 +1,5 @@
-from RefactoringOperation.RefactoringOperationEnum import RefactoringOperationEnum
-from RefactoringOperation.RefactoringOperations import *
+from refactoring_operation.RefactoringOperationEnum import RefactoringOperationEnum
+from refactoring_operation.RefactoringOperations import *
 
 def dispatch(index:int):
     return {

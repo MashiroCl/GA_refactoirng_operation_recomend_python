@@ -4,11 +4,11 @@ from jmetal.algorithm.multiobjective import NSGAII
 from jmetal.operator import BitFlipMutation,SPXCrossover
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from utils import readJson
-from Jxplatform2.jClass import jClass
-from RefactoringOperation import Solution
-from CodeOwnership.Repository import Repository
+from jxplatform2.jClass import jClass
+from refactoring_operation import Solution
+from code_ownership.Repository import Repository
 
-from Jxplatform2.Jxplatform2 import Jxplatform2
+from jxplatform2.Jxplatform2 import Jxplatform2
 
 'use Jxplatform2 extract repository'
 j = "/Users/leichen/Code/pythonProject/pythonProject/salabResearch/Jxplatform2/JxplatformExtract.jar"

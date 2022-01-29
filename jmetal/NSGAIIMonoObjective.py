@@ -6,7 +6,7 @@ from jmetal.operator.crossover import IntegerSBXCrossover
 from jmetal.util.solution import get_non_dominated_solutions, print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from utils import readJson
-from Jxplatform2.jClass import jClass
+from jxplatform2.jClass import jClass
 from SearchROProblemIntegerMono import SearchROProblemIntegerMono
 from jmetal.lab.visualization import Plot,InteractivePlot
 from jmetal.util.observer import WriteFrontToFileObserver,BasicObserver
