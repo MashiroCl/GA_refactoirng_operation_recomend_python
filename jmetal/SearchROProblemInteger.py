@@ -1,11 +1,11 @@
 from jmetal.core.problem import IntegerProblem
 from jmetal.core.solution import IntegerSolution
 import random
-from CodeOwnership.CodeOwnership import CodeOwnership
+from code_ownership.CodeOwnership import CodeOwnership
 
-from Encoding.IntegerEncoding import IntegerEncoding
-from RefactoringOperation.RefactoringOperationDispatcher import dispatch
-from QMOOD.Qmood import Qmood
+from encoding.IntegerEncoding import IntegerEncoding
+from refactoring_operation.RefactoringOperationDispatcher import dispatch
+from qmood.Qmood import Qmood
 import copy
 
 class SearchROProblemInteger(IntegerProblem):
@@ -18,7 +18,7 @@ class SearchROProblemInteger(IntegerProblem):
         '''
         super(SearchROProblemInteger,self).__init__()
         "8 objectives: QMOOD 6 metrics + highest ownership+# of commiters"
-        self.number_of_objectives = 1
+        self.number_of_objectives = 2
         # self.number_of_objectives = 6
         "4 variables decide a refactoring operation"
         self.number_of_variables = 4
@@ -67,29 +67,29 @@ class SearchROProblemInteger(IntegerProblem):
         minus = -1
         qmood_metrics_list = ["Effectiveness", "Extendibility", "Flexibility", "Functionality", "Resusability",
                               "Understandability"]
-        # qmood_metrics_list = ["Resusability"]
+        qmood_metrics_list = ["Resusability"]
 
-        # print(solution.variables,end=" ")
-        # code_quality = 0
-        # for i in range(len(qmood_metrics_list)):
-        #     if i==0:
-        #         code_quality += -1*(qmood_metrics_value[qmood_metrics_list[i]]-self.initial_objectives[qmood_metrics_list[i]])
-        #     else:
-        #         code_quality += -1*0.01*(qmood_metrics_value[qmood_metrics_list[i]]-self.initial_objectives[qmood_metrics_list[i]])
+        print(solution.variables,end=" ")
+        code_quality = 0
+        for i in range(len(qmood_metrics_list)):
+            if i==0:
+                code_quality += -1*(qmood_metrics_value[qmood_metrics_list[i]]-self.initial_objectives[qmood_metrics_list[i]])
+            else:
+                code_quality += -1*0.01*(qmood_metrics_value[qmood_metrics_list[i]]-self.initial_objectives[qmood_metrics_list[i]])
 
         # print([-1*(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
         # print(minus * sum([qmood_metrics_value[metric] - self.initial_objectives[metric] for metric in qmood_metrics_list]))
 
-        solution.objectives[0] = minus * sum([(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
+        # solution.objectives[0] = minus * sum([(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
         # solution.objectives[0] = minus * (qmood_metrics_value["Understandability"] - self.initial_objectives["Understandability"])
 
-        # print(code_quality)
-        # solution.objectives[0] = code_quality
+        print(code_quality)
+        solution.objectives[0] = code_quality
 
         'calculate ownership on refactoring operations applied files'
-        # relationship = CodeOwnership(self.repoPath).findAuthorPairList(decodedIntegerSequences).calculateRelationship(self.developerGraph)
-        # solution.objectives[1] = minus * relationship
-        # solution.objectives[1] = 0
+        relationship = CodeOwnership(self.repoPath).findAuthorPairList(decodedIntegerSequences).calculateRelationship(self.developerGraph)
+        solution.objectives[1] = minus * relationship
+        solution.objectives[1] = 0
         return solution
 
     def create_solution(self) -> IntegerSolution:
