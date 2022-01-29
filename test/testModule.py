@@ -2,10 +2,10 @@ from jxplatform2.jClass import jClass
 from utils import readJson
 from qmood.metricCalculation import *
 from executeRO import ExecuteRO
-from jmetal.Solution import Solution
+from search_technique.Solution import Solution
 from qmood.Qmood import Qmood
 from encoding import Encoding
-from jmetal.SearchROProblemBinary import SearchROProblemBinary
+from search_technique.SearchROProblemBinary import SearchROProblemBinary
 from encoding.BinaryEncoding import BinaryEncoding
 from encoding.BinaryROTypeDict import ROTypeDict
 from refactoring_operation.RefactoringOperationEnum import *
