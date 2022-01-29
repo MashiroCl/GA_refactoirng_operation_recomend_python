@@ -1,7 +1,7 @@
-from Jxplatform2.jClass import jClass
-from Jxplatform2.jMethod import jMethod
+from jxplatform2.jClass import jClass
+from jxplatform2.jMethod import jMethod
 from utils import readJson
-from Encoding.Encoding import Encoding
+from encoding.Encoding import Encoding
 
 #represent refactoring operations
 class Solution():

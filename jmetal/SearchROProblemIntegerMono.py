@@ -1,10 +1,10 @@
 from jmetal.core.problem import IntegerProblem
 from jmetal.core.solution import IntegerSolution
 import random
-from CodeOwnership.CodeOwnership import  CodeOwnership
-from Encoding.IntegerEncoding import IntegerEncoding
-from RefactoringOperation.RefactoringOperationDispatcher import dispatch
-from QMOOD.Qmood import Qmood
+from code_ownership.CodeOwnership import  CodeOwnership
+from encoding.IntegerEncoding import IntegerEncoding
+from refactoring_operation.RefactoringOperationDispatcher import dispatch
+from qmood.Qmood import Qmood
 import copy
 
 class SearchROProblemIntegerMono(IntegerProblem):

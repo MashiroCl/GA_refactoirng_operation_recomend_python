@@ -1,4 +1,4 @@
-from RefactoringOperation.RefactoringOperationEnum import RefactoringOperationEnum
+from refactoring_operation.RefactoringOperationEnum import RefactoringOperationEnum
 class ROTypeDict():
     def __init__(self):
         self.ROTypeDict = {}
