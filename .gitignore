@@ -1,16 +1,18 @@
 .idea
 test
-jMetal/FUN.NSGAII.SearchRO
-jMetal/jmetalpy.log
-jMetal/VAR.NSGAII.SearchRO
-jMetal/FrontData
-jMetal/NSGAII.eps
-jMetal/solutionObjectives.txt
+jmetal/FUN.NSGAII.SearchRO
+jmetal/jmetalpy.log
+jmetal/VAR.NSGAII.SearchRO
+jmetal/FrontData
+jmetal/NSGAII.eps
+jmetal/solutionObjectives.txt
 Visiualize/.ipynb_checkpoints
 Visiualize/test_Plot.py
 ResultGraph
 .gitignore
 *.pyc
 *.DS_Store
-CodeOwnership/test_PullRequestService.py
+code_ownership/test_PullRequestService.py
+Visiualize/VisiualizeFront.ipynb
+
 

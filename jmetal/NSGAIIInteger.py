@@ -6,12 +6,12 @@ from jmetal.util.solution import get_non_dominated_solutions, print_function_val
 from jmetal.algorithm.multiobjective import NSGAII
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from utils import readJson
-from Jxplatform2.jClass import jClass
+from jxplatform2.jClass import jClass
 from SearchROProblemInteger import SearchROProblemInteger
 from jmetal.lab.visualization import Plot,InteractivePlot
 from jmetal.util.observer import WriteFrontToFileObserver,PlotFrontToFileObserver,ProgressBarObserver,BasicObserver
-from CodeOwnership.DeveloperGraph import DeveloperGraph
-from CodeOwnership.PullRequestService import PullRequestService
+from code_ownership.DeveloperGraph import DeveloperGraph
+from code_ownership.PullRequestService import PullRequestService
 
 'Read Jxplatform2 extraction result'
 # jsonFile = "/Users/leichen/Desktop/jedis.json"
@@ -23,7 +23,7 @@ platform = sys.argv[3]
 
 if platform == "1":
     'Local'
-    max_evaluations = 15000
+    max_evaluations = 20
     repoName = "mbassador"
     jsonFile = "/Users/leichen/Desktop/" +repoName +".json"
     repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
@@ -51,8 +51,8 @@ problem = SearchROProblemInteger(jClist,repoPath,developerGraph)
 # max_evaluations=5000
 algorithm = NSGAII(
     problem=problem,
-    population_size=150,
-    offspring_population_size=140,
+    population_size=10,
+    offspring_population_size=1,
     mutation=IntegerPolynomialMutation(probability=0.5),
     crossover=IntegerSBXCrossover(probability=1),
     termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
@@ -60,7 +60,7 @@ algorithm = NSGAII(
 
 algorithm.observable.register(observer=BasicObserver())
 algorithm.observable.register(observer=WriteFrontToFileObserver(
-    output_directory=outputPath+repoName+"/front2"))
+    output_directory=outputPath+repoName+"/front3"))
 algorithm.run()
 front = get_non_dominated_solutions(algorithm.get_result())
 # front = problem.front

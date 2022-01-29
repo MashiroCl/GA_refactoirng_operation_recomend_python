@@ -13,15 +13,15 @@ class Jxplatform2:
         os.system(command)
 
 if __name__ == "__main__":
-    repoName = sys.argv[1]
-    # j="/Users/leichen/Code/pythonProject/pythonProject/salabResearch/Jxplatform2/JxplatformExtract.jar"
+    # repoName = sys.argv[1]
+    j="/Users/leichen/Code/pythonProject/pythonProject/salabResearch/Jxplatform2/JxplatformExtract.jar"
     # j="/Users/leichen/Desktop/JxplatformExtract.jar"
-    j = "/home/chenlei/MORCO/MORCOpy/Jxplatform2/JxplatformExtract.jar"
-    # t="/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
+    # j = "/home/chenlei/MORCO/MORCOpy/Jxplatform2/JxplatformExtract.jar"
+    t="/Users/leichen/ResearchAssistant/InteractiveRebase/data/calen-chan"
     # t="/Users/leichen/ResearchAssistant/InteractiveRebase/data/ganttproject-1.10.2"
-    t="/home/chenlei/MORCO/data/"+repoName
+    # t="/home/chenlei/MORCO/data/"+repoName
     c=t
-    # outputPath="/Users/leichen/Desktop/ganttproject-1.10.2.json"
-    outputPath="/home/chenlei/MORCO/extractResult/"+repoName+".json"
+    outputPath="/Users/leichen/Desktop/calen.json"
+    # outputPath="/home/chenlei/MORCO/extractResult/"+repoName+".json"
     jx=Jxplatform2(j,t,c,outputPath)
     jx.extractInfo()
