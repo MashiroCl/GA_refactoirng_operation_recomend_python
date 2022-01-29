@@ -13,4 +13,6 @@ ResultGraph
 *.pyc
 *.DS_Store
 code_ownership/test_PullRequestService.py
+Visiualize/VisiualizeFront.ipynb
+
 
