@@ -8,18 +8,15 @@ from jmetal.util.termination_criterion import StoppingByEvaluations
 from utils import readJson
 from jxplatform2.jClass import jClass
 from SearchROProblemInteger import SearchROProblemInteger
-from jmetal.lab.visualization import Plot,InteractivePlot
-from jmetal.util.observer import WriteFrontToFileObserver,PlotFrontToFileObserver,ProgressBarObserver,BasicObserver
+from jmetal.util.observer import WriteFrontToFileObserver,BasicObserver
 from code_ownership.DeveloperGraph import DeveloperGraph
 from code_ownership.PullRequestService import PullRequestService
 
 'Read Jxplatform2 extraction result'
-# jsonFile = "/Users/leichen/Desktop/jedis.json"
-# repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
-# repoName = "ganttproject-1.10.2"
 repoName = sys.argv[1]
 max_evaluations = sys.argv[2]
 platform = sys.argv[3]
+
 
 if platform == "1":
     'Local'
@@ -28,12 +25,22 @@ if platform == "1":
     jsonFile = "/Users/leichen/Desktop/" +repoName +".json"
     repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
     outputPath = "/Users/leichen/Desktop/output"
+    # load developer relationship
+    relationshipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/pullrequest.csv"
+    res = PullRequestService().loadPullRequest(relationshipCsvPath)
+    developerGraph = DeveloperGraph(res).generate_vertices().build()
+    ownershipPath = ""
 
 elif platform == "2":
     'Server'
     jsonFile = "/home/chenlei/MORCO/extractResult/" + repoName + ".json"
     repoPath = "/home/chenlei/MORCO/data/" + repoName
     outputPath = "/home/chenlei/MORCO/output_all_objectives_positive/"
+    # load developer relationship
+    relationshipCsvPath = "/home/chenlei/MORCO/relationship/"+repoName+"/pullrequest.csv"
+    res = PullRequestService().loadPullRequest(relationshipCsvPath)
+    developerGraph = DeveloperGraph(res).generate_vertices().build()
+    ownershipPath = "/home/chenlei/MORCO/relationship/"+repoName+"/ownership.csv"
 
 #load repository class info
 load = readJson(jsonFile)
@@ -41,18 +48,13 @@ jClist = []
 for each in load:
     jClist.append(jClass(load=each))
 
-#load developer relationship
-relationshipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/pullrequest.csv"
-res = PullRequestService().loadPullRequest(relationshipCsvPath)
-developerGraph = DeveloperGraph(res).generate_vertices().build()
 
-problem = SearchROProblemInteger(jClist,repoPath,developerGraph)
+problem = SearchROProblemInteger(jClist,repoPath,developerGraph,ownershipPath)
 
-# max_evaluations=5000
 algorithm = NSGAII(
     problem=problem,
-    population_size=100,
-    offspring_population_size=100,
+    population_size=300,
+    offspring_population_size=300,
     mutation=IntegerPolynomialMutation(probability=0.5),
     crossover=IntegerSBXCrossover(probability=1),
     termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
@@ -60,13 +62,10 @@ algorithm = NSGAII(
 
 algorithm.observable.register(observer=BasicObserver())
 algorithm.observable.register(observer=WriteFrontToFileObserver(
-    output_directory=outputPath+repoName+"/front3"))
+    output_directory=outputPath+repoName+"/front"))
 algorithm.run()
 front = get_non_dominated_solutions(algorithm.get_result())
-# front = problem.front
-# for each in algorithm.get_result():
-#     front.append(each)
-#
+
 # save to files
 print_function_values_to_file(front, outputPath+repoName+'/FUN.NSGAII.SearchRO')
 print_variables_to_file(front, outputPath+repoName+'/VAR.NSGAII.SearchRO')

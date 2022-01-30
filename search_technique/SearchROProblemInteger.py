@@ -9,7 +9,7 @@ from qmood.Qmood import Qmood
 import copy
 
 class SearchROProblemInteger(IntegerProblem):
-    def __init__(self, projectInfo, repoPath, developerGraph):
+    def __init__(self, projectInfo, repoPath, developerGraph, ownershipPath):
         '''
         set basic parameters and encode current project
         :param projectInfo: project being processed, should be a list of jClass
@@ -32,14 +32,7 @@ class SearchROProblemInteger(IntegerProblem):
         self.obj_directions=[self.MAXIMIZE,
                              self.MAXIMIZE]
 
-        self.obj_labels=['Effectiveness',
-                         'Extendibility',
-                         'Flexibility',
-                         'Functionality',
-                         'Resusability',
-                         'Understandability',
-                         'HighestOwnership',
-                         'NumOfCommiters']
+        self.obj_labels=['Quality Gain','Relatioinship Score']
         self.projectInfo = projectInfo
         self.repoPath = repoPath
         self.integerEncoding = IntegerEncoding()
@@ -51,6 +44,7 @@ class SearchROProblemInteger(IntegerProblem):
                           self.integerEncoding.N]*self.number_of_refactorings
         self.initial_objectives = Qmood().calculateQmood(self.projectInfo)
         self.developerGraph = developerGraph
+        self.ownershipPath = ownershipPath
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
         projectInfo = copy.deepcopy(self.projectInfo)
@@ -70,17 +64,14 @@ class SearchROProblemInteger(IntegerProblem):
         minus = -1
         qmood_metrics_list = ["Effectiveness", "Extendibility", "Flexibility", "Functionality", "Resusability",
                               "Understandability"]
-        # qmood_metrics_list = ["Resusability"]
 
         code_quality = minus * sum([(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
 
-        print(code_quality)
         solution.objectives[0] = code_quality
 
         'calculate ownership on refactoring operations applied files'
-        relationship = CodeOwnership(self.repoPath).findAuthorPairList(decodedIntegerSequences).calculateRelationship(self.developerGraph)
+        relationship = CodeOwnership(self.ownershipPath).findAuthorPairList(decodedIntegerSequences).calculateRelationship(self.developerGraph)
         solution.objectives[1] = minus * relationship
-        solution.objectives[1] = 0
         return solution
 
     def create_solution(self) -> IntegerSolution:
