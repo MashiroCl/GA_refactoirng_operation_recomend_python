@@ -2,31 +2,34 @@ from code_ownership.Repository import Repository
 import os
 
 class CodeOwnership:
-    def __init__(self,repoPath):
+    '''
+    search author pair list according to decoded sequence
+    calculate relationship according to author pair list and developer graph
+    '''
+    def __init__(self, repoPath, ownershipCsvPath):
         self.repoPath = repoPath
         self.repo = Repository(self.repoPath)
-        self.commitOutputPath = os.path.join(self.repoPath,"MORCOoutput")
-        self.csvOutputPath = os.path.join(self.repoPath,"MORCOoutput","csv")
-        self.csvName = "ownership.csv"
+        self.ownershipCsvPath = ownershipCsvPath
         self.authorPairList = list()
 
-    def findAuthorPairList(self, decodedBinarySequences):
+    def findAuthorPairList(self, decodedSequences):
         '''
         author set is like {{dev1,dev2},{dev2,dev3}}
-        one set of 2 developers are the developer who owns the highest ownership for files on which refactoring is applied to
+        one set of 2 developers are the developers who own the highest ownership for the 2 files on which refactoring is applied to
         :param decodedBinarySequences:
         :return:
         '''
         filePaths = []
-        for decodedBinarySequence in decodedBinarySequences:
+        for decodedSequence in decodedSequences:
             try:
-                filePaths.append(decodedBinarySequence["class1"].getFilePath())
-                filePaths.append(decodedBinarySequence["class2"].getFilePath())
+                filePaths.append(decodedSequence["class1"].getFilePath())
+                filePaths.append(decodedSequence["class2"].getFilePath())
             except KeyError:
                 pass
             except TypeError:
                 pass
-        with open(os.path.join(self.csvOutputPath,self.csvName)) as f:
+        'find owner of the 2 files in ownership.csv'
+        with open(self.ownershipCsvPath) as f:
             lines = f.readlines()
         lines = [each.split(",") for each in lines]
         i = 0
@@ -61,12 +64,16 @@ class CodeOwnership:
             if developerA in developerGraph.vertices.keys():
                 if developerB in developerGraph.vertices[developerA].keys():
                     relationship += developerGraph.vertices[developerA][developerB]
-
         return relationship/(len(self.authorPairList) if len(self.authorPairList)!=0 else 1)
 
 
-
+    @DeprecationWarning
     def calculateOwnership(self, decodedBinarySequences):
+        '''
+        Warning: this method is no longer support, the calculation of ownership is useless
+        :param decodedBinarySequences:
+        :return:
+        '''
         filePath = []
         for decodedBinarySequence in decodedBinarySequences:
             try:
