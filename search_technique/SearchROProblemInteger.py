@@ -19,7 +19,6 @@ class SearchROProblemInteger(IntegerProblem):
         super(SearchROProblemInteger,self).__init__()
         "8 objectives: QMOOD 6 metrics + highest ownership+# of commiters"
         self.number_of_objectives = 2
-        # self.number_of_objectives = 6
         "4 variables decide a refactoring operation"
         self.number_of_variables = 4
         # todo: Research on what are contraints for

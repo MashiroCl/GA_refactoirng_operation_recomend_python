@@ -35,7 +35,7 @@ elif platform == "2":
     'Server'
     jsonFile = "/home/chenlei/MORCO/extractResult/" + repoName + ".json"
     repoPath = "/home/chenlei/MORCO/data/" + repoName
-    outputPath = "/home/chenlei/MORCO/output_all_objectives_positive/"
+    outputPath = "/home/chenlei/MORCO/output_temp/"
     # load developer relationship
     relationshipCsvPath = "/home/chenlei/MORCO/relationship/"+repoName+"/pullrequest.csv"
     res = PullRequestService().loadPullRequest(relationshipCsvPath)
