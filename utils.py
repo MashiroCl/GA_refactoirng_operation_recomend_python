@@ -1,13 +1,14 @@
 import json
 import os
-def create_folder(folder):
+def create_folder(folder, recreate = True):
     path=folder
     try:
         os.mkdir(path)
     except FileExistsError:
-        print("Folder " + folder + " already exists, Directory recreated")
-        os.system("rm -rf "+folder)
-        os.mkdir(path)
+        if recreate == True:
+            print("Folder " + folder + " already exists, Directory recreated")
+            os.system("rm -rf "+folder)
+            os.mkdir(path)
     return path
 
 def execute(command):

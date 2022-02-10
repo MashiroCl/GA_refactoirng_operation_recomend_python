@@ -112,7 +112,9 @@ class CodeOwnership:
 
 if __name__=="__main__":
     repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
+    csvPath = os.path.join(repoPath, "MORCOoutput","ownership.csv")
     commitOutputPath = os.path.join(repoPath, "MORCOoutput")
     csvOutputPath = os.path.join(repoPath, "MORCOoutput", "csv")
     csvName = "ownership.csv"
-    Repository(repoPath).countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName)
+    localPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
+    Repository(repoPath).countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName,localPath)

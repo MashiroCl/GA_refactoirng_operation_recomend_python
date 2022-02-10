@@ -34,19 +34,21 @@ class Repository():
 
         return self
 
-    def authorCommitDict2CSV(self, csvPath:str, csvName:str):
+    def authorCommitDict2CSV(self, csvPath:str, csvName:str, localPath:str):
         '''
         wirte extraction info of all files into a csv file
         :param outputPath: output path for csv file
+        :param localPath: parent path for repo path
         :return:
         '''
-        create_folder(csvPath)
+        create_folder(csvPath,False)
         csvPath=join(csvPath,csvName)
         result=[]
         for eachFile in self.files:
             for eachAuthor in eachFile.authorCommitDict:
                 temp = []
-                temp.append(eachFile.path)
+                'exclude path on my local computer'
+                temp.append(eachFile.path.split(localPath)[1])
                 temp.append(eachFile.name)
                 temp.append(eachAuthor)
                 temp.append(float(len(eachFile.authorCommitDict[eachAuthor]))/float(eachFile.commitNum))
