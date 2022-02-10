@@ -9,6 +9,9 @@ class jMethod:
             if "LOCAL: " in each:
                 self.parameter.append(each.split("LOCAL: ")[1])
 
+    def __repr__(self):
+        return self.method
+
     def getModifier(self):
         return self.modifier
     def getName(self):
