@@ -29,7 +29,7 @@ if platform == "1":
     relationshipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/pullrequest.csv"
     res = PullRequestService().loadPullRequest(relationshipCsvPath)
     developerGraph = DeveloperGraph(res).generate_vertices().build()
-    ownershipPath = ""
+    ownershipPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName +"/MORCOoutput/csv/ownership.csv"
 
 elif platform == "2":
     'Server'
@@ -46,8 +46,9 @@ elif platform == "2":
 load = readJson(jsonFile)
 jClist = []
 for each in load:
-    jClist.append(jClass(load=each))
-
+    javaClass = jClass(each)
+    if not javaClass.testClass:
+        jClist.append(javaClass)
 
 problem = SearchROProblemInteger(jClist,repoPath,developerGraph,ownershipPath)
 
