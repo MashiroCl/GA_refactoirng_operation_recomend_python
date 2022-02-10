@@ -2,21 +2,20 @@ from jmetal.core.problem import IntegerProblem
 from jmetal.core.solution import IntegerSolution
 import random
 from code_ownership.CodeOwnership import CodeOwnership
-
 from encoding.IntegerEncoding import IntegerEncoding
 from refactoring_operation.RefactoringOperationDispatcher import dispatch
 from qmood.Qmood import Qmood
 import copy
+
 
 class SearchROProblemInteger(IntegerProblem):
     def __init__(self, projectInfo, repoPath, developerGraph, ownershipPath):
         '''
         set basic parameters and encode current project
         :param projectInfo: project being processed, should be a list of jClass
-        :param repository: repository of project being processed, used to do code ownership related manipulation,
         should be an entity of class Repository
         '''
-        super(SearchROProblemInteger,self).__init__()
+        super(SearchROProblemInteger, self).__init__()
         "8 objectives: QMOOD 6 metrics + highest ownership+# of commiters"
         self.number_of_objectives = 2
         "4 variables decide a refactoring operation"
@@ -69,8 +68,9 @@ class SearchROProblemInteger(IntegerProblem):
         solution.objectives[0] = code_quality
 
         'calculate ownership on refactoring operations applied files'
-        relationship = CodeOwnership(self.ownershipPath).findAuthorPairList(decodedIntegerSequences).calculateRelationship(self.developerGraph)
+        relationship = CodeOwnership(self.repoPath,self.ownershipPath).findAuthorPairList(decodedIntegerSequences).calculateRelationship(self.developerGraph)
         solution.objectives[1] = minus * relationship
+
         return solution
 
     def create_solution(self) -> IntegerSolution:
