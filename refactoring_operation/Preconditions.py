@@ -51,7 +51,7 @@ def pushDownMethodPreCondition(decodedBinarySequence,projectInfo):
     '''
     if decodedBinarySequence["class1method"] not in decodedBinarySequence["class1"].getMethod():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
+    if decodedBinarySequence["class1"]["className"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
@@ -65,7 +65,7 @@ def pushDownFieldPreCondition(decodedBinarySequence,projectInfo):
     '''
     if decodedBinarySequence["class1field"] not in decodedBinarySequence["class1"].getField():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
+    if decodedBinarySequence["class1"]["className"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
@@ -79,7 +79,7 @@ def pullUpMethodPreCondition(decodedBinarySequence,projectInfo):
     '''
     if decodedBinarySequence["class2method"] not in decodedBinarySequence["class2"].getMethod():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
+    if decodedBinarySequence["class1"]["className"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
@@ -93,7 +93,7 @@ def pullUpFieldPreCondition(decodedBinarySequence,projectInfo):
     '''
     if decodedBinarySequence["class2field"] not in decodedBinarySequence["class2"].getField():
         return False
-    if decodedBinarySequence["class1"] not in decodedBinarySequence["class2"].getSuperClass():
+    if decodedBinarySequence["class1"]["className"] not in decodedBinarySequence["class2"].getSuperClass():
         return False
 
     return True
