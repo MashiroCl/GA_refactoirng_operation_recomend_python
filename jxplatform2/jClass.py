@@ -74,7 +74,7 @@ class jClass:
         """
         /../test/../ or class Testxxx, then it must be a test class
         """
-        if "test" in self.classInfo.filePath or "Test" in self.classInfo.filePath :
+        if "test" in self.filePath or "Test" in self.filePath :
             return True
         # Why I use this as the criterion to distinguish test class before?
         # if self.classInfo.split("#")[0] == str(0):
