@@ -71,9 +71,23 @@ class jClass:
         return self.filePath
 
     def isTestClass(self):
-        if self.classInfo.split("#")[0] == str(0):
+        """
+        /../test/../ or class Testxxx, then it must be a test class
+        """
+        if "test" or "Test" in self.classInfo.filePath:
             return True
+        # Why I use this as the criterion to distinguish test class before?
+        # if self.classInfo.split("#")[0] == str(0):
+        #     return True
         return False
+
+    def isAnonymousClass(self):
+        """
+        no name in classInfo is anonymous inner class
+        :return:
+        """
+        if not self.classInfo.split("#")[1]:
+            return True
 
     def hasField(self,field):
         if field in self.fieldList:
