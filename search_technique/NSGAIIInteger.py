@@ -1,18 +1,16 @@
 import sys
-
-sys.path.append('../')
+sys.path.append("../")
 from jmetal.operator import IntegerPolynomialMutation
 from jmetal.operator.crossover import IntegerSBXCrossover
 from jmetal.util.solution import get_non_dominated_solutions, print_function_values_to_file, print_variables_to_file
 from jmetal.algorithm.multiobjective import NSGAII
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from utils import readJson
-from jxplatform2.jClass import jClass
-from SearchROProblemInteger import SearchROProblemInteger
 from jmetal.util.observer import WriteFrontToFileObserver, BasicObserver
 from code_ownership.DeveloperGraph import DeveloperGraph
 from code_ownership.PullRequestService import PullRequestService
-
+from jxplatform2.jClass import jClass
+from search_technique.SearchROProblemInteger import SearchROProblemInteger
+from utils import readJson
 
 def load_args():
     'Read Jxplatform2 extraction result'
