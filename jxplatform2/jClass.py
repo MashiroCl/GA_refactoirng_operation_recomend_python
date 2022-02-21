@@ -20,7 +20,8 @@ class jClass:
 
         "If this class is a test class"
         self.testClass=self.isTestClass()
-
+        "use filepath and class name as signature of a class"
+        self.key = self.filePath + "#" +self.getClassName()
 
     def getClass(self):
         return self.classInfo
@@ -39,7 +40,8 @@ class jClass:
         return self.childrenList
     def getSuperClass(self):
         return self.superClassList
-
+    def getKey(self):
+        return self.key
 
     def addMethod(self,jMethod):
         if self.hasMethod(jMethod):
