@@ -76,31 +76,32 @@ def load_repository(jsonFile: str, exclude_test: bool):
     return exclude_test_class(exclude=exclude_test, javaClasses=javaClasses)
 
 
-repoName, max_evaluations, platform = load_args()
-jsonFile, repoPath, outputPath, developerGraph, ownershipPath = select_platform(repoName, platform)
-jClist = load_repository(jsonFile=jsonFile, exclude_test=True)
+if __name__ =="__main__":
+    repoName, max_evaluations, platform = load_args()
+    jsonFile, repoPath, outputPath, developerGraph, ownershipPath = select_platform(repoName, platform)
+    jClist = load_repository(jsonFile=jsonFile, exclude_test=True)
 
-problem = SearchROProblemInteger(jClist, repoPath, developerGraph, ownershipPath)
+    problem = SearchROProblemInteger(jClist, repoPath, developerGraph, ownershipPath)
 
-algorithm = NSGAII(
-    problem=problem,
-    population_size=300,
-    offspring_population_size=300,
-    mutation=IntegerPolynomialMutation(probability=0.5),
-    crossover=IntegerSBXCrossover(probability=1),
-    termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
-)
+    algorithm = NSGAII(
+        problem=problem,
+        population_size=300,
+        offspring_population_size=300,
+        mutation=IntegerPolynomialMutation(probability=0.5),
+        crossover=IntegerSBXCrossover(probability=1),
+        termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))
+    )
 
-algorithm.observable.register(observer=BasicObserver())
-algorithm.observable.register(observer=WriteFrontToFileObserver(
-    output_directory=outputPath + repoName + "/front"))
-algorithm.run()
-front = get_non_dominated_solutions(algorithm.get_result())
+    algorithm.observable.register(observer=BasicObserver())
+    algorithm.observable.register(observer=WriteFrontToFileObserver(
+        output_directory=outputPath + repoName + "/front"))
+    algorithm.run()
+    front = get_non_dominated_solutions(algorithm.get_result())
 
-# save to files
-print_function_values_to_file(front, outputPath + repoName + '/FUN.NSGAII.SearchRO')
-print_variables_to_file(front, outputPath + repoName + '/VAR.NSGAII.SearchRO')
+    # save to files
+    print_function_values_to_file(front, outputPath + repoName + '/FUN.NSGAII.SearchRO')
+    print_variables_to_file(front, outputPath + repoName + '/VAR.NSGAII.SearchRO')
 
-print('Algorithm (continuous problem): ' + algorithm.get_name())
-print('Problem: ' + problem.get_name())
-print('Computing time: ' + str(algorithm.total_computing_time))
+    print('Algorithm (continuous problem): ' + algorithm.get_name())
+    print('Problem: ' + problem.get_name())
+    print('Computing time: ' + str(algorithm.total_computing_time))
