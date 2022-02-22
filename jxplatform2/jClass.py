@@ -18,8 +18,10 @@ class jClass:
             self.superClassList.append(each)
         self.filePath=self.load['filePath']
 
-        "If this class is a test class"
-        self.testClass=self.isTestClass()
+        "If this class is a test class, then test.class is true"
+        self.testClass = self.isTestClass()
+        "If this class is an anonymous class, then anonymous_class is true"
+        self.anonymous_class = self.isAnonymousClass()
         "use filepath and class name as signature of a class"
         self.key = self.filePath + "#" +self.getClassName()
 
@@ -90,6 +92,7 @@ class jClass:
         """
         if not self.classInfo.split("#")[1]:
             return True
+        return False
 
     def hasField(self,field):
         if field in self.fieldList:
