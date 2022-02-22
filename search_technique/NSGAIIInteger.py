@@ -50,7 +50,7 @@ def select_platform(repoName, platform):
 
 
 def exclude_test_class(exclude: bool, javaClasses):
-    """exclude is true, then exclude test_class"""
+    """exclude test_class"""
     res = []
     if exclude:
         for each in javaClasses:
@@ -61,6 +61,17 @@ def exclude_test_class(exclude: bool, javaClasses):
             res.append(each)
     return res
 
+def exclude_anonymous_class(exclude: bool, javaClasses):
+    """ exclude anonymous class"""
+    res = []
+    if exclude:
+        for each in javaClasses:
+            if not each.anonymous_class:
+                res.append(each)
+        else:
+            for each in javaClasses:
+                res.append(each)
+    return res
 
 def json_2_jClass(jsonList):
     res = []
@@ -69,17 +80,19 @@ def json_2_jClass(jsonList):
     return res
 
 
-def load_repository(jsonFile: str, exclude_test: bool):
+def load_repository(jsonFile: str, exclude_test: bool, exclude_anonymous: bool):
     # load repository class info
     load = readJson(jsonFile)
     javaClasses = json_2_jClass(load)
-    return exclude_test_class(exclude=exclude_test, javaClasses=javaClasses)
+    javaClasses = exclude_test_class(exclude=exclude_test, javaClasses=javaClasses)
+    javaClasses = exclude_anonymous_class(exclude = exclude_anonymous, javaClasses = javaClasses)
+    return javaClasses
 
 
 if __name__ =="__main__":
     repoName, max_evaluations, platform = load_args()
     jsonFile, repoPath, outputPath, developerGraph, ownershipPath = select_platform(repoName, platform)
-    jClist = load_repository(jsonFile=jsonFile, exclude_test=True)
+    jClist = load_repository(jsonFile=jsonFile, exclude_test=True, exclude_anonymous=True)
 
     problem = SearchROProblemInteger(jClist, repoPath, developerGraph, ownershipPath)
 
