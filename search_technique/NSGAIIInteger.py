@@ -68,8 +68,8 @@ def exclude_anonymous_class(exclude: bool, javaClasses):
         for each in javaClasses:
             if not each.anonymous_class:
                 res.append(each)
-        else:
-            for each in javaClasses:
+    else:
+        for each in javaClasses:
                 res.append(each)
     return res
 
@@ -80,7 +80,7 @@ def json_2_jClass(jsonList):
     return res
 
 
-def load_repository(jsonFile: str, exclude_test: bool, exclude_anonymous: bool):
+def load_repository(jsonFile: str, exclude_test: bool, exclude_anonymous: bool=False):
     # load repository class info
     load = readJson(jsonFile)
     javaClasses = json_2_jClass(load)
