@@ -34,6 +34,7 @@ class SearchROProblemInteger(IntegerProblem):
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
+                             self.MAXIMIZE,
                              self.MAXIMIZE]
 
         self.obj_labels=['Quality Gain','Relatioinship Score']
