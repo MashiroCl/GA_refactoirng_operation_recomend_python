@@ -1,5 +1,8 @@
 from refactoring_operation.RefactoringOperationEnum import RefactoringOperationEnum
-class IntegerEncoding():
+from encoding.Encoding import Encoding
+
+
+class IntegerEncoding(Encoding):
     def __init__(self):
         self.chromosomeLen=4
         self.classNum = 0
