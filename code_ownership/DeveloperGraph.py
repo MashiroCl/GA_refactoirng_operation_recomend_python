@@ -49,7 +49,10 @@ class DeveloperGraph():
         'for relationship between authour and him/herself, set the highest value that appears in self.vertices'
         maximum =0
         for each in self.vertices:
-            maximum = max(max(self.vertices[each].values()),maximum)
+            # print(each)
+            # print(len(self.vertices[each].values()))
+            if len(self.vertices[each].values())!=0:
+                maximum = max(max(self.vertices[each].values()),maximum)
         for each in self.vertices:
             self.vertices[each][each] = maximum
 
