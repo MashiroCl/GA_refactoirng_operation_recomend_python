@@ -45,7 +45,7 @@ class CodeOwnership:
         :param filePath:
         :return:
         '''
-        candidates = [each for each in ownershipLines if each[0].strip()==filePath.strip()]
+        candidates = [each for each in ownershipLines if filePath.strip() in each[0].strip()]
         candidates.sort(key=lambda x: x[2])
         return candidates[0][2]
 
