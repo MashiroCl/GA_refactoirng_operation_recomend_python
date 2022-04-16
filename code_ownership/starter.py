@@ -1,12 +1,11 @@
-from .Repository import Repository
-from . PullRequestService import PullRequestService
-from .DeveloperGraph import DeveloperGraph
+from Repository import Repository
+from PullRequestService import PullRequestService
+from DeveloperGraph import DeveloperGraph
 from jxplatform2.Jxplatform2 import Jxplatform2
 import os
 
 
 class Starter:
-    @staticmethod
     def extract_codeOwnership(self, repo:str):
         repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/"+repo
         csvPath = os.path.join(repoPath, "MORCOoutput", "ownership.csv")
@@ -18,7 +17,6 @@ class Starter:
         localPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
         Repository(repoPath).countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath)
 
-    @staticmethod
     def extract_pullRequest(self, repo, repoURL:str, output:str):
         "use the java script"
         # repo = "jeromq"
@@ -26,10 +24,9 @@ class Starter:
         # output = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "/MORCOoutput/csv/pullrequest.csv")
 
 
-    @staticmethod
     def build_developerGraph(self, repo:str):
         "Remember to set the start date and end date"
-        relationshipCsvPath = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "/MORCOoutput/csv/pullrequest.csv")
+        relationshipCsvPath = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "MORCOoutput/csv/pullrequest.csv")
         res = PullRequestService().loadPullRequest(relationshipCsvPath)
         developerGraph = DeveloperGraph(res).generate_vertices().build()
 
@@ -47,3 +44,8 @@ class Starter:
         # outputPath="/home/chenlei/MORCO/extractResult/"+repoName+".json"
         jx = Jxplatform2(j, t, c, outputPath)
         jx.extractInfo()
+
+if __name__ == "__main__":
+    starter = Starter()
+    # starter.extract_codeOwnership("xabber-android")
+    starter.build_developerGraph("xabber-android")
