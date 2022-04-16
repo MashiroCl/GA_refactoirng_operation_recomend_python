@@ -1,16 +1,15 @@
 from .Preconditions import *
-def inlineClass(decodedSequence,projectInfo):
+def inlineClass(decodedSequence, projectInfo):
     '''
     move all fields and methods from class1 to class2 and remove class1
     :param decodedSequence:
     :param projectInfo:
     :return:
     '''
-    return
 
     'check precondition'
     if not inlineClassPreCondition(decodedSequence,projectInfo):
-        return
+        return False
 
     'move method'
     for eachMethod in decodedSequence["class1"].getMethod():
@@ -22,8 +21,8 @@ def inlineClass(decodedSequence,projectInfo):
         moveAField(decodedSequence["class1"],
                     decodedSequence["class2"],
                    eachField)
-    print(decodedSequence)
     projectInfo.remove(decodedSequence["class1"])
+    return True
 
 def moveMethod(decodedSequence,projectInfo):
     '''
@@ -35,13 +34,13 @@ def moveMethod(decodedSequence,projectInfo):
 
     'check precondition'
     if not moveMethodPreCondition(decodedSequence,projectInfo):
-        return
+        return False
 
     'move method from class1 to class2'
     moveAMethod(decodedSequence["class1"],
                 decodedSequence["class2"],
                 decodedSequence["class1method"])
-
+    return True
 
 def moveField(decodedSequence,projectInfo):
     '''
@@ -53,11 +52,11 @@ def moveField(decodedSequence,projectInfo):
 
     'check precondition'
     if not moveFieldPreCondition(decodedSequence, projectInfo):
-        return
+        return False
     moveAField(decodedSequence["class1"],
                 decodedSequence["class2"],
                 decodedSequence["class1field"])
-
+    return True
 
 def pushDownField(decodedSequence,projectInfo):
     '''
@@ -69,11 +68,11 @@ def pushDownField(decodedSequence,projectInfo):
 
     'check precondition'
     if not pushDownFieldPreCondition(decodedSequence, projectInfo):
-        return
+        return False
     moveAField(decodedSequence["class1"],
                 decodedSequence["class2"],
                 decodedSequence["class1field"])
-
+    return True
 
 def pushDownMethod(decodedSequence,projectInfo):
     '''
@@ -85,11 +84,11 @@ def pushDownMethod(decodedSequence,projectInfo):
 
     'check precondition'
     if not pushDownMethodPreCondition(decodedSequence, projectInfo):
-        return
+        return False
     moveAMethod(decodedSequence["class1"],
                 decodedSequence["class2"],
                 decodedSequence["class1method"])
-
+    return True
 
 def pullUpField(decodedSequence,projectInfo):
     '''
@@ -101,11 +100,11 @@ def pullUpField(decodedSequence,projectInfo):
 
     'check precondition'
     if not pullUpFieldPreCondition(decodedSequence, projectInfo):
-        return
+        return False
     moveAField(decodedSequence["class2"],
                 decodedSequence["class1"],
                 decodedSequence["class2field"])
-
+    return True
 
 def pullUpMethod(decodedSequence,projectInfo):
     '''
@@ -117,11 +116,11 @@ def pullUpMethod(decodedSequence,projectInfo):
 
     'check precondition'
     if not pullUpMethodPreCondition(decodedSequence, projectInfo):
-        return
+        return False
     moveAField(decodedSequence["class2"],
                decodedSequence["class1"],
                decodedSequence["class2method"])
-
+    return True
 
 def doNothing(decodedSequence,projectInfo):
     '''

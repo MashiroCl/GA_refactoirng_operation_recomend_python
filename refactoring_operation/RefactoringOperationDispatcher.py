@@ -12,5 +12,3 @@ def dispatch(index:int):
         RefactoringOperationEnum.PULLUPFIELD.value:pullUpField,
         RefactoringOperationEnum.NULL.value:doNothing
     }.get(index)
-
-

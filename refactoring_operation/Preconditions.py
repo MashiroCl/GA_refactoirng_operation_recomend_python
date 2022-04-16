@@ -1,11 +1,12 @@
-def inlineClassPreCondition(decodedBinarySequence,projectInfo):
+def inlineClassPreCondition(decodedBinarySequence, projectInfo):
     '''
     class1 and class2 is not the same class
     :param decodedBinarySequence:
     :param projectInfo:
     :return:
     '''
-    if decodedBinarySequence["class1"]==decodedBinarySequence["class2"]:
+    if decodedBinarySequence["class1"]==decodedBinarySequence["class2"] or\
+            decodedBinarySequence["class1"] not in projectInfo:
         return False
     return True
 
