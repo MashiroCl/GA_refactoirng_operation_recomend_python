@@ -64,7 +64,8 @@ class IntegerEncoding(Encoding):
         element = self._getElementOfN(ROType,class1Info,class2Info,n)
 
         if(ROType == RefactoringOperationEnum.INLINECLASS):
-            pass
+            resDict["class1method"] = "place_holder"
+
         elif(ROType == RefactoringOperationEnum.MOVEMETHOD):
             resDict["class1method"]=element
 
