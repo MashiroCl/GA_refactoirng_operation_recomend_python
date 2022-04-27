@@ -3,7 +3,7 @@ import glob
 import csv
 from utils import create_folder
 from os.path import join
-class Repository():
+class Repository:
     def __init__(self,path:str):
         self.path=path
         self.name=path.split("/")[-1]
