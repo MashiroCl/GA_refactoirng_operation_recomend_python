@@ -10,6 +10,7 @@ from code_ownership.DeveloperGraph import DeveloperGraph
 from code_ownership.PullRequestService import PullRequestService
 from jxplatform2.jClass import jClass
 from search_technique.SearchROProblemInteger import SearchROProblemInteger
+from call_graph.CallGraph import CallGraph
 from utils import readJson
 
 def load_args():
@@ -24,16 +25,15 @@ def select_platform(repoName, platform):
     """select to run on local: 1 or on server: 2"""
     if platform == "1":
         'Local'
-        max_evaluations = 1000
-        repoName = "mbassador"
         jsonFile = "/Users/leichen/Desktop/" + repoName + ".json"
         repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
-        outputPath = "/Users/leichen/Desktop/output"
+        outputPath = "/Users/leichen/Desktop/output/"
         # load developer relationship
-        relationshipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/pullrequest.csv"
+        relationshipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/"+repoName+"/MORCOoutput/csv/pullrequest.csv"
         res = PullRequestService().loadPullRequest(relationshipCsvPath)
         developerGraph = DeveloperGraph(res).generate_vertices().build()
         ownershipPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName + "/MORCOoutput/csv/ownership.csv"
+        callGraph = CallGraph("/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName + "/MORCOoutput/csv/callgraph.json")
 
     elif platform == "2":
         'Server'
@@ -45,8 +45,10 @@ def select_platform(repoName, platform):
         res = PullRequestService().loadPullRequest(relationshipCsvPath)
         developerGraph = DeveloperGraph(res).generate_vertices().build()
         ownershipPath = "/home/chenlei/MORCO/relationship/" + repoName + "/ownership.csv"
+        callGraph = CallGraph("/home/chenlei/MORCO/relationship/" + repoName + "/callgraph.json")
 
-    return jsonFile, repoPath, outputPath, developerGraph, ownershipPath
+
+    return jsonFile, repoPath, outputPath, developerGraph, ownershipPath, callGraph
 
 
 def exclude_test_class(exclude: bool, javaClasses):
@@ -91,15 +93,15 @@ def load_repository(jsonFile: str, exclude_test: bool, exclude_anonymous: bool=F
 
 if __name__ =="__main__":
     repoName, max_evaluations, platform = load_args()
-    jsonFile, repoPath, outputPath, developerGraph, ownershipPath = select_platform(repoName, platform)
+    jsonFile, repoPath, outputPath, developerGraph, ownershipPath, callGraph = select_platform(repoName, platform)
     jClist = load_repository(jsonFile=jsonFile, exclude_test=True, exclude_anonymous=True)
 
-    problem = SearchROProblemInteger(jClist, repoPath, developerGraph, ownershipPath)
+    problem = SearchROProblemInteger(jClist, repoPath, developerGraph, ownershipPath, callGraph)
 
     algorithm = NSGAII(
         problem=problem,
-        population_size=300,
-        offspring_population_size=300,
+        population_size=100,
+        offspring_population_size=100,
         mutation=IntegerPolynomialMutation(probability=0.5),
         crossover=IntegerSBXCrossover(probability=1),
         termination_criterion=StoppingByEvaluations(max_evaluations=int(max_evaluations))

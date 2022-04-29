@@ -8,14 +8,14 @@ from qmood.Qmood import Qmood
 from refactoring_operation.RefactoringOperationDispatcher import dispatch
 from semantic.NameExtractor import NameExtractor
 from semantic.Vectorize import TF_IDF
-
+from call_graph.CallGraph import CallGraph
 
 
 class SearchROProblemInteger(IntegerProblem):
     """
     Integer encoding problem which
     """
-    def __init__(self, projectInfo, repoPath, developerGraph, ownershipPath):
+    def __init__(self, projectInfo, repoPath, developerGraph, ownershipPath, callGraph):
         '''
         set basic parameters and encode current project
         :param projectInfo: project being processed, should be a list of jClass
@@ -52,6 +52,7 @@ class SearchROProblemInteger(IntegerProblem):
         self.ownershipPath = ownershipPath
         self.tf_idf = TF_IDF()
         self.classes_nameSequence_dict = self.extract_names_sequences()
+        self.callGraph=callGraph
 
     def extract_names_sequences(self):
         name_extractor = NameExtractor()
@@ -73,7 +74,8 @@ class SearchROProblemInteger(IntegerProblem):
         for each in decoded_sequences:
             X = self.vectorize_classes([each["class1"], each["class2"]])
             cosine_smiliarity = self.calc_cosine_similarity(X).tolist()[1]
-            res +=cosine_smiliarity
+            res += cosine_smiliarity
+        res = res/len(decoded_sequences)
         return res
 
     def exec_RO(self, decoded_sequences, projectInfo):
@@ -90,8 +92,6 @@ class SearchROProblemInteger(IntegerProblem):
     def calc_relationship(self, decoded_sequencs):
         return CodeOwnership(self.repoPath,self.ownershipPath).findAuthorPairList(decoded_sequencs).\
             calculateRelationship(self.developerGraph)
-
-
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
         projectInfo = copy.deepcopy(self.projectInfo)
@@ -113,9 +113,12 @@ class SearchROProblemInteger(IntegerProblem):
         relationship = self.calc_relationship(decodedIntegerSequences)
         solution.objectives[1] = -1 * relationship
 
-        'calculate semantic coherence on refactoring operations applied classes'
+        'calculate semantic coherence and call relation on refactoring operations applied classes'
         semantic_coherence = self.calc_sematic_coherence(decodedIntegerSequences)
-        solution.objectives[2] = -1 * semantic_coherence
+
+        'calculate call relation'
+        call_relation = self.callGraph.calc_call_relation(decodedIntegerSequences)
+        solution.objectives[2] = -0.2 * semantic_coherence - 0.8*call_relation
 
         return solution
 
