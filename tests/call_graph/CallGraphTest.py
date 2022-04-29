@@ -40,6 +40,19 @@ class CallGraphTest(unittest.TestCase):
         actual = callgraph.shared_call_out(class1, class2)
         self.assertEqual(1,actual)
 
+    def test_check(self):
+        repo = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/callgraph.json"
+        callgraph = CallGraph(repo)
+        print(callgraph.callgraph)
+
+    def test_shared_call_out_key_not_exist(self):
+        repo = "/Users/leichen/Desktop/student.json"
+        callgraph = CallGraph(repo)
+        print(callgraph.callgraph)
+        class1 = "NotExist.java"
+        class2 = "SchoolDay.java"
+        actual = callgraph.shared_call_out(class1, class2)
+        self.assertEqual(0,actual)
 
     def test_shared_call_in_all_different(self):
         repo = "/Users/leichen/Desktop/student.json"
@@ -49,3 +62,21 @@ class CallGraphTest(unittest.TestCase):
         class2 = "Student.java"
         actual = callgraph.shared_call_in(class1, class2)
         self.assertEqual(0,actual)
+
+
+    def test_call_relation(self):
+        repo = "/Users/leichen/Desktop/student.json"
+        callgraph = CallGraph(repo)
+        print(callgraph.callgraph)
+        class1 = "Teacher.java"
+        class2 = "SchoolDay.java"
+        actual = callgraph.call_relation(class1, class2)
+        self.assertEqual(0.4, actual)
+
+
+    def test_test(self):
+        a={1:{1:1, 2:2},2:{2:2, 3:3}}
+        try:
+            print(a.get(3,0).get(1,0))
+        except:
+            a= None

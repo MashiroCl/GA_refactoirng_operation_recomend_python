@@ -49,12 +49,14 @@ class MyTestCase(unittest.TestCase):
     def test_TF_IDF_cosine_similarity_with_example_repo_mbassador(self):
         nameExtractor = NameExtractor()
         jsonFile = "../mbassador.json"
-        projectInfo = load_repository(jsonFile=jsonFile, exclude_test=True)
+        projectInfo = load_repository(jsonFile=jsonFile, exclude_test=True, exclude_anonymous=True)
         names_dict = nameExtractor.extract(projectInfo=projectInfo)
         sequence_dict = nameExtractor.dict_names_to_dict_sequence(names_dict)
+        for each in sequence_dict:
+            if len(sequence_dict[each][0]) <3:
+                print(f"dict key:{each}, dict value: {sequence_dict[each]}")
         X = self.TF_IDF.vectorize(sequence_dict)
         res = self.TF_IDF.cosine_similarity(X)
-        print(res)
 
 if __name__ == '__main__':
     unittest.main()
