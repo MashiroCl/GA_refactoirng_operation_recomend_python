@@ -71,6 +71,12 @@ class jClass:
     def setFilePath(self,filePath:str):
         self.filePath=filePath
 
+    def getRelativeFilePath(self):
+        '''
+        return file path after "src"
+        '''
+        return self.filePath.split("/src/")[1]
+
     def getFilePath(self)->str:
         return self.filePath
 
