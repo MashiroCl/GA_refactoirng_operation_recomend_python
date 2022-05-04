@@ -23,6 +23,10 @@ class DeveloperGraph():
         self.baseline = "2011-12-24"
         self.deadline = "2022-12-24"
 
+    def set_bd_line(self, baseline, deadline):
+        self.baseline = baseline
+        self.deadline = deadline
+
     def generate_vertices(self):
         for each in self.pull_request_list:
             if each.proposer not in self.vertices.keys():
