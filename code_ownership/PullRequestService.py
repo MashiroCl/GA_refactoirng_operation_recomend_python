@@ -3,9 +3,9 @@ class PullRequest():
     def __init__(self,pullRequest_info:List[str]):
         self.url = pullRequest_info[0].strip()
         self.state = pullRequest_info[1].strip()
-        self.proposer = pullRequest_info[2].strip()
+        self.proposer = pullRequest_info[2].strip().replace("\"","").replace(" ", "").replace("-", "").lower()
         self.proposed_time = pullRequest_info[3].replace("\"","").strip()[:10]
-        self.commentators = [pullRequest_info[i].strip() for i in range(len(pullRequest_info)) if i%2==0 and i>3]
+        self.commentators = [pullRequest_info[i].strip().replace(" ","").replace("-", "").replace("\"", "").lower() for i in range(len(pullRequest_info)) if i%2==0 and i>3]
         self.comment_timestamps = [pullRequest_info[i].replace("\"","").strip()[:10]\
                                    for i in range(len(pullRequest_info)) if i%2!=0 and i>1]
         self.num_of_participants = str((len(pullRequest_info)-2)/2)
