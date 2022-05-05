@@ -76,7 +76,8 @@ class SearchROProblemInteger(IntegerProblem):
             X = self.vectorize_classes([each["class1"], each["class2"]])
             cosine_smiliarity = self.calc_cosine_similarity(X).tolist()[1]
             res += cosine_smiliarity
-        res = res/len(decoded_sequences)
+        if len(decoded_sequences) != 0:
+            res = res/len(decoded_sequences)
         return res
 
     def exec_RO(self, decoded_sequences, projectInfo):
