@@ -1,5 +1,6 @@
 import copy
 import random
+from typing import  List
 from jmetal.core.problem import IntegerProblem
 from jmetal.core.solution import IntegerSolution
 from code_ownership.CodeOwnership import CodeOwnership
@@ -79,8 +80,14 @@ class SearchROProblemInteger(IntegerProblem):
         return res
 
     def exec_RO(self, decoded_sequences, projectInfo):
+        '''
+        perform refactoring operations in decoded_sequences on projectInfo
+        return a list recording which refactorings has passed the preconditions and be executed
+        '''
+        executed = list()
         for each in decoded_sequences:
-            dispatch(each["ROType"].value)(each, projectInfo)
+            executed.append(dispatch(each["ROType"].value)(each, projectInfo))
+        return executed
 
     def calc_quality_gain(self, projectInfo):
         qmood_metrics_list = ["Effectiveness", "Extendibility", "Flexibility", "Functionality", "Resusability",
@@ -93,6 +100,13 @@ class SearchROProblemInteger(IntegerProblem):
         return CodeOwnership(self.repoPath,self.ownershipPath).findAuthorPairList(decoded_sequencs).\
             calculateRelationship(self.developerGraph)
 
+    def filter(self, executed:list, decoded_sequences:List[dict])->List[dict]:
+        res = list()
+        for i, value in enumerate(executed):
+            if value:
+                res.append(decoded_sequences[i])
+        return res
+
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
         projectInfo = copy.deepcopy(self.projectInfo)
         self.integerEncoding.encoding(projectInfo)
@@ -101,7 +115,11 @@ class SearchROProblemInteger(IntegerProblem):
         decodedIntegerSequences = self.integerEncoding.decoding(solution.variables)
 
         "Execute corresponding refactoring operations"
-        self.exec_RO(decodedIntegerSequences, projectInfo)
+        executed = self.exec_RO(decodedIntegerSequences, projectInfo)
+
+        "Filter out RO that hasn't passed preconditions"
+        decodedIntegerSequences = self.filter(executed=executed, decoded_sequences=decodedIntegerSequences)
+
 
         'calculate Quality Gain after executed refactoring operatins'
         quality_gain = self.calc_quality_gain(projectInfo)
