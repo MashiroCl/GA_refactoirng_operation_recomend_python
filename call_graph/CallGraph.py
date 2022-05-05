@@ -92,5 +92,6 @@ class CallGraph:
         for each in decoded_sequences:
             res += self.call_relation(each["class1"].getRelativeFilePath(), each["class1"].getRelativeFilePath())
         'normalize'
-        res = res/len(decoded_sequences)
+        if len(decoded_sequences)!=0:
+            res = res/len(decoded_sequences)
         return res
