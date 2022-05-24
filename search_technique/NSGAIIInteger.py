@@ -9,7 +9,7 @@ from jmetal.util.observer import WriteFrontToFileObserver, BasicObserver
 from code_ownership.DeveloperGraph import DeveloperGraph
 from code_ownership.PullRequestService import PullRequestService
 from jxplatform2.jClass import jClass
-from search_technique.SearchROProblemInteger import SearchROProblemInteger
+from search_technique.SearchROProblemRE import SearchROProbleRE
 from call_graph.CallGraph import CallGraph
 from utils import readJson
 
@@ -25,7 +25,7 @@ def select_platform(repoName, platform):
     """select to run on local: 1 or on server: 2"""
     if platform == "1":
         'Local'
-        jsonFile = "/Users/leichen/Desktop/" + repoName + ".json"
+        jsonFile = "/Users/leichen/Desktop/StaticalAnalysis/" + repoName + ".json"
         repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repoName
         outputPath = "/Users/leichen/Desktop/output/"
         # load developer relationship
@@ -96,7 +96,7 @@ if __name__ =="__main__":
     jsonFile, repoPath, outputPath, developerGraph, ownershipPath, callGraph = select_platform(repoName, platform)
     jClist = load_repository(jsonFile=jsonFile, exclude_test=True, exclude_anonymous=True)
 
-    problem = SearchROProblemInteger(jClist, repoPath, developerGraph, ownershipPath, callGraph)
+    problem = SearchROProbleRE(jClist, repoPath, developerGraph, ownershipPath, callGraph)
 
     algorithm = NSGAII(
         problem=problem,
