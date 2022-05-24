@@ -1,6 +1,6 @@
 import copy
 import random
-from typing import  List
+from typing import List
 from jmetal.core.problem import IntegerProblem
 from jmetal.core.solution import IntegerSolution
 from code_ownership.CodeOwnership import CodeOwnership
@@ -9,10 +9,9 @@ from qmood.Qmood import Qmood
 from refactoring_operation.RefactoringOperationDispatcher import dispatch
 from semantic.NameExtractor import NameExtractor
 from semantic.Vectorize import TF_IDF
-from call_graph.CallGraph import CallGraph
 
 
-class SearchROProblemInteger(IntegerProblem):
+class SearchROProbleRE(IntegerProblem):
     """
     Integer encoding problem which
     """
@@ -22,8 +21,8 @@ class SearchROProblemInteger(IntegerProblem):
         :param projectInfo: project being processed, should be a list of jClass
         should be an entity of class Repository
         '''
-        super(SearchROProblemInteger, self).__init__()
-        "2 objectives: QMOOD-> Quality Gain + commiters relationship + semantic coherence"
+        super(SearchROProbleRE, self).__init__()
+        "3 objectives: QMOOD-> Quality Gain + commiters relationship + semantic coherence"
         self.number_of_objectives = 3
         "4 variables decide a refactoring operation"
         self.number_of_variables = 4
@@ -152,4 +151,4 @@ class SearchROProblemInteger(IntegerProblem):
         return newSolution
 
     def get_name(self) -> str:
-        return "Search Refactoring Operation Problem"
+        return "Search Refactoring Operation Problem with Review Effort"
