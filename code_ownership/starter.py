@@ -28,7 +28,9 @@ class Starter:
         "Remember to set the start date and end date"
         relationshipCsvPath = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "MORCOoutput/csv/pullrequest.csv")
         res = PullRequestService().loadPullRequest(relationshipCsvPath)
-        developerGraph = DeveloperGraph(res).generate_vertices().build()
+        developerGraph = DeveloperGraph(res)
+        developerGraph.set_bd_line("2011-12-24","")
+        developerGraph = developerGraph.generate_vertices().build()
 
 
     def jxplatform2(self, repo:str):
@@ -47,5 +49,5 @@ class Starter:
 
 if __name__ == "__main__":
     starter = Starter()
-    # starter.extract_codeOwnership("xabber-android")
-    starter.build_developerGraph("xabber-android")
+    starter.extract_codeOwnership("jfinal")
+    # starter.build_developerGraph("HikariCP")
