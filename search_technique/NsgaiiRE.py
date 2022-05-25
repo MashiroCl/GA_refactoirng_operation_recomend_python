@@ -2,7 +2,7 @@ import sys
 sys.path.append("../")
 from jmetal.operator import IntegerPolynomialMutation
 from jmetal.operator.crossover import IntegerSBXCrossover
-from jmetal.algorithm.multiobjective import NSGAII
+from jmetal.algorithm.multiobjective.nsgaii import NSGAII
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.observer import WriteFrontToFileObserver, BasicObserver
 from code_ownership.DeveloperGraph import DeveloperGraph
