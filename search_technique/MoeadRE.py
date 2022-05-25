@@ -1,5 +1,5 @@
-from jmetal.operator import PolynomialMutation
-from jmetal.operator.crossover import DifferentialEvolutionCrossover
+from jmetal.operator import IntegerPolynomialMutation
+from jmetal.operator.crossover import IntegerSBXCrossover
 from jmetal.util.aggregative_function import Tschebycheff
 from jmetal.util.observer import BasicObserver, WriteFrontToFileObserver
 from jmetal.util.termination_criterion import StoppingByEvaluations
@@ -64,8 +64,8 @@ class MoeadRE(Search_technique):
         self.algorithm = MOEAD(
             problem=self.problem,
             population_size=300,
-            crossover=DifferentialEvolutionCrossover(CR=1.0, F=0.5, K=0.5),
-            mutation=PolynomialMutation(probability=1.0 / self.problem.number_of_variables, distribution_index=20),
+            mutation=IntegerPolynomialMutation(probability=0.5),
+            crossover= IntegerSBXCrossover(probability=1),
             aggregative_function=Tschebycheff(dimension=self.problem.number_of_objectives),
             neighbor_size=20,
             neighbourhood_selection_probability=0.9,
