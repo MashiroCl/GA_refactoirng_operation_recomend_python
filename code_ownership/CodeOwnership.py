@@ -25,9 +25,9 @@ class CodeOwnership:
                 filePaths.append(decodedSequence["class1"].getFilePath())
                 filePaths.append(decodedSequence["class2"].getFilePath())
             except KeyError:
-                pass
+                print(" class not exist in decoded sequence findAuthorPairList")
             except TypeError:
-                pass
+                print(" type error decoded sequence findAuthorPairList")
         'find owner of the 2 files in ownership.csv'
         with open(self.ownershipCsvPath) as f:
             lines = f.readlines()
@@ -46,7 +46,7 @@ class CodeOwnership:
         :return:
         '''
         candidates = [each for each in ownershipLines if filePath.strip() in each[0].strip()]
-        candidates.sort(key=lambda x: x[2])
+        candidates.sort(key=lambda x: float(x[3]), reverse=True)
         return candidates[0][2]
 
 
@@ -63,7 +63,6 @@ class CodeOwnership:
             developerB = each[1]
             relationship += self.fuzzy_compare(developerA, developerB, developerGraph)
         return relationship/(len(self.authorPairList) if len(self.authorPairList)!=0 else 1)
-
 
     def name_process(self, name:str):
         return name.strip().replace(" ", "").replace("-","").lower()
@@ -123,7 +122,7 @@ class CodeOwnership:
         return highestOwenership, numOfCommiters
 
 if __name__=="__main__":
-    repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/rhino"
+    repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/atomix"
     csvPath = os.path.join(repoPath, "MORCOoutput","ownership.csv")
     commitOutputPath = os.path.join(repoPath, "MORCOoutput")
     csvOutputPath = os.path.join(repoPath, "MORCOoutput", "csv")
