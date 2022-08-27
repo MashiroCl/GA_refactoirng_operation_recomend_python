@@ -1,27 +1,27 @@
 import copy
-import random
 from typing import List
-from jmetal.core.problem import IntegerProblem
 from jmetal.core.solution import IntegerSolution
 from code_ownership.CodeOwnership import CodeOwnership
 from encoding.IntegerEncoding import IntegerEncoding
 from qmood.Qmood import Qmood
-from refactoring_operation.RefactoringOperationDispatcher import dispatch
-from semantic.NameExtractor import NameExtractor
 from semantic.Vectorize import TF_IDF
+from search_technique.enviroment import Platform
+from search_technique.SearchROProblem import SearchROProblem
+from multiprocessing import Process
 
 
-class SearchROProbleRE(IntegerProblem):
+class SearchROProblemRE(SearchROProblem):
     """
     Integer encoding problem which
     """
-    def __init__(self, projectInfo, repoPath, developerGraph, ownershipPath, callGraph):
+
+    def __init__(self, abs_representation: List, platform: Platform):
         '''
         set basic parameters and encode current project
-        :param projectInfo: project being processed, should be a list of jClass
+        :param abs_representation: project being processed, should be a list of jClass
         should be an entity of class Repository
         '''
-        super(SearchROProbleRE, self).__init__()
+        super(SearchROProblemRE, self).__init__(abs_representation, platform)
         "3 objectives: QMOOD-> Quality Gain + commiters relationship + semantic coherence"
         self.number_of_objectives = 3
         "4 variables decide a refactoring operation"
@@ -33,84 +33,38 @@ class SearchROProbleRE(IntegerProblem):
         self.number_of_refactorings = 20
 
         'Qmood: maximize    code ownership: maximize'
-        self.obj_directions=[self.MAXIMIZE,
-                             self.MAXIMIZE,
-                             self.MAXIMIZE]
+        self.obj_directions = [self.MAXIMIZE,
+                               self.MAXIMIZE,
+                               self.MAXIMIZE]
 
-        self.obj_labels=['Quality Gain','Relatioinship Score']
-        self.projectInfo = projectInfo
-        self.repoPath = repoPath
+        self.obj_labels = ['Quality Gain', 'Relationship Score']
+        self.abs_representation = abs_representation
+        self.repo_path = platform.repo_path
         self.integerEncoding = IntegerEncoding()
-        self.integerEncoding.encoding(self.projectInfo)
-        self.lower_bound=[1, 1, 1, 1] *self.number_of_refactorings
-        self.upper_bound=[self.integerEncoding.ROTypeNum,
-                          self.integerEncoding.classNum,
-                          self.integerEncoding.classNum,
-                          self.integerEncoding.N]*self.number_of_refactorings
-        self.initial_objectives = Qmood().calculateQmood(self.projectInfo)
-        self.developerGraph = developerGraph
-        self.ownershipPath = ownershipPath
+        self.integerEncoding.encoding(self.abs_representation)
+        self.lower_bound = [1, 1, 1, 1] * self.number_of_refactorings
+        self.upper_bound = [self.integerEncoding.ROTypeNum,
+                            self.integerEncoding.classNum,
+                            self.integerEncoding.classNum,
+                            self.integerEncoding.N] * self.number_of_refactorings
+        self.initial_objectives = Qmood().calculateQmood(self.abs_representation)
+        self.developer_graph = platform.load_developer_graph()
+        self.ownership_path = platform.ownership_path
         self.tf_idf = TF_IDF()
         self.classes_nameSequence_dict = self.extract_names_sequences()
-        self.callGraph=callGraph
-
-    def extract_names_sequences(self):
-        name_extractor = NameExtractor()
-        names_dict = name_extractor.extract(projectInfo=self.projectInfo)
-        sequence_dict = name_extractor.dict_names_to_dict_sequence(names_dict)
-        return sequence_dict
-
-    def vectorize_classes(self, classes):
-        res = list()
-        for each in classes:
-            res.append(self.classes_nameSequence_dict[each.getKey()][0])
-        return self.tf_idf.vectorize(res)
-
-    def calc_cosine_similarity(self, doc_metric):
-        return self.tf_idf.cosine_similarity(doc_metric)
-
-    def calc_sematic_coherence(self, decoded_sequences):
-        res =0
-        for each in decoded_sequences:
-            X = self.vectorize_classes([each["class1"], each["class2"]])
-            cosine_smiliarity = self.calc_cosine_similarity(X).tolist()[1]
-            res += cosine_smiliarity
-        if len(decoded_sequences) != 0:
-            res = res/len(decoded_sequences)
-        return res
-
-    def exec_RO(self, decoded_sequences, projectInfo):
-        '''
-        perform refactoring operations in decoded_sequences on projectInfo
-        return a list recording which refactorings has passed the preconditions and be executed
-        '''
-        executed = list()
-        for each in decoded_sequences:
-            executed.append(dispatch(each["ROType"].value)(each, projectInfo))
-        return executed
-
-    def calc_quality_gain(self, projectInfo):
-        qmood_metrics_list = ["Effectiveness", "Extendibility", "Flexibility", "Functionality", "Resusability",
-                              "Understandability"]
-
-        qmood_metrics_value = Qmood().calculateQmood(projectInfo)
-        return sum([(qmood_metrics_value[metric] - self.initial_objectives[metric]) for metric in qmood_metrics_list])
+        self.callGraph = platform.load_call_graph()
 
     def calc_relationship(self, decoded_sequencs):
-        return CodeOwnership(self.repoPath,self.ownershipPath).findAuthorPairList(decoded_sequencs).\
-            calculateRelationship(self.developerGraph)
+        return CodeOwnership(self.repo_path, self.ownership_path).findAuthorPairList(decoded_sequencs). \
+            calculateRelationship(self.developer_graph)
 
-    def filter(self, executed:list, decoded_sequences:List[dict])->List[dict]:
-        res = list()
-        for i, value in enumerate(executed):
-            if value:
-                res.append(decoded_sequences[i])
-        return res
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
-        projectInfo = copy.deepcopy(self.projectInfo)
-        self.integerEncoding.encoding(projectInfo)
+        import time
 
+        projectInfo = copy.deepcopy(self.abs_representation)
+
+        self.integerEncoding.encoding(projectInfo)
         'Decode and execute'
         decodedIntegerSequences = self.integerEncoding.decoding(solution.variables)
 
@@ -120,10 +74,24 @@ class SearchROProbleRE(IntegerProblem):
         "Filter out RO that hasn't passed preconditions"
         decodedIntegerSequences = self.filter(executed=executed, decoded_sequences=decodedIntegerSequences)
 
+        # start = time.time()
 
-        'calculate Quality Gain after executed refactoring operatins'
+        # multi_process_pool = Pool(4)
+        # 'calculate Quality Gain after executed refactoring operations'
+        # quality_gain_getter = multi_process_pool.apply_async(self.calc_quality_gain,(projectInfo,))
+        # relationship_getter = multi_process_pool.apply_async(self.calc_relationship,(decodedIntegerSequences,))
+        # semantic_getter = multi_process_pool.apply_async(self.calc_sematic_coherence,(decodedIntegerSequences,))
+        # call_getter = multi_process_pool.apply_async(self.callGraph.calc_call_relation, (decodedIntegerSequences,))
+        # multi_process_pool.close()
+        # multi_process_pool.join()
+
         quality_gain = self.calc_quality_gain(projectInfo)
-
+        # process = [Process(target=self.calc_quality_gain, args=(projectInfo,)),
+        #            Process(target= self.calc_relationship,args = (decodedIntegerSequences,)),
+        #            Process(target=self.calc_sematic_coherence, args=(decodedIntegerSequences,)),
+        #            Process(target=self.callGraph.calc_call_relation, args=(decodedIntegerSequences,))]
+        # [p.start() for p in process]
+        # [p.join() for p in process]
         'calculate QMOOD  after executed refactoring operations'
         solution.objectives[0] = -1 * quality_gain
 
@@ -136,19 +104,12 @@ class SearchROProbleRE(IntegerProblem):
 
         'calculate call relation'
         call_relation = self.callGraph.calc_call_relation(decodedIntegerSequences)
-        solution.objectives[2] = -0.2 * semantic_coherence - 0.8*call_relation
+        solution.objectives[2] = -0.2 * semantic_coherence - 0.8 * call_relation
+
+        # end = time.time()
+        # print(f"{end - start}, calc 3 objectives time")
 
         return solution
-
-    def create_solution(self) -> IntegerSolution:
-        newSolution = IntegerSolution(lower_bound=self.lower_bound,
-                                      upper_bound=self.upper_bound,
-                                      number_of_objectives=self.number_of_objectives,
-                                      number_of_constraints=self.number_of_constraints)
-        newSolution.variables = \
-            [int(random.uniform(self.lower_bound[i] * 1.0, self.upper_bound[i] * 1.0))
-             for i in range(self.number_of_variables*self.number_of_refactorings)]
-        return newSolution
 
     def get_name(self) -> str:
         return "Search Refactoring Operation Problem with Review Effort"
