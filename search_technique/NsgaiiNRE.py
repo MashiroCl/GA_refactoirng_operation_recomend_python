@@ -25,7 +25,7 @@ class NsgaiiNRE(SearchTechniqueNRE):
         )
         self.algorithm.observable.register(observer=BasicObserver())
         self.algorithm.observable.register(observer=WriteFrontToFileObserver(
-            output_directory=self.outputPath + self.repo_name + "/front/" + self.name + "/"))
+            output_directory=self.output_path + self.repo_name + "/front/" + self.name + "/"))
         self.algorithm.run()
         return self
 

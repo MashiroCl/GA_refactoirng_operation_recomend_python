@@ -76,10 +76,8 @@ class SearchTechnique:
         java_classes = self.exclude_anonymous_class(exclude=exclude_anonymous, java_classes=java_classes)
         return java_classes
 
-
     def load(self):
         pass
-
 
     def search(self):
         pass
@@ -111,13 +109,12 @@ class SearchTechniqueRE(SearchTechnique):
 
 class SearchTechniqueNRE(SearchTechnique):
     def load(self):
-        self.repo_name, self.max_evaluations, platform = self.load_args()
-        selected_platform = self.select_platform(self.repo_name, platform)
-        call_graph = selected_platform.load_call_graph()
+        self.repo_name, self.max_evaluations, self.platform = self.load_args()
+        selected_platform = self.select_platform(self.repo_name, self.platform)
         self.output_path = selected_platform.output_path
 
-        jClist = self.load_repository(json_file=selected_platform.json_file_path,
-                                      exclude_test=True, exclude_anonymous=True)
+        abs_representation = self.load_repository(json_file=selected_platform.json_file_path,
+                                                  exclude_test=True, exclude_anonymous=True)
 
-        self.problem = SearchROProblemNRE(jClist, selected_platform.repo_path, call_graph)
+        self.problem = SearchROProblemNRE(abs_representation, selected_platform)
         return self

@@ -6,8 +6,6 @@ from jmetal.operator.crossover import IntegerSBXCrossover
 from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII, UniformReferenceDirectionFactory
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.observer import WriteFrontToFileObserver, BasicObserver
-from search_technique.SearchROProblemNRE import SearchROProblemNRE
-from call_graph.CallGraph import CallGraph
 from search_technique.SearchTechnique import SearchTechniqueNRE
 
 
@@ -27,7 +25,7 @@ class Nsga3NRE(SearchTechniqueNRE):
         )
         self.algorithm.observable.register(observer=BasicObserver())
         self.algorithm.observable.register(observer=WriteFrontToFileObserver(
-            output_directory=self.outputPath + self.repo_name + "/front/" + self.name + "/"))
+            output_directory=self.output_path + self.repo_name + "/front/" + self.name + "/"))
         self.algorithm.run()
         return self
 
