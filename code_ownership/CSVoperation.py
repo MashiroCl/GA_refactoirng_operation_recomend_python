@@ -48,7 +48,7 @@ class CSVoperation:
 
 if __name__ == "__main__":
     '''
-    1. Use code in main function in CodeOwnership.py to extract a csvs
+    1. Use code in main function in CodeOwnership.py to extract a csv
     2. Use code below to conduct operations on that csv
     3. Use java code to extract pullrequest.csv
     4. Build DeveloperGraph and extract info into a csv

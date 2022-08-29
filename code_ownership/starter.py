@@ -15,7 +15,7 @@ class Starter:
             os.makedirs(csvOutputPath)
         csvName = "ownership.csv"
         localPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
-        Repository(repoPath).countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath)
+        Repository(repoPath).countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath).extract_owner_csv()
 
     def extract_pullRequest(self, repo, repoURL:str, output:str):
         "use the java script"
@@ -29,9 +29,9 @@ class Starter:
         relationshipCsvPath = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "MORCOoutput/csv/pullrequest.csv")
         res = PullRequestService().loadPullRequest(relationshipCsvPath)
         developerGraph = DeveloperGraph(res)
-        developerGraph.set_bd_line("2011-12-24","")
-        developerGraph = developerGraph.generate_vertices().build()
-
+        developerGraph.set_bd_line("2011-12-24","2022-12-24")
+        developerGraph.generate_vertices().build()
+        return developerGraph
 
     def jxplatform2(self, repo:str):
         # repoName = sys.argv[1]
@@ -49,5 +49,6 @@ class Starter:
 
 if __name__ == "__main__":
     starter = Starter()
-    starter.extract_codeOwnership("jfinal")
-    # starter.build_developerGraph("HikariCP")
+    starter.extract_codeOwnership("quasar")
+    # res = starter.build_developerGraph("javapoet")
+    # print(res.vertices)
