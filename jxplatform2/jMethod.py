@@ -26,10 +26,16 @@ class jMethod:
             name.append(each.split("@")[0])
         return name
     def getParameterType(self):
-        type=[]
+        t=[]
         for each in self.parameter:
-            type.append(each.split("@")[1])
-        return type
+            t.append(each.split("@")[1])
+        return t
+
+    def getParameterPackage(self):
+        packages = []
+        for each in self.parameter:
+            packages.append(each.split("@")[-1])
+        return packages
 
     def getFull(self):
         return self.method
