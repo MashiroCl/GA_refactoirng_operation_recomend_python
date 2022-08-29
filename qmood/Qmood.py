@@ -1,18 +1,22 @@
 from .metricCalculation import *
 
+
 class Qmood():
-    def __init__(self):
-        self.DSC=0
-        self.NOH=0
-        self.ANA=0
-        self.DAM=0
-        self.DCC=0
-        self.CAM=0
-        self.MOA=0
-        self.MFA=0
-        self.NOP=0
-        self.CIS=0
-        self.NOM=0
+
+    def __init__(self, java_classes):
+        self.DSC = len(java_classes)
+        self.hierarchies = count_hierarchies(java_classes)
+        self.NOH = self.hierarchies
+        self.classes_with_child_class = count_classes_with_child_class(java_classes)
+        self.ANA = self.classes_with_child_class
+        self.DAM = 0
+        self.DCC = 0
+        self.CAM = 0
+        self.MOA = 0
+        self.MFA = 0
+        self.NOP = 0
+        self.CIS = 0
+        self.NOM = 0
         self.Resusability = 0
         self.Flexibility = 0
         self.Understandability = 0
@@ -20,100 +24,49 @@ class Qmood():
         self.Extendibility = 0
         self.Effectiveness = 0
 
-    def calculateSingleQmood(self,jClass,jClassList):
-        self.DSC=DSC(jClassList)
-        self.NOH=NOH(jClass)
-        self.ANA=ANA(jClassList)
-        self.DAM=DAM(jClass)
-        self.DCC=DCC(jClassList)
-        self.CAM=CAM(jClass)
-        self.MOA=MOA(jClassList,jClass)
-        self.MFA=MFA(jClass)
-        self.NOP=NOP(jClass)
-        self.CIS=CIS(jClass)
-        self.NOM=NOM(jClass)
-
-        self.Resusability = -0.25*self.DCC+0.25*self.CAM+0.5*self.CIS+0.5*self.DSC
-        self.Flexibility = 0.25*self.DAM-0.25*self.DCC+0.5*self.MOA+0.5*self.NOP
-        self.Understandability = -0.33*self.ANA+0.33*self.DAM-0.33*self.DCC+0.33*self.CAM-0.33*self.NOP-0.33*self.NOM-0.33*self.DSC
-        self.Functionality = 0.12*self.CAM+0.22*self.NOP+0.22*self.CIS+0.22*self.DSC+0.22*self.NOH
-        self.Extendibility = 0.5*self.ANA-0.5*self.DCC+0.5*self.MFA+0.5*self.NOP
-        self.Effectiveness = 0.2*self.ANA+0.2*self.DAM+0.2*self.MOA+0.2*self.MFA+0.2*self.NOP
-
-    def calculateQmood(self,jClassList):
+    def calculateQmood(self, java_classes, user_defined_packages, inline_class_info):
         'obtain metrics for all classes and calculate the average value '
-        sDSC, sNOH, sANA, sDAM, sDCC, sCAM, sMOA, sMFA, sNOP, sCIS, sNOM = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        NOP_not0_count = 0
-        NOM_not0_count = 0
-        for each in jClassList:
-            sDSC+=DSC(jClassList)
-            sNOH+=NOH(jClassList)
-            sANA+=ANA(jClassList)
-            sDAM+=DAM(each)
-            sDCC+=DCC(each,jClassList)
-            sCAM+=CAM(each)
-            sMOA+=MOA(each,jClassList)
-            sMFA+=MFA(each)
-            # sNOP+=NOP(each)
+        sDAM, sDCC, sCAM, sMOA, sMFA, sNOP, sCIS, sNOM = 0, 0, 0, 0, 0, 0, 0, 0
+        length = len(java_classes)
+        for each in java_classes:
+            sDAM += DAM(each)
+            sDCC += DCC(each, user_defined_packages)
+            sCAM += CAM(each)
+            sMOA += MOA(each, user_defined_packages)
+            sMFA += MFA(each)
             curNOP = NOP(each)
-            if curNOP!=0:
-                sNOP+=curNOP
-                NOP_not0_count+=1
-            sCIS+=CIS(each)
-            # sNOM=NOM(each)
+            if curNOP != 0:
+                sNOP += curNOP
+            sCIS += CIS(each)
             curNOM = NOM(each)
-            if curNOM!=0:
-                sNOM+=curNOM
-                NOM_not0_count+=1
-        lenJCL=len(jClassList)
-        self.DSC=sDSC/lenJCL
-        self.NOH=sNOH/lenJCL
-        self.ANA=sANA/lenJCL
-        self.DAM=sDAM/lenJCL
-        self.DCC=sDCC/lenJCL
-        self.CAM=sCAM/lenJCL
-        self.MOA=sMOA/lenJCL
-        self.MFA=sMFA/lenJCL
-        # if NOP_not0_count==0:
-        #     NOP_not0_count=1
-        self.NOP=sNOP/lenJCL
-        self.CIS=sCIS/lenJCL
-        # if NOM_not0_count==0:
-        #     NOM_not0_count=1
-        self.NOM=sNOM/lenJCL
+            if curNOM != 0:
+                sNOM += curNOM
+        self.DSC = DSC(length, inline_class_info)
+        self.NOH = NOH(length, inline_class_info)
+        self.ANA = ANA(len(self.classes_with_child_class), inline_class_info, length)
+        self.DAM = sDAM / length
+        self.DCC = sDCC / length
+        self.CAM = sCAM / length
+        self.MOA = sMOA / length
+        self.MFA = sMFA / length
+        self.NOP = sNOP / length
+        self.CIS = sCIS / length
+        self.NOM = sNOM / length
 
         # print("DSC:{},NOH:{},ANA:{},DAM:{},DCC:{},CAM:{},MOA:{},MFA:{},NOP:{},CIS:{},NOM:{}".format(self.DSC,self.NOH,self.ANA,self.DAM,self.DCC,self.CAM,self.MOA,self.MFA,self.NOP,self.CIS,self.NOM))
 
-        self.Resusability = -0.25*self.DCC+0.25*self.CAM+0.5*self.CIS+0.5*self.DSC
-        self.Flexibility = 0.25*self.DAM-0.25*self.DCC+0.5*self.MOA+0.5*self.NOP
-        self.Understandability = -0.33*self.ANA+0.33*self.DAM-0.33*self.DCC+0.33*self.CAM-0.33*self.NOP-0.33*self.NOM-0.33*self.DSC
-        self.Functionality = 0.12*self.CAM+0.22*self.NOP+0.22*self.CIS+0.22*self.DSC+0.22*self.NOH
-        self.Extendibility = 0.5*self.ANA-0.5*self.DCC+0.5*self.MFA+0.5*self.NOP
-        self.Effectiveness = 0.2*self.ANA+0.2*self.DAM+0.2*self.MOA+0.2*self.MFA+0.2*self.NOP
+        self.Resusability = -0.25 * self.DCC + 0.25 * self.CAM + 0.5 * self.CIS + 0.5 * self.DSC
+        self.Flexibility = 0.25 * self.DAM - 0.25 * self.DCC + 0.5 * self.MOA + 0.5 * self.NOP
+        self.Understandability = -0.33 * self.ANA + 0.33 * self.DAM - 0.33 * self.DCC + 0.33 * self.CAM - 0.33 * self.NOP - 0.33 * self.NOM - 0.33 * self.DSC
+        self.Functionality = 0.12 * self.CAM + 0.22 * self.NOP + 0.22 * self.CIS + 0.22 * self.DSC + 0.22 * self.NOH
+        self.Extendibility = 0.5 * self.ANA - 0.5 * self.DCC + 0.5 * self.MFA + 0.5 * self.NOP
+        self.Effectiveness = 0.2 * self.ANA + 0.2 * self.DAM + 0.2 * self.MOA + 0.2 * self.MFA + 0.2 * self.NOP
 
-        result=dict()
-        result["Resusability"]=self.Resusability
+        result = dict()
+        result["Resusability"] = self.Resusability
         result["Flexibility"] = self.Flexibility
         result["Understandability"] = self.Understandability
         result["Functionality"] = self.Functionality
         result["Extendibility"] = self.Extendibility
         result["Effectiveness"] = self.Effectiveness
         return result
-
-    def getResusability(self):
-        return self.Resusability
-    def getFlexibility(self):
-        return self.Flexibility
-    def getUnderstandability(self):
-        return self.Understandability
-    def getFunctionality(self):
-        return self.Functionality
-    def getExtendibility(self):
-        return self.Extendibility
-    def getEffectiveness(self):
-        return self.Effectiveness
-
-if __name__=="__main__":
-    print("test Qmood calculation")
-    qmood=Qmood()
-    qmood.calculateQmood()

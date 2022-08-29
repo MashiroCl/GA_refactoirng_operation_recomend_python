@@ -115,6 +115,5 @@ class SearchTechniqueNRE(SearchTechnique):
 
         abs_representation = self.load_repository(json_file=selected_platform.json_file_path,
                                                   exclude_test=True, exclude_anonymous=True)
-
         self.problem = SearchROProblemNRE(abs_representation, selected_platform)
         return self
