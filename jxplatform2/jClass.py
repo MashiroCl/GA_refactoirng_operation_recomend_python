@@ -1,4 +1,5 @@
 from .jMethod import jMethod
+
 class jClass:
     def __init__(self,load):
         self.load = load
@@ -23,12 +24,13 @@ class jClass:
         "If this class is an anonymous class, then anonymous_class is true"
         self.anonymous_class = self.isAnonymousClass()
         "use filepath and class name as signature of a class"
-        self.key = self.filePath + "#" +self.getClassName()
+        self.className = self.classInfo.split("#")[1]
+        self.key = self.filePath + "#" +self.className
 
     def getClass(self):
         return self.classInfo
     def getClassName(self):
-        return self.classInfo.split("#")[1]
+        return self.className
 
     def getParameters(self):
         pass
