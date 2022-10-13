@@ -1,0 +1,186 @@
+Name,Stars,Forks,Language,Description,URL,Domain
+square/okhttp,"10,050","2,542",Java,An HTTP+HTTP/2 client for Android and Java applications.,https://github.com/square/okhttp,Web libraries and frameworks
+spring-projects/spring-framework,"8,271","6,897",Java,The Spring Framework,https://github.com/spring-projects/spring-framework,Web libraries and frameworks
+bumptech/glide,"7,478","1,537",Java,An image loading and caching library for Android focused on smooth scrolling,https://github.com/bumptech/glide,Web libraries and frameworks
+afollestad/material-dialogs,"5,663","1,147",Java,"A beautiful, easy-to-use, and customizable dialogs API, enabling you to use Material designed dialogs down to API 8.",https://github.com/afollestad/material-dialogs,Web libraries and frameworks
+Bearded-Hen/Android-Bootstrap,"5,019","1,152",Java,"Bootstrap style widgets for Android, with Glyph Icons",https://github.com/Bearded-Hen/Android-Bootstrap,Web libraries and frameworks
+dropwizard/dropwizard,"4,247","1,869",Java,A damn simple library for building production-ready RESTful web services.,https://github.com/dropwizard/dropwizard,Web libraries and frameworks
+AndroidBootstrap/android-bootstrap,"4,076","1,275",Java,A template/bootstrap/boilerplate application that includes tons of great open source tools and frameworks.,https://github.com/AndroidBootstrap/android-bootstrap,Web libraries and frameworks
+perwendel/spark,"3,838",828,Java,A Sinatra inspired framework for java,https://github.com/perwendel/spark,Web libraries and frameworks
+springside/springside4,"3,265","2,391",Java,"A Spring Framework based, pragmatic style JavaEE application reference architecture.",https://github.com/springside/springside4,Web libraries and frameworks
+dmytrodanylyk/circular-progress-button,"2,976",776,Java,Android Circular Progress Button,https://github.com/dmytrodanylyk/circular-progress-button,Web libraries and frameworks
+castorflex/SmoothProgressBar,"2,968",908,Java,A small Android library allowing you to have a smooth and customizable horizontal indeterminate ProgressBar,https://github.com/castorflex/SmoothProgressBar,Web libraries and frameworks
+AsyncHttpClient/async-http-client,"2,765",812,Java,Asynchronous Http and WebSocket Client library for Java,https://github.com/AsyncHttpClient/async-http-client,Web libraries and frameworks
+ReactiveX/RxJava,"12,364","1,944",Java,RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs using observable sequences for the Java VM.,https://github.com/ReactiveX/RxJava,System software
+clojure/clojure,"5,197",904,Java,The Clojure programming language,https://github.com/clojure/clojure,System software
+JetBrains/kotlin,"4,720",502,Java,The Kotlin Programming Language,https://github.com/JetBrains/kotlin,System software
+eclipse/vert.x,"4,635",904,Java,Vert.x is a tool-kit for building reactive applications on the JVM,https://github.com/eclipse/vert.x,System software
+prestodb/presto,"4,600","1,324",Java,Distributed SQL query engine for big data,https://github.com/prestodb/presto,System software
+android/platform_frameworks_base,"4,278","3,537",Java,null,https://github.com/android/platform_frameworks_base,System software
+google/j2objc,"3,977",504,Java,A Java to iOS Objective-C translation tool and runtime.,https://github.com/google/j2objc,System software
+thinkaurelius/titan,"3,583",702,Java,Distributed Graph Database,https://github.com/thinkaurelius/titan,System software
+gradle/gradle,"3,295","1,336",Java,A powerful build system for the JVM,https://github.com/gradle/gradle,System software
+apache/storm,"2,989","2,251",Java,Mirror of Apache Storm,https://github.com/apache/storm,System software
+apache/kafka,"2,853","1,726",Java,Mirror of Apache Kafka,https://github.com/apache/kafka,System software
+apache/cassandra,"2,650","1,199",Java,Mirror of Apache Cassandra,https://github.com/apache/cassandra,System software
+Atmosphere/atmosphere,"2,523",574,Java,"Realtime Client Server Framework for the JVM, supporting WebSockets with Cross-Browser Fallbacks",https://github.com/Atmosphere/atmosphere,System software
+orientechnologies/orientdb,"2,333",520,Java,"OrientDB is the first Multi-Model DBMS with Document & Graph engine. OrientDB can run distributed (Multi-Master), supports SQL, ACID Transactions, Full-Text indexing, Reactive Queries and has a small memory footprint. OrientDB is licensed with Apache 2 license and the development is driven by OrientDB LTD and a worldwide Open Source community.",https://github.com/orientechnologies/orientdb,System software
+elastic/elasticsearch,"15,734","5,254",Java,"Open Source, Distributed, RESTful Search Engine",https://github.com/elastic/elasticsearch,Software tools
+nathanmarz/storm,"8,785","1,760",Java,"Distributed and fault-tolerant realtime computation: stream processing, continuous computation, distributed RPC, and more",https://github.com/nathanmarz/storm,Software tools
+square/leakcanary,"8,126","1,306",Java,A memory leak detection library for Android and Java.,https://github.com/square/leakcanary,Software tools
+netty/netty,"6,476","3,285",Java,Netty project - an event-driven asynchronous network application framework,https://github.com/netty/netty,Software tools
+Netflix/Hystrix,"5,519",997,Java,"Hystrix is a latency and fault tolerance library designed to isolate points of access to remote systems, services and 3rd party libraries, stop cascading failure and enable resilience in complex distributed systems where failure is inevitable.",https://github.com/Netflix/Hystrix,Software tools
+spring-projects/spring-boot,"4,864","4,819",Java,Spring Boot,https://github.com/spring-projects/spring-boot,Software tools
+bazelbuild/bazel,"4,161",465,Java,"Correct, reproducible, and fast builds for everyone.",https://github.com/bazelbuild/bazel,Software tools
+Netflix/SimianArmy,"3,874",515,Java,Tools for keeping your cloud operating in top form. Chaos Monkey is a resiliency tool that helps applications tolerate random instance failures.,https://github.com/Netflix/SimianArmy,Software tools
+dropwizard/metrics,"3,842","1,012",Java,:chart_with_upwards_trend: Capturing JVM- and application-level metrics. So you know what's going on.,https://github.com/dropwizard/metrics,Software tools
+claritylab/lucida,"3,682",604,Java,Speech and Vision Based Intelligent Personal Assistant,https://github.com/claritylab/lucida,Software tools
+OpenRefine/OpenRefine,"3,583",627,Java,"OpenRefine is a free, open source power tool for working with messy data and improving it",https://github.com/OpenRefine/OpenRefine,Software tools
+go-lang-plugin-org/go-lang-idea-plugin,"3,178",377,Java,Google Go language IDE built using the IntelliJ Platform,https://github.com/go-lang-plugin-org/go-lang-idea-plugin,Software tools
+JetBrains/intellij-community,"2,837","1,241",Java,IntelliJ IDEA Community Edition,https://github.com/JetBrains/intellij-community,Software tools
+eclipse/che,"2,649",363,Java,Eclipse Che: Next-generation Eclipse IDE. Open source workspace server and cloud IDE.,https://github.com/eclipse/che,Software tools
+facebook/buck,"2,475",416,Java,"A fast build system that encourages the creation of small, reusable modules over a variety of platforms and languages.",https://github.com/facebook/buck,Software tools
+openhab/openhab,"2,407","1,256",Java,Source code of the open Home Automation Bus (openHAB),https://github.com/openhab/openhab,Software tools
+skylot/jadx,"2,256",424,Java,Dex to Java decompiler,https://github.com/skylot/jadx,Software tools
+Alluxio/alluxio,"2,254",864,Java,Memory-Speed Virtual Distributed Storage System,https://github.com/Alluxio/alluxio,Software tools
+gocd/gocd,"2,232",390,Java,Main repository for Go Continuous Delivery,https://github.com/gocd/gocd,Software tools
+ChrisRM/material-theme-jetbrains,"2,152",100,Java,JetBrains theme of Material Theme,https://github.com/ChrisRM/material-theme-jetbrains,Software tools
+nostra13/Android-Universal-Image-Loader,"12,318","5,656",Java,"Powerful and flexible library for loading, caching and displaying images on Android.",https://github.com/nostra13/Android-Universal-Image-Loader,Non-web libraries and frameworks
+square/retrofit,"11,133","2,104",Java,"Type-safe HTTP client for Android and Java by Square, Inc.",https://github.com/square/retrofit,Non-web libraries and frameworks
+square/picasso,"9,366","2,615",Java,A powerful image downloading and caching library for Android,https://github.com/square/picasso,Non-web libraries and frameworks
+jfeinstein10/SlidingMenu,"9,131","5,308",Java,An Android library that allows you to easily create applications with slide-in menus. You may use it in your Android apps provided that you cite this project and include the license in your app. Thanks!,https://github.com/jfeinstein10/SlidingMenu,Non-web libraries and frameworks
+greenrobot/EventBus,"8,958","2,467",Java,"Android optimized event bus that simplifies communication between Activities, Fragments, Threads, Services, etc. Less code, better quality.",https://github.com/greenrobot/EventBus,Non-web libraries and frameworks
+facebook/fresco,"8,540","2,474",Java,An Android library for managing images and the memory they use.,https://github.com/facebook/fresco,Non-web libraries and frameworks
+loopj/android-async-http,"8,516","4,036",Java,An Asynchronous HTTP Library for Android,https://github.com/loopj/android-async-http,Non-web libraries and frameworks
+libgdx/libgdx,"8,374","4,480",Java,Desktop/Android/HTML5/iOS Java game development framework,https://github.com/libgdx/libgdx,Non-web libraries and frameworks
+PhilJay/MPAndroidChart,"8,224","2,660",Java,"A powerful Android chart view / graph view library, supporting line- bar- pie- radar- bubble- and candlestick charts as well as scaling, dragging and animations.",https://github.com/PhilJay/MPAndroidChart,Non-web libraries and frameworks
+zxing/zxing,"8,211","4,744",Java,"Official ZXing (""Zebra Crossing"") project home",https://github.com/zxing/zxing,Non-web libraries and frameworks
+JakeWharton/butterknife,"8,120","1,735",Java,"View ""injection"" library for Android.",https://github.com/JakeWharton/butterknife,Non-web libraries and frameworks
+google/guava,"8,119","1,878",Java,Google Core Libraries for Java 6+,https://github.com/google/guava,Non-web libraries and frameworks
+excilys/androidannotations,"7,269","2,051",Java,Fast Android Development. Easy maintainance.,https://github.com/excilys/androidannotations,Non-web libraries and frameworks
+JakeWharton/ActionBarSherlock,"7,209","4,184",Java,[DEPRECATED] Action bar implementation which uses the native action bar on Android 4.0+ and a custom implementation on pre-4.0 through a single API and theme.,https://github.com/JakeWharton/ActionBarSherlock,Non-web libraries and frameworks
+JakeWharton/ViewPagerIndicator,"7,135","3,814",Java,Paging indicator widgets compatible with the ViewPager from the Android Support Library and ActionBarSherlock.,https://github.com/JakeWharton/ViewPagerIndicator,Non-web libraries and frameworks
+chrisbanes/Android-PullToRefresh,"6,562","4,515",Java,DEPRECATED,https://github.com/chrisbanes/Android-PullToRefresh,Non-web libraries and frameworks
+navasmdc/MaterialDesignLibrary,"6,378","1,991",Java,This is a library with components of Android L to you use in android 2.2,https://github.com/navasmdc/MaterialDesignLibrary,Non-web libraries and frameworks
+ReactiveX/RxAndroid,"5,970",931,Java,RxJava bindings for Android,https://github.com/ReactiveX/RxAndroid,Non-web libraries and frameworks
+chrisbanes/PhotoView,"5,810","2,118",Java,"Implementation of ImageView for Android that supports zooming, by various touch gestures.",https://github.com/chrisbanes/PhotoView,Non-web libraries and frameworks
+ksoichiro/Android-ObservableScrollView,"5,427","1,414",Java,Android library to observe scroll events on scrollable views.,https://github.com/ksoichiro/Android-ObservableScrollView,Non-web libraries and frameworks
+daimajia/AndroidSwipeLayout,"5,040","1,493",Java,The Most Powerful Swipe Layout!,https://github.com/daimajia/AndroidSwipeLayout,Non-web libraries and frameworks
+square/dagger,"4,873","1,154",Java,A fast dependency injector for Android and Java.,https://github.com/square/dagger,Non-web libraries and frameworks
+nhaarman/ListViewAnimations,"4,788","1,676",Java,An Android library which allows developers to easily add animations to ListView items,https://github.com/nhaarman/ListViewAnimations,Non-web libraries and frameworks
+astuetz/PagerSlidingTabStrip,"4,786","2,392",Java,An interactive indicator to navigate between the different pages of a ViewPager,https://github.com/astuetz/PagerSlidingTabStrip,Non-web libraries and frameworks
+junit-team/junit4,"4,670","1,846",Java,A programmer-oriented testing framework for Java.,https://github.com/junit-team/junit4,Non-web libraries and frameworks
+mikepenz/MaterialDrawer,"4,633",943,Java,"The flexible, easy to use, all in one drawer library for your Android project.",https://github.com/mikepenz/MaterialDrawer,Non-web libraries and frameworks
+lgvalle/Material-Animations,"4,621",776,Java,Android Transition animations explanation with examples.,https://github.com/lgvalle/Material-Animations,Non-web libraries and frameworks
+umano/AndroidSlidingUpPanel,"4,554","1,490",Java,This library provides a simple way to add a draggable sliding up panel (popularized by Google Music and Google Maps) to your Android application. Brought to you by Umano.,https://github.com/umano/AndroidSlidingUpPanel,Non-web libraries and frameworks
+alibaba/fastjson,"4,516","1,844",Java,:bullettrain_side: Fast JSON Processor,https://github.com/alibaba/fastjson,Non-web libraries and frameworks
+facebook/stetho,"4,471",414,Java,"Stetho is a debug bridge for Android applications, enabling the powerful Chrome Developer Tools and much more.",https://github.com/facebook/stetho,Non-web libraries and frameworks
+liaohuqiu/android-Ultra-Pull-To-Refresh,"4,456","1,605",Java,Ultra Pull to Refresh for Android. Support all the views.,https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh,Non-web libraries and frameworks
+florent37/MaterialViewPager,"4,402",856,Java,A Material Design ViewPager easy to use library,https://github.com/florent37/MaterialViewPager,Non-web libraries and frameworks
+koush/ion,"4,303",803,Java,Android Asynchronous Networking and Image Loading,https://github.com/koush/ion,Non-web libraries and frameworks
+greenrobot/greenDAO,"4,291","1,576",Java,greenDAO is a light & fast ORM solution for Android that maps objects to SQLite databases.,https://github.com/greenrobot/greenDAO,Non-web libraries and frameworks
+gabrielemariotti/cardslib,"4,233","1,205",Java,Android Library to build a UI Card,https://github.com/gabrielemariotti/cardslib,Non-web libraries and frameworks
+etsy/AndroidStaggeredGrid,"4,107","1,134",Java,An Android staggered grid view which supports multiple columns with rows of varying sizes.,https://github.com/etsy/AndroidStaggeredGrid,Non-web libraries and frameworks
+realm/realm-java,"4,098",502,Java,Realm is a mobile database: a replacement for SQLite & ORMs,https://github.com/realm/realm-java,Non-web libraries and frameworks
+LMAX-Exchange/disruptor,"4,041","1,073",Java,High Performance Inter-Thread Messaging Library,https://github.com/LMAX-Exchange/disruptor,Non-web libraries and frameworks
+wyouflf/xUtils,"3,987","2,857",Java,"android orm, bitmap, http, view inject...",https://github.com/wyouflf/xUtils,Non-web libraries and frameworks
+square/otto,"3,962",783,Java,An enhanced Guava-based event bus with emphasis on Android support.,https://github.com/square/otto,Non-web libraries and frameworks
+sparklemotion/nokogiri,"3,759",537,Java,"Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser with XPath and CSS selector support.",https://github.com/sparklemotion/nokogiri,Non-web libraries and frameworks
+emilsjolander/StickyListHeaders,"3,755","1,274",Java,An android library for section headers that stick to the top,https://github.com/emilsjolander/StickyListHeaders,Non-web libraries and frameworks
+PaoloRotolo/AppIntro,"3,740",607,Java,Make a cool intro for your Android app.,https://github.com/PaoloRotolo/AppIntro,Non-web libraries and frameworks
+facebook/facebook-android-sdk,"3,707","2,175",Java,Used to integrate Android apps with Facebook Platform.,https://github.com/facebook/facebook-android-sdk,Non-web libraries and frameworks
+alibaba/dubbo,"3,704","3,853",Java,Dubbo is a distributed service framework empowers applications with service import/export capability with high performance RPC.,https://github.com/alibaba/dubbo,Non-web libraries and frameworks
+mcxiaoke/android-volley,"3,668","1,524",Java,DEPRECATED,https://github.com/mcxiaoke/android-volley,Non-web libraries and frameworks
+roboguice/roboguice,"3,659",907,Java,"Google Guice on Android, version 3.0",https://github.com/roboguice/roboguice,Non-web libraries and frameworks
+pardom/ActiveAndroid,"3,630",932,Java,Active record style SQLite persistence for Android,https://github.com/pardom/ActiveAndroid,Non-web libraries and frameworks
+lucasr/twoway-view,"3,587",796,Java,RecyclerView made simple,https://github.com/lucasr/twoway-view,Non-web libraries and frameworks
+amlcurran/ShowcaseView,"3,558","1,038",Java,"Highlight the best bits of your app to users quickly, simply, and cool...ly",https://github.com/amlcurran/ShowcaseView,Non-web libraries and frameworks
+chrisjenx/Calligraphy,"3,505",455,Java,Custom fonts in Android the easy way...,https://github.com/chrisjenx/Calligraphy,Non-web libraries and frameworks
+hdodenhof/CircleImageView,"3,434","1,124",Java,A circular ImageView for Android,https://github.com/hdodenhof/CircleImageView,Non-web libraries and frameworks
+xetorthio/jedis,"3,427","1,600",Java,A blazingly small and sane redis java client,https://github.com/xetorthio/jedis,Non-web libraries and frameworks
+rey5137/material,"3,378",844,Java,A library to bring fully animated Material Design components to pre-Lolipop Android.,https://github.com/rey5137/material,Non-web libraries and frameworks
+JakeWharton/NineOldAndroids,"3,341","1,546",Java,[DEPRECATED] Android library for using the Honeycomb animation API on all versions of the platform back to 1.0!,https://github.com/JakeWharton/NineOldAndroids,Non-web libraries and frameworks
+futuresimple/android-floating-action-button,"3,340",954,Java,Floating Action Button for Android based on Material Design specification,https://github.com/futuresimple/android-floating-action-button,Non-web libraries and frameworks
+scribejava/scribejava,"3,232","1,232",Java,Simple OAuth library for Java,https://github.com/scribejava/scribejava,Non-web libraries and frameworks
+makovkastar/FloatingActionButton,"3,217",783,Java,Android floating action button,https://github.com/makovkastar/FloatingActionButton,Non-web libraries and frameworks
+facebook/rebound,"3,184",588,Java,A Java library that models spring dynamics and adds real world physics to your app.,https://github.com/facebook/rebound,Non-web libraries and frameworks
+koush/AndroidAsync,"3,181",918,Java,"Asynchronous socket, http (client+server), websocket, and socket.io library for android. Based on nio, not threads.",https://github.com/koush/AndroidAsync,Non-web libraries and frameworks
+chrisbanes/ActionBar-PullToRefresh,"3,164","1,106",Java,DEPRECATED,https://github.com/chrisbanes/ActionBar-PullToRefresh,Non-web libraries and frameworks
+wasabeef/recyclerview-animators,"3,111",623,Java,An Android Animation library which easily add itemanimator to RecyclerView items.,https://github.com/wasabeef/recyclerview-animators,Non-web libraries and frameworks
+DroidPluginTeam/DroidPlugin,"3,064","1,260",Java,"A plugin framework on android,Run any third-party apk without installation, modification or repackage",https://github.com/DroidPluginTeam/DroidPlugin,Non-web libraries and frameworks
+traex/RippleEffect,"3,061",751,Java,Implementation of Ripple effect from Material Design for Android API 9+,https://github.com/traex/RippleEffect,Non-web libraries and frameworks
+alibaba/druid,"3,046","1,823",Java,为监控而生的数据库连接池！,https://github.com/alibaba/druid,Non-web libraries and frameworks
+google/guice,"3,045",521,Java,"Guice (pronounced 'juice') is a lightweight dependency injection framework for Java 6 and above, brought to you by Google.",https://github.com/google/guice,Non-web libraries and frameworks
+google/ExoPlayer,"2,978","1,119",Java,An extensible media player for Android,https://github.com/google/ExoPlayer,Non-web libraries and frameworks
+singwhatiwanna/dynamic-load-apk,"2,935","1,338",Java,DL : dynamic load framework in android,https://github.com/singwhatiwanna/dynamic-load-apk,Non-web libraries and frameworks
+cymcsg/UltimateRecyclerView,"2,899",687,Java,"A RecyclerView(advanced and flexible version of ListView in Android) with refreshing,loading more,animation and many other features.",https://github.com/cymcsg/UltimateRecyclerView,Non-web libraries and frameworks
+JakeWharton/hugo,"2,861",227,Java,Annotation-triggered method call logging for your debug builds.,https://github.com/JakeWharton/hugo,Non-web libraries and frameworks
+airbnb/aerosolve,"2,857",312,Java,A machine learning package built for humans.,https://github.com/airbnb/aerosolve,Non-web libraries and frameworks
+rengwuxian/MaterialEditText,"2,825",592,Java,EditText in Material Design,https://github.com/rengwuxian/MaterialEditText,Non-web libraries and frameworks
+keyboardsurfer/Crouton,"2,801",736,Java,Context sensitive notifications for Android,https://github.com/keyboardsurfer/Crouton,Non-web libraries and frameworks
+stephanenicolas/robospice,"2,791",560,Java,"Repo of the Open Source Android library : RoboSpice. RoboSpice is a modular android library that makes writing asynchronous long running tasks easy. It is specialized in network requests, supports caching and offers REST requests out-of-the box using extension modules.",https://github.com/stephanenicolas/robospice,Non-web libraries and frameworks
+yahoo/anthelion,"2,772",780,Java,Anthelion is a plugin for Apache Nutch to crawl semantic annotations within HTML pages,https://github.com/yahoo/anthelion,Non-web libraries and frameworks
+orhanobut/logger,"2,754",494,Java,"Simple, pretty and powerful logger for android",https://github.com/orhanobut/logger,Non-web libraries and frameworks
+Yalantis/Side-Menu.Android,"2,754",954,Java,Side menu with some categories to choose.,https://github.com/Yalantis/Side-Menu.Android,Non-web libraries and frameworks
+jhy/jsoup,"2,753",929,Java,"jsoup: Java HTML Parser, with best of DOM, CSS, and jquery",https://github.com/jhy/jsoup,Non-web libraries and frameworks
+bauerca/drag-sort-listview,"2,719","1,531",Java,Android ListView with drag and drop reordering.,https://github.com/bauerca/drag-sort-listview,Non-web libraries and frameworks
+square/android-times-square,"2,718",905,Java,Standalone Android widget for picking a single date from a calendar view.,https://github.com/square/android-times-square,Non-web libraries and frameworks
+nicolasgramlich/AndEngine,"2,717","1,487",Java,Free Android 2D OpenGL Game Engine,https://github.com/nicolasgramlich/AndEngine,Non-web libraries and frameworks
+daimajia/AndroidImageSlider,"2,711",924,Java,An amazing and convenient Android image slider.,https://github.com/daimajia/AndroidImageSlider,Non-web libraries and frameworks
+ACRA/acra,"2,706",746,Java,Application Crash Reports for Android,https://github.com/ACRA/acra,Non-web libraries and frameworks
+jgilfelt/SystemBarTint,"2,685",797,Java,[DEPRECATED] Apply background tinting to the Android system UI when using KitKat translucent modes,https://github.com/jgilfelt/SystemBarTint,Non-web libraries and frameworks
+iBotPeaches/Apktool,"2,635",870,Java,A tool for reverse engineering Android apk files,https://github.com/iBotPeaches/Apktool,Non-web libraries and frameworks
+vinc3m1/RoundedImageView,"2,634",738,Java,"A fast ImageView that supports rounded corners, ovals, and circles.",https://github.com/vinc3m1/RoundedImageView,Non-web libraries and frameworks
+ManuelPeinado/FadingActionBar,"2,622",733,Java,"Android library implementing a fading effect for the action bar, similar to the one found in the Play Music app",https://github.com/ManuelPeinado/FadingActionBar,Non-web libraries and frameworks
+cyrilmottier/GreenDroid,"2,611","1,026",Java,GreenDroid is a development library for the Android platform. It makes UI developments easier and consistent through your applications.,https://github.com/cyrilmottier/GreenDroid,Non-web libraries and frameworks
+alibaba/dexposed,"2,600",755,Java,dexposed enable 'god' mode for single android application.,https://github.com/alibaba/dexposed,Non-web libraries and frameworks
+druid-io/druid,"2,593",625,Java,Column oriented distributed data store ideal for powering interactive applications,https://github.com/druid-io/druid,Non-web libraries and frameworks
+processing/processing,"2,589",779,Java,Source code for the Processing Development Environment (PDE),https://github.com/processing/processing,Non-web libraries and frameworks
+SimonVT/android-menudrawer,"2,562","1,253",Java,"*DEPRECATED* A slide-out menu implementation, which allows users to navigate between views in your app.",https://github.com/SimonVT/android-menudrawer,Non-web libraries and frameworks
+yangfuhai/afinal,"2,557","1,592",Java,"Afinal是一个android的ioc，orm框架，内置了四大模块功能：FinalAcitivity,FinalBitmap,FinalDb,FinalHttp。通过finalActivity，我们可以通过注解的方式进行绑定ui和事件。通过finalBitmap，我们可以方便的加载bitmap图片，而无需考虑oom等问题。通过finalDB模块，我们一行代码就可以对android的sqlite数据库进行增删改查。通过FinalHttp模块，我们可以以ajax形式请求http数据。详情请通过以下网址查看。",https://github.com/yangfuhai/afinal,Non-web libraries and frameworks
+Yalantis/uCrop,"2,538",323,Java,Image Cropping Library for Android,https://github.com/Yalantis/uCrop,Non-web libraries and frameworks
+ikew0ng/SwipeBackLayout,"2,520",919,Java,An Android library that help you to build app with swipe back gesture.,https://github.com/ikew0ng/SwipeBackLayout,Non-web libraries and frameworks
+brettwooldridge/HikariCP,"2,512",342,Java,光 HikariCP・A solid high-performance JDBC connection pool at last.,https://github.com/brettwooldridge/HikariCP,Non-web libraries and frameworks
+yixia/VitamioBundle,"2,506","1,575",Java,Vitamio for Android,https://github.com/yixia/VitamioBundle,Non-web libraries and frameworks
+daimajia/NumberProgressBar,"2,497",801,Java,"A beautiful, slim Android ProgressBar.",https://github.com/daimajia/NumberProgressBar,Non-web libraries and frameworks
+BoltsFramework/Bolts-Android,"2,492",358,Java,Bolts is a collection of low-level libraries designed to make developing mobile apps easier.,https://github.com/BoltsFramework/Bolts-Android,Non-web libraries and frameworks
+koral--/android-gif-drawable,"2,491",731,Java,Views and Drawable for displaying animated GIFs on Android,https://github.com/koral--/android-gif-drawable,Non-web libraries and frameworks
+ogaclejapan/SmartTabLayout,"2,465",504,Java,A custom ViewPager title strip which gives continuous feedback to the user when scrolling,https://github.com/ogaclejapan/SmartTabLayout,Non-web libraries and frameworks
+johannilsson/android-pulltorefresh,"2,462","1,184",Java,DEPRECATED This project aims to provide a reusable pull to refresh widget for Android.,https://github.com/johannilsson/android-pulltorefresh,Non-web libraries and frameworks
+neo4j/neo4j,"2,455",869,Java,Graphs for Everyone,https://github.com/neo4j/neo4j,Non-web libraries and frameworks
+Bilibili/DanmakuFlameMaster,"2,453",777,Java,"大弹幕时代来临了,这里是Android上最好的开源弹幕引擎·烈焰弹幕使 ～ 被弹幕吞噬吧!",https://github.com/Bilibili/DanmakuFlameMaster,Non-web libraries and frameworks
+81813780/AVLoadingIndicatorView,"2,441",549,Java,Nice loading animations for Android,https://github.com/81813780/AVLoadingIndicatorView,Non-web libraries and frameworks
+JakeWharton/DiskLruCache,"2,435",695,Java,Java implementation of a Disk-based LRU cache which specifically targets Android compatibility.,https://github.com/JakeWharton/DiskLruCache,Non-web libraries and frameworks
+google/auto,"2,411",267,Java,A collection of source code generators for Java.,https://github.com/google/auto,Non-web libraries and frameworks
+jdamcd/android-crop,"2,401",762,Java,Android library project for cropping images,https://github.com/jdamcd/android-crop,Non-web libraries and frameworks
+pedant/sweet-alert-dialog,"2,400",809,Java,"SweetAlert for Android, a beautiful and clever alert dialog",https://github.com/pedant/sweet-alert-dialog,Non-web libraries and frameworks
+mybatis/mybatis-3,"2,387","1,932",Java,MyBatis SQL mapper framework for Java,https://github.com/mybatis/mybatis-3,Non-web libraries and frameworks
+rzwitserloot/lombok,"2,361",542,Java,Very spicy additions to the Java programming language.,https://github.com/rzwitserloot/lombok,Non-web libraries and frameworks
+square/sqlbrite,"2,339",181,Java,A lightweight wrapper around SQLiteOpenHelper which introduces reactive stream semantics to SQL operations.,https://github.com/square/sqlbrite,Non-web libraries and frameworks
+JakeWharton/RxBinding,"2,334",237,Java,RxJava binding APIs for Android's UI widgets.,https://github.com/JakeWharton/RxBinding,Non-web libraries and frameworks
+mockito/mockito,"2,297",465,Java,Mocking framework for unit tests written in Java,https://github.com/mockito/mockito,Non-web libraries and frameworks
+jgilfelt/android-viewbadger,"2,289",934,Java,"[DEPRECATED] A simple way to ""badge"" any given Android view at runtime without having to cater for it in layout",https://github.com/jgilfelt/android-viewbadger,Non-web libraries and frameworks
+deeplearning4j/deeplearning4j,"2,277",791,Java,"Deep Learning for Java, Scala & Clojure on Hadoop, Spark",https://github.com/deeplearning4j/deeplearning4j,Non-web libraries and frameworks
+Prototik/HoloEverywhere,"2,275",758,Java,NO LONGER MAINTAINED. DEVELOP FOR 4.X+ DUDE.,https://github.com/Prototik/HoloEverywhere,Non-web libraries and frameworks
+JoanZapata/android-iconify,"2,266",341,Java,"Android integration of multiple icon providers such as FontAwesome, Entypo, Typicons,...",https://github.com/JoanZapata/android-iconify,Non-web libraries and frameworks
+Comcast/FreeFlow,"2,256",417,Java,A layout engine for Android that decouples layouts from the View containers that manage scrolling and view recycling. FreeFlow makes it really easy to create custom layouts and beautiful transition animations as data and layouts change,https://github.com/Comcast/FreeFlow,Non-web libraries and frameworks
+haifengl/smile,"2,247",276,Java,Statistical Machine Intelligence & Learning Engine,https://github.com/haifengl/smile,Non-web libraries and frameworks
+java-native-access/jna,"2,213",644,Java,Java Native Access,https://github.com/java-native-access/jna,Non-web libraries and frameworks
+Yalantis/Phoenix,"2,201",644,Java,Phoenix Pull-to-Refresh,https://github.com/Yalantis/Phoenix,Non-web libraries and frameworks
+openaphid/android-flip,"2,197","1,276",Java,"A component for flip animation on Android, which is similar to the effect in Flipboard iPhone/Android",https://github.com/openaphid/android-flip,Non-web libraries and frameworks
+roughike/BottomBar,"2,173",227,Java,A custom view component that mimics the new Material Design Bottom Navigation pattern.,https://github.com/roughike/BottomBar,Non-web libraries and frameworks
+theDazzler/droidicon,"2,164",243,Java,"Over 1600 customizable icons for Android including 750+ Google Material Design icons, 25 ready-made social badges, and more!",https://github.com/theDazzler/droidicon,Non-web libraries and frameworks
+lecho/hellocharts-android,"2,152",656,Java,"Charts/graphs library for Android compatible with API 8+, several chart types with support for scaling, scrolling and animations",https://github.com/lecho/hellocharts-android,Non-web libraries and frameworks
+CyberAgent/android-gpuimage,"2,150",798,Java,Android filters based on OpenGL (idea from GPUImage for iOS),https://github.com/CyberAgent/android-gpuimage,Non-web libraries and frameworks
+google/iosched,"10,464","4,080",Java,The Google I/O 2015 Android App,https://github.com/google/iosched,Application software
+HannahMitt/HomeMirror,"6,885",543,Java,Android application powering the mirror in my house,https://github.com/HannahMitt/HomeMirror,Application software
+nickbutcher/plaid,"4,625",807,Java,,https://github.com/nickbutcher/plaid,Application software
+JakeWharton/u2020,"3,416",660,Java,A sample Android app which showcases advanced usage of Dagger among other open source libraries.,https://github.com/JakeWharton/u2020,Application software
+googlesamples/android-topeka,"3,195",723,Java,A fun to play quiz that showcases material design on Android,https://github.com/googlesamples/android-topeka,Application software
+geeeeeeeeek/WeChatLuckyMoney,"2,983","1,032",Java,":moneybag: 微信抢红包插件, 帮助你在微信群聊抢红包时战无不胜. An Android app that helps you snatch virtual red envelopes in WeChat group chat.",https://github.com/geeeeeeeeek/WeChatLuckyMoney,Application software
+frogermcs/InstaMaterial,"2,721",756,Java,Implementation of Instagram with Material Design (originally based on Emmanuel Pacamalan's concept),https://github.com/frogermcs/InstaMaterial,Application software
+dropbox/hackpad,"2,635",322,Java,Hackpad is a web-based realtime wiki.,https://github.com/dropbox/hackpad,Application software
+actorapp/actor-platform,"2,460",471,Java,"Actor Messaging platform, modern replacement for Jabber/ejabberd",https://github.com/actorapp/actor-platform,Application software
+k9mail/k-9,"2,435","1,380",Java,K-9 Mail – Advanced Email for Android,https://github.com/k9mail/k-9,Application software
+romannurik/muzei,"2,307",595,Java,Muzei Live Wallpaper for Android,https://github.com/romannurik/muzei,Application software
+qii/weiciyuan,"2,280","1,298",Java,Sina Weibo Android Client,https://github.com/qii/weiciyuan,Application software
