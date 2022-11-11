@@ -1,0 +1,53 @@
+import csv
+from typing import List
+from datetime import date
+
+LAMBDA = 0.8
+
+
+class Graph:
+    '''
+    {dev1: {dev2: 1.0, dev3: 2.0}, dev2{dev1: 1.0} ...}
+    '''
+
+    def __init__(self):
+        self.vertices = dict()
+        self.baseline = date(2008, 12, 24)
+        self.deadline = date(2022, 12, 24)
+
+    def build_from_csv(self, pr_csv: str):
+        def create_dict(s:str):
+            if s not in self.vertices.keys():
+                self.vertices[s] = dict()
+
+        with open(pr_csv) as f:
+            reader = csv.reader(f)
+            # each pull request
+            for row in reader:
+                proposer = row[2]
+                comments = row[3:]  # [comment1,comment1_time,comment2,comment2_time]
+                create_dict(proposer)
+                # each commenter and comment with proposer
+                for i in range(0, len(comments), 2):
+                    commenter = comments[i]
+                    # skip if the proposer and commenter is the same
+                    if proposer == commenter:
+                        continue
+                    create_dict(commenter)
+                    edge_weight = self.calc_edge(i, comments)
+                    self.update(proposer, commenter, edge_weight)
+        return self.vertices
+
+    def calc_edge(self, index: int, comments: List[str]):
+        def to_date(t: str):  # turn 2020-12-24 to date(2020,12,24) to calculate days number
+            t = t.split("-")
+            return date(int(t[0]), int(t[1]), int(t[2]))
+
+        time_factor = (to_date(comments[index + 1]) - self.baseline) / (self.deadline - self.baseline)
+        return LAMBDA ** (index - 1) * time_factor
+
+    def update(self, proposer: str, commenter: str, edge_weight: float):
+        pd = self.vertices[proposer]
+        cd = self.vertices[commenter]
+        pd[commenter] = pd.get(commenter, 0) + edge_weight
+        cd[proposer] = cd.get(proposer, 0) + edge_weight
