@@ -4,7 +4,6 @@ from datetime import date
 
 LAMBDA = 0.8
 
-
 class Graph:
     '''
     {dev1: {dev2: 1.0, dev3: 2.0}, dev2{dev1: 1.0} ...}
@@ -44,7 +43,7 @@ class Graph:
             return date(int(t[0]), int(t[1]), int(t[2]))
 
         time_factor = (to_date(comments[index + 1]) - self.baseline) / (self.deadline - self.baseline)
-        return LAMBDA ** (index - 1) * time_factor
+        return LAMBDA ** index * time_factor
 
     def update(self, proposer: str, commenter: str, edge_weight: float):
         pd = self.vertices[proposer]
