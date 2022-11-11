@@ -1,7 +1,7 @@
 from typing import List
 from expertise.repository import Repository
-from expertise.commit import Commit
 from expertise.javafile import File as JavaFile
+import utils.csv as csv
 
 
 class PersonalOwnership:
@@ -14,10 +14,10 @@ class PersonalOwnership:
         return f"path:{self.file_path}, author:{self.author}, ownership:{self.ownership}"
 
     def tolist(self):
-        return [self.file_path,self.author,self.ownership]
+        return [self.file_path, self.author, self.ownership]
 
 
-def get_file_ownership(file: JavaFile)->List[PersonalOwnership]:
+def get_file_ownership(file: JavaFile) -> List[PersonalOwnership]:
     commits = file.get_commits()
     n = len(commits)
     ownership = []
@@ -27,3 +27,10 @@ def get_file_ownership(file: JavaFile)->List[PersonalOwnership]:
     for author in author_com_num_dict.keys():
         ownership.append(PersonalOwnership(file.path, author, author_com_num_dict[author] / n))
     return ownership
+
+
+def get_repo_ownership(repo_path: str, output_path: str, mode: str = "a"):
+    files = Repository(repo_path).get_files()
+    with open(output_path, mode, encoding="utf-8") as f:
+        for file in files:
+            csv.ownership2csv(get_file_ownership(file), f)

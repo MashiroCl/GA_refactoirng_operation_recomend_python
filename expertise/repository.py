@@ -12,11 +12,11 @@ class Repository:
         self.name = path.split("/")[-1]
 
     def get_files(self, exclude_tests: bool = True) -> List[File]:
-        paths = glob.glob(self.path+"/*/*.java")
+        paths = glob.glob(self.path+"/**/*.java",recursive=True)
         files = []
         for path in paths:
             if exclude_tests:
                 if "test" in path or "Test" in path:
                     continue
-            files.append(File(path))
+            files.append(File(self.path,path))
         return files
