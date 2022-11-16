@@ -1,7 +1,8 @@
 import unittest
 from expertise.javafile import File
 from expertise.repository import Repository
-from expertise.ownership import get_file_ownership
+from expertise.ownership import get_file_ownership, get_repo_ownership, \
+    jaccard, get_repo_ownership_t, search_similar_files, get_rev_file_ownership, extract_owners
 
 
 class MyTestCase(unittest.TestCase):
@@ -29,6 +30,45 @@ class MyTestCase(unittest.TestCase):
         res = get_file_ownership(f)
         self.assertEqual("0.625", res[0].ownership)
         self.assertEqual("0.375", res[0].ownership)
+
+    def test_get_ownership_for_repo(self):
+        repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
+        output_path = "./mbassador.csv"
+        get_repo_ownership(repo_path, output_path)
+
+    def test_jaccard(self):
+        path1 = "1/2/3/4"
+        path2 = "3/4/5/6/7/8"
+        self.assertEqual(jaccard(path1,path2), 0.25)
+
+    def test_similar_files(self):
+        repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
+        files = Repository(repo_path).get_files()
+        similar_files = search_similar_files(files[0], files)
+        # print(f"origin: {files[0].path}")
+        # print("==================================")
+        # for each in similar_files:
+        #     print(each.path)
+        self.assertEqual(len(similar_files),4)
+
+    def test_get_rev_file_ownership(self):
+        repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
+        files = Repository(repo_path).get_files()
+        similar_files = search_similar_files(files[0], files)
+        res = get_rev_file_ownership(files[1],"bennidi",similar_files)
+        # print(res)
+        self.assertEqual(res.ownership,1.9448464697829062)
+
+    def test_get_ownership_for_repo_t(self):
+        repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
+        output_path = "./mbassador_t.csv"
+        get_repo_ownership_t(repo_path, output_path)
+
+    def test_extract_owners(self):
+        csv_path = "./mbassador_t.csv"
+        output_path = "./owners.csv"
+        with open(output_path,"w") as f:
+            extract_owners(csv_path,f)
 
 if __name__ == '__main__':
     unittest.main()
