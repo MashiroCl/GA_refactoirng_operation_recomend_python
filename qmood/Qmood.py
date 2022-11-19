@@ -56,6 +56,9 @@ class Qmood():
         # print("DSC:{},NOH:{},ANA:{},DAM:{},DCC:{},CAM:{},MOA:{},MFA:{},NOP:{},CIS:{},NOM:{}".format(self.DSC,self.NOH,self.ANA,self.DAM,self.DCC,self.CAM,self.MOA,self.MFA,self.NOP,self.CIS,self.NOM))
 
         self.Resusability = -0.25 * self.DCC + 0.25 * self.CAM + 0.5 * self.CIS + 0.5 * self.DSC
+        # print("====================================================================================")
+        # print(f"DCC:{self.DCC}, CAM:{self.CAM}, CIS:{self.CIS}, DSC:{self.DSC}")
+        # print("====================================================================================")
         self.Flexibility = 0.25 * self.DAM - 0.25 * self.DCC + 0.5 * self.MOA + 0.5 * self.NOP
         self.Understandability = -0.33 * self.ANA + 0.33 * self.DAM - 0.33 * self.DCC + 0.33 * self.CAM - 0.33 * self.NOP - 0.33 * self.NOM - 0.33 * self.DSC
         self.Functionality = 0.12 * self.CAM + 0.22 * self.NOP + 0.22 * self.CIS + 0.22 * self.DSC + 0.22 * self.NOH
