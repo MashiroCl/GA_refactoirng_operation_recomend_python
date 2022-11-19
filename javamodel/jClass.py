@@ -1,4 +1,5 @@
-from .jMethod import jMethod
+from javamodel.jMethod import jMethod
+
 
 class jClass:
     def __init__(self,load):
