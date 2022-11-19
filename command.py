@@ -13,6 +13,14 @@ def command_line():
     return parser.parse_args()
 
 
+def command_extract():
+    parser = argparse.ArgumentParser(description="Extract info for MORCoRE")
+    parser.add_argument("-r", help="repo path")
+    parser.add_argument("-u", help= "repo url")
+    parser.add_argument("-o", help = "output")
+    return parser.parse_args()
+
+
 def functions(args):
     if args.e is not None:
         get_repo_ownership_t(args.i, args.o)
@@ -46,11 +54,15 @@ def extract_repo_model(jxplatform, repo_p, output_directory):
     extract_call_graph(jxplatform, repo_p, call_p)
 
 
-def extract():
+def extract(args):
     repo_p = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/javapoet"
     repo_url = "https://github.com/square/javapoet"
     output_directory = "/Users/leichen/Desktop/output/temp/"
-    jxplatform = "/Users/leichen/Desktop/arExtractor.jar"
+    jxplatform = "jxplatform2/arExtractor.jar"
+
+    repo_p = args.r
+    repo_url = args.u
+    output_directory = args.o
 
     print(f"Extracting repository model for {repo_p}")
     extract_repo_model(jxplatform, repo_p, output_directory)
@@ -67,6 +79,5 @@ def extract():
 
 
 if __name__ == "__main__":
-    # args = command_line()
-    # functions(args)
-    extract()
+    args = command_extract()
+    extract(args)
