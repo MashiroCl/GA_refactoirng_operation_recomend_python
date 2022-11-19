@@ -1,12 +1,15 @@
 from typing import List
 from expertise.repository import Repository
 from expertise.javafile import File as JavaFile
-import utils.csv as csv
+import utils.csv as csv_utils
+import csv
 from datetime import date
 
 JACCARD_THRESHOLD = 0.8
-BASE_LINE = date(2008,12,24)
-DEAD_LINE = date(2022,12,24)
+BASE_LINE = date(2008, 12, 24)
+DEAD_LINE = date(2022, 12, 24)
+
+LOCAL_FILE_PATH = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
 
 
 class PersonalOwnership:
@@ -70,26 +73,37 @@ def jaccard(path1: str, path2: str):
     return len(p1_set.intersection(p2_set)) / len(p1_set.union(p2_set))
 
 
+def trim_path(po: PersonalOwnership):
+    if LOCAL_FILE_PATH in po.file_path:
+        po.file_path = po.file_path.split(LOCAL_FILE_PATH)[1]
+    return po
+
+
 def get_repo_ownership(repo_path: str, output_path: str, mode: str = "a"):
     files = Repository(repo_path).get_files()
     with open(output_path, mode, encoding="utf-8") as f:
         for file in files:
-            csv.ownership2csv(get_file_ownership(file), f)
+            csv_utils.ownership2csv(get_file_ownership(file), f)
+
 
 def get_repo_ownership_t(repo_path: str, output_path: str, mode: str = "a"):
     files = Repository(repo_path).get_files()
     with open(output_path, mode, encoding="utf-8") as f:
         for file in files:
             similar_files = search_similar_files(file, files)
-            csv.ownership2csv(get_file_ownership_t(file, similar_files), f)
+            pos = get_file_ownership_t(file, similar_files)
+            for po in pos:
+                trim_path(po)
+            csv_utils.ownership2csv(pos, f)
 
 
-def extract_owners(csv_path:str, output_file:'File'):
+def extract_owners(csv_path: str, output_file: 'File'):
     '''
     find the owners in one java file and export them into another csv
     :param :
     :return:
     '''
+
     def extract_csv() -> List[List[str]]:
         with open(csv_path, "r") as f:
             data = f.readlines()
@@ -108,11 +122,11 @@ def extract_owners(csv_path:str, output_file:'File'):
         '''
         candidates.sort(key=lambda x: float(x[2]), reverse=True)
         if len(candidates) < 2:
-            return [PersonalOwnership(candidates[0][0],candidates[0][1],candidates[0][2])]
+            return [PersonalOwnership(candidates[0][0], candidates[0][1], candidates[0][2])]
         # todo: discuss need of threshold
         # elif float(candidates[0][2]) - float(candidates[1][2]) < OWNERSHIP_THRESHOLD:
-        return [PersonalOwnership(candidates[0][0],candidates[0][1],candidates[0][2]),
-                PersonalOwnership(candidates[1][0],candidates[1][1],candidates[1][2])]
+        return [PersonalOwnership(candidates[0][0], candidates[0][1], candidates[0][2]),
+                PersonalOwnership(candidates[1][0], candidates[1][1], candidates[1][2])]
 
     csv_lines = extract_csv()
     owners = []
@@ -125,4 +139,17 @@ def extract_owners(csv_path:str, output_file:'File'):
                 candidates.append(csv_lines[row])
                 row += 1
             owners += select_owners(candidates)
-    csv.ownership2csv(owners, output_file)
+    csv_utils.ownership2csv(owners, output_file)
+
+
+def get_path_owner_dict(owners_path: str):
+    '''
+    key: file_path, value: owner/owners
+    '''
+    res = dict()
+    with open(owners_path) as f:
+        reader = csv.reader(f)
+        for row in reader:
+            res.setdefault(row[0], list()).append(row[1])
+    return res
+
