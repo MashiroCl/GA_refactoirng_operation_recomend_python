@@ -1,5 +1,5 @@
-from jxplatform2.jVariable import jVariable
-from jxplatform2.jMethod import jMethod
+from javamodel.jVariable import jVariable
+from javamodel.jMethod import jMethod
 from typing import List, Dict
 
 
@@ -85,7 +85,6 @@ def getArgsTypes(jm):
 
 
 def CAM(jc):
-    CAM = 0
     types = set()
     methods = jc.getMethod()
     numerator = 0
@@ -219,7 +218,7 @@ def DSC(length:int, inline_class_info: Dict[str, int]):
     :param jClassList:
     :return: total number of classes in design
     '''
-    return length+inline_class_info["DSC"]
+    return length+inline_class_info.get("DSC",0)
 
 
 def count_hierarchies(java_classes):
@@ -239,7 +238,7 @@ def NOH(hierarchies: int, inline_class_info: Dict[str, int]):
 	Other java.lang/java.util classes are temporaly not considered
     :return:
     '''
-    return hierarchies + inline_class_info["NOH"]
+    return hierarchies + inline_class_info.get("NOH",0)
 
 
 def count_classes_with_child_class(java_classes):
@@ -251,7 +250,7 @@ def ANA(classes_with_child_class: int, inline_class_info: Dict[str, int], length
     Average number of classes from which a class inherits information
     :return:
     '''
-    return (classes_with_child_class + inline_class_info["ANA"]) / length
+    return (classes_with_child_class + inline_class_info.get("ANA",0)) / length
 
 
 def init_inline_class_info():
