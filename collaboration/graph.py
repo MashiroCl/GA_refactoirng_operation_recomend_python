@@ -4,6 +4,8 @@ from datetime import date
 
 LAMBDA = 0.8
 
+exclude_name_list = {"dependabot[bot]" }
+
 class Graph:
     '''
     {dev1: {dev2: 1.0, dev3: 2.0}, dev2{dev1: 1.0} ...}
@@ -18,23 +20,30 @@ class Graph:
         def create_dict(s:str):
             if s not in self.vertices.keys():
                 self.vertices[s] = dict()
-
+        self_collaboration_score = 0
         with open(pr_csv) as f:
             reader = csv.reader(f)
             # each pull request
             for row in reader:
                 proposer = row[2]
+                if proposer in exclude_name_list:
+                    continue
                 comments = row[3:]  # [comment1,comment1_time,comment2,comment2_time]
                 create_dict(proposer)
                 # each commenter and comment with proposer
                 for i in range(0, len(comments), 2):
                     commenter = comments[i]
-                    # skip if the proposer and commenter is the same
-                    if proposer == commenter:
+                    # skip if the proposer and commenter is the same or commenter should be excluded
+                    if proposer == commenter or commenter in exclude_name_list:
                         continue
                     create_dict(commenter)
                     edge_weight = self.calc_edge(i, comments)
                     self.update(proposer, commenter, edge_weight)
+                    self_collaboration_score = max(self.vertices[proposer][commenter], self_collaboration_score)
+            # set the collaboration score for each proposer and him/herself as the maximum collaboration score which
+            # ever exists in the repository
+            for proposer in self.vertices.keys():
+                self.vertices[proposer][proposer] = self_collaboration_score
         return self.vertices
 
     def calc_edge(self, index: int, comments: List[str]):
