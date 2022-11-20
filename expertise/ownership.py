@@ -43,7 +43,7 @@ def get_file_ownership_t(file: JavaFile, similar_files: List[JavaFile]) -> List[
     param
         files: files having similar paths with the 1st parameter file
     """
-    authors = set([commit.author_name for commit in file.get_commits()])
+    authors = set([commit.author_name for commit in file.get_commits_from_json()])
     return [get_rev_file_ownership(file, each_author, similar_files) for each_author in authors]
 
 
@@ -53,7 +53,7 @@ def get_rev_file_ownership(file: JavaFile, reviewer: str, similar_files: List[Ja
 
     ownership = 0
     for each in similar_files:
-        for commit in each.get_commits():
+        for commit in each.get_commits_from_json():
             if commit.author_name == reviewer:
                 ownership += time_factor(commit)
     return PersonalOwnership(file.path, reviewer, ownership)
@@ -88,6 +88,9 @@ def get_repo_ownership(repo_path: str, output_path: str, mode: str = "a"):
 
 def get_repo_ownership_t(repo_path: str, output_path: str, mode: str = "a"):
     files = Repository(repo_path).get_files()
+    # build git log json
+    for file in files:
+        file.commits2csv()
     with open(output_path, mode, encoding="utf-8") as f:
         for file in files:
             similar_files = search_similar_files(file, files)

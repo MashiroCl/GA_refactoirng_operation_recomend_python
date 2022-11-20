@@ -13,6 +13,11 @@ class MyTestCase(unittest.TestCase):
         for file in files:
             file.get_commits()
 
+    def test_commits2csv(self):
+        file_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/antlr4/antlr4-maven-plugin/src/main/java/org/antlr/mojo/antlr4/MojoUtils.java"
+        repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/antlr4"
+        f = File(repo_path, file_path)
+        f.commits2csv()
 
     def test_log_commits(self):
         file_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/antlr4/antlr4-maven-plugin/src/main/java/org/antlr/mojo/antlr4/MojoUtils.java"
@@ -60,15 +65,32 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(res.ownership,1.9448464697829062)
 
     def test_get_ownership_for_repo_t(self):
-        repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador"
-        output_path = "./mbassador_t.csv"
+        import time
+        start = time.time()
+        repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/jedis"
+        output_path = "./jedis.csv"
         get_repo_ownership_t(repo_path, output_path)
+        end = time.time()
+        print(end-start)
 
     def test_extract_owners(self):
         csv_path = "./mbassador_t.csv"
-        output_path = "./owners.csv"
+        output_path = "./owners.csv_utils"
         with open(output_path,"w") as f:
             extract_owners(csv_path,f)
+
+    def test_jedis(self):
+        import glob
+        files = glob.glob("/Users/leichen/ResearchAssistant/InteractiveRebase/data/quasar/**/*.java",recursive=True)
+        print(len(files))
+
+    def test_mkdir(self):
+        import os
+        path = "/Users/leichen/Desktop/output/mkdir"
+        if not os.path.exists(path):
+            os.mkdir(path)
+        os.system("cd /Users/leichen/Desktop/output/mkdir && touch 123.txt")
+
 
 if __name__ == '__main__':
     unittest.main()
