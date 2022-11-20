@@ -1,7 +1,8 @@
-import argparse
+import argparse, os
 from expertise.ownership import get_repo_ownership_t, extract_owners
 from collaboration.collaboration import get_pr_history
 from jxplatform2.Jxplatform2 import extract_abs, extract_call_graph
+from utils.directory import mkdir
 
 def command_line():
     parser = argparse.ArgumentParser(description="MORCoRE: Multi-objective refactoring recommendation considering review effort")
@@ -17,7 +18,6 @@ def command_extract():
     parser = argparse.ArgumentParser(description="Extract info for MORCoRE")
     parser.add_argument("-r", help="repo path")
     parser.add_argument("-u", help= "repo url")
-    parser.add_argument("-o", help = "output")
     return parser.parse_args()
 
 
@@ -59,20 +59,28 @@ def extract(args):
 
     repo_p = args.r
     repo_url = args.u
-    output_directory = args.o
+
+    MORCoRE_output = os.path.join(repo_p, "MORCoRE")
+    csv_p = os.path.join(MORCoRE_output, "csv")
+    output_p = os.path.join(MORCoRE_output, "output")
+    mkdir(MORCoRE_output)
+    mkdir(csv_p)
+    mkdir(output_p)
 
     print(f"Extracting repository model for {repo_p}")
-    extract_repo_model(jxplatform, repo_p, output_directory)
+    extract_repo_model(jxplatform, repo_p, output_p)
     print(f"Finished extracting repository model for {repo_p}")
 
     print(f"Extracting expertise for {repo_p}")
-    extract_expertise(repo_p, output_directory)
+    extract_expertise(repo_p, output_p)
     print(f"Finished extracting expertise for {repo_p}")
 
     print(f"Extracting collaboration for {repo_p}")
-    extract_collaboration(repo_url, output_directory)
+    extract_collaboration(repo_url, output_p)
     print(f"Finished extracting collaboration for {repo_p}")
 
+def search():
+    pass
 
 
 if __name__ == "__main__":
