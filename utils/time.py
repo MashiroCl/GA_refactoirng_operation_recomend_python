@@ -5,7 +5,7 @@ import calendar
 abbr_to_num = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 
 
-def format_committime(t: str) -> str:
+def format_committime(t: str) -> date:
     '''
     commit time format
     e.g. Thu, 30 Mar 2017 10:44:25 -0700 ->2017-03-30
@@ -13,7 +13,7 @@ def format_committime(t: str) -> str:
     if not t:
         return None
     t = t.split(" ")[1:4]
-    return date(int(t[2]), abbr_to_num[t[1]], int(t[0])).__str__()
+    return date(int(t[2]), abbr_to_num[t[1]], int(t[0]))
 
 
 def format_prtime(t: str) -> str:
