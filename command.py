@@ -55,9 +55,6 @@ def extract_repo_model(jxplatform, repo_p, output_directory):
 
 
 def extract(args):
-    repo_p = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/javapoet"
-    repo_url = "https://github.com/square/javapoet"
-    output_directory = "/Users/leichen/Desktop/output/temp/"
     jxplatform = "jxplatform2/arExtractor.jar"
 
     repo_p = args.r
