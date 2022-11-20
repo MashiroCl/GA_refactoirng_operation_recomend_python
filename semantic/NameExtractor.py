@@ -1,6 +1,6 @@
 from typing import List
-from jxplatform2.jClass import jClass
-from jxplatform2.jVariable import jVariable
+from javamodel.jClass import jClass
+from javamodel.jVariable import jVariable
 
 
 class NameExtractor():
