@@ -62,7 +62,7 @@ def extract(args):
 
     MORCoRE_output = os.path.join(repo_p, "MORCoRE")
     csv_p = os.path.join(MORCoRE_output, "csv")
-    output_p = os.path.join(MORCoRE_output, "output")
+    output_p = os.path.join(MORCoRE_output, "output/")
     mkdir(MORCoRE_output)
     mkdir(csv_p)
     mkdir(output_p)
