@@ -27,9 +27,10 @@ class SearchTechnique:
             p = LocalPlatform()
         if platform == "titan":
             p = TitanPlatform()
-        p.set_repository(repo_name)
         if platform == "valkyrie":
             p = ValkyriePlatform()
+
+        p.set_repository(repo_name)
         return p
 
     def load_args(self):
