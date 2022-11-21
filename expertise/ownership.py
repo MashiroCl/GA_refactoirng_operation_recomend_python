@@ -10,6 +10,8 @@ BASE_LINE = date(2008, 12, 24)
 DEAD_LINE = date(2022, 12, 24)
 
 LOCAL_FILE_PATH = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
+TITAN_FILE_PATH = "/unknown/unknown/unknown"
+VALKYRIE_FILE_PATH = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt"
 
 
 class PersonalOwnership:
@@ -76,6 +78,10 @@ def jaccard(path1: str, path2: str):
 def trim_path(po: PersonalOwnership):
     if LOCAL_FILE_PATH in po.file_path:
         po.file_path = po.file_path.split(LOCAL_FILE_PATH)[1]
+    elif VALKYRIE_FILE_PATH in po.file_path:
+        po.file_path = po.file_path.split(VALKYRIE_FILE_PATH)[1]
+    elif TITAN_FILE_PATH in po.file_path:
+        po.file_path = po.file_path.split(TITAN_FILE_PATH)[1]
     return po
 
 
