@@ -1,12 +1,11 @@
 import sys
-
 sys.path.append("../")
-from jxplatform2.jClass import jClass
+import json
+from javamodel.jClass import jClass
 from search_technique.SearchROProblemRE import SearchROProblemRE
 from search_technique.SearchROProblemNRE import SearchROProblemNRE
 from search_technique.enviroment.Platform import *
 from jmetal.util.solution import get_non_dominated_solutions, print_function_values_to_file, print_variables_to_file
-from utils import readJson
 
 
 class SearchTechnique:
@@ -29,6 +28,8 @@ class SearchTechnique:
         if platform == "titan":
             p = TitanPlatform()
         p.set_repository(repo_name)
+        if platform == "valkyrie":
+            p = ValkyriePlatform()
         return p
 
     def load_args(self):
@@ -70,7 +71,8 @@ class SearchTechnique:
 
     def load_repository(self, json_file: str, exclude_test: bool, exclude_anonymous: bool = False):
         # load repository class info
-        load = readJson(json_file)
+        with open(json_file) as f:
+            load = json.load(f)
         java_classes = self.json_2_jClass(load)
         java_classes = self.exclude_test_class(exclude=exclude_test, java_classes=java_classes)
         java_classes = self.exclude_anonymous_class(exclude=exclude_anonymous, java_classes=java_classes)
