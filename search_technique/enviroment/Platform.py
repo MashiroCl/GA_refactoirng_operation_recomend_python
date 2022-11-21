@@ -81,9 +81,9 @@ class ValkyriePlatform(Platform):
         self.name = "valkyrie"
 
     def set_repository(self, repo_name):
-        self.json_file_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "MORECoRE/csv/abs.json"
+        self.json_file_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORECoRE/csv/abs.json"
         self.repo_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name
-        self.output_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "MORECoRE/output/"
-        self.collaboration_csv_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "MORECoRE/csv/pullrequest.csv"
-        self.ownership_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "MORECoRE/csv/owners.csv"
-        self.call_graph_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "MORECoRE/csv/call.json"
+        self.output_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORECoRE/output/"
+        self.collaboration_csv_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORECoRE/csv/pullrequest.csv"
+        self.ownership_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORECoRE/csv/owners.csv"
+        self.call_graph_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORECoRE/csv/call.json"
