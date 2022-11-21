@@ -68,15 +68,15 @@ def extract(args):
     mkdir(output_p)
 
     print(f"Extracting repository model for {repo_p}")
-    extract_repo_model(jxplatform, repo_p, output_p)
+    extract_repo_model(jxplatform, repo_p, csv_p)
     print(f"Finished extracting repository model for {repo_p}")
 
     print(f"Extracting expertise for {repo_p}")
-    extract_expertise(repo_p, output_p)
+    extract_expertise(repo_p, csv_p)
     print(f"Finished extracting expertise for {repo_p}")
 
     print(f"Extracting collaboration for {repo_p}")
-    extract_collaboration(repo_url, output_p)
+    extract_collaboration(repo_url, csv_p)
     print(f"Finished extracting collaboration for {repo_p}")
 
 def search():
