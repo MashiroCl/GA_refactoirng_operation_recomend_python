@@ -139,7 +139,7 @@ def extract_owners(csv_path: str, output_file: 'File'):
 
     csv_lines = extract_csv()
     owners = []
-    row = 1
+    row = 0
     while row < len(csv_lines):
         if row < len(csv_lines):
             cur_file_path = csv_lines[row][0]
