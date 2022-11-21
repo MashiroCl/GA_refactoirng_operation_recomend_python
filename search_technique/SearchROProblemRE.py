@@ -1,7 +1,7 @@
 import copy
 from typing import List
 from jmetal.core.solution import IntegerSolution
-from code_ownership.CodeOwnership import CodeOwnership
+# from code_ownership.CodeOwnership import CodeOwnership
 from encoding.IntegerEncoding import IntegerEncoding
 from qmood.metricCalculation import init_inline_class_info
 from qmood.Qmood import Qmood
@@ -67,10 +67,10 @@ class SearchROProblemRE(SearchROProblem):
                                                                                 self.user_defined_classes,
                                                                                 self.inline_class_info)
 
-    @DeprecationWarning
-    def calc_relationship(self, decoded_sequencs):
-        return CodeOwnership(self.repo_path, self.ownership_path).findAuthorPairList(decoded_sequencs). \
-            calculateRelationship(self.collaboration_graph)
+    # @DeprecationWarning
+    # def calc_relationship(self, decoded_sequencs):
+    #     return CodeOwnership(self.repo_path, self.ownership_path).findAuthorPairList(decoded_sequencs). \
+    #         calculateRelationship(self.collaboration_graph)
 
     def calc_collaboration(self, decoded_sequences):
         score = 0
