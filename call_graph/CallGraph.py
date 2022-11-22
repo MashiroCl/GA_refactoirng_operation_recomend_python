@@ -1,9 +1,9 @@
 import json
 
-
 class CallGraph:
-    def __init__(self, repoPath: str):
+    def __init__(self, repoPath: str, repo_name:str):
         self.repo = repoPath
+        self.repo_name = repo_name
         with open(self.repo) as f:
             self.json = json.load(f)
         self.callgraph = dict()
@@ -36,11 +36,13 @@ class CallGraph:
             total_len = 1
         return share / total_len
 
-    def obtain_callees(self, class1, type):
-        callee_list = self.callgraph.get(class1, list())
+    def obtain_callees(self, class1, t):
+        callee_list = []
+        if class1 in self.callgraph.keys():
+            callee_list = self.callgraph[class1]
         if len(callee_list)==0:
             return callee_list
-        return callee_list[type]
+        return callee_list[t]
 
     def shared_call_out(self, class1, class2):
         '''
@@ -90,7 +92,9 @@ class CallGraph:
     def calc_call_relation(self, decoded_sequences):
         res = 0
         for each in decoded_sequences:
-            res += self.call_relation(each["class1"].getRelativeFilePath(), each["class1"].getRelativeFilePath())
+            print(each["class1"].getRelativeFilePath(self.repo_name))
+            res += self.call_relation(each["class1"].getRelativeFilePath(self.repo_name),
+                                      each["class2"].getRelativeFilePath(self.repo_name))
         'normalize'
         if len(decoded_sequences)!=0:
             res = res/len(decoded_sequences)

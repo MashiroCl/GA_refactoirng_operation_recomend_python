@@ -1,5 +1,5 @@
 from javamodel.jMethod import jMethod
-
+import utils.directory as directory
 
 class jClass:
     def __init__(self,load):
@@ -74,11 +74,13 @@ class jClass:
     def setFilePath(self,filePath:str):
         self.filePath=filePath
 
-    def getRelativeFilePath(self):
+    def getRelativeFilePath(self, repo_name):
         '''
-        return file path after "src"
+        return file path after repository name
         '''
-        return self.filePath.split("/src/")[1]
+        return directory.trim_path(self.filePath,repo_name)
+        # return self.filePath.split("/src/")[1]
+        pass
 
     def getFilePath(self)->str:
         return self.filePath

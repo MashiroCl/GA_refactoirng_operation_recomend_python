@@ -14,6 +14,7 @@ from collaboration.graph import Graph
 class Platform:
     def __init__(self):
         self.name = "platform"
+        self.repo_name = ""
         self.json_file_path = ""
         self.output_path = ""
         # developers collaboration
@@ -35,9 +36,10 @@ class Platform:
         '''
         Set repository path in paths of platform
         '''
+        self.repo_name = repo_name
 
     def load_call_graph(self) -> CallGraph:
-        return CallGraph(self.call_graph_path)
+        return CallGraph(self.call_graph_path, self.repo_name)
 
     def old_load_developer_graph(self) -> DeveloperGraph:
         pullrequests = PullRequestService().loadPullRequest(self.collaboration_csv_path)
@@ -55,6 +57,7 @@ class LocalPlatform(Platform):
         self.name = "local"
 
     def set_repository(self, repo_name):
+        self.repo_name = repo_name
         self.json_file_path = "/Users/leichen/Desktop/StaticalAnalysis/" + repo_name + ".json"
         self.repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repo_name
         self.output_path = "/Users/leichen/Desktop/output/"
@@ -68,6 +71,7 @@ class TitanPlatform(Platform):
         self.name = "titan"
 
     def set_repository(self, repo_name):
+        self.repo_name = repo_name
         self.json_file_path = "/home/chenlei/MORCO/extractResult/" + repo_name + ".json"
         self.repo_path = "/home/chenlei/MORCO/data/" + repo_name
         self.output_path = "/home/chenlei/MORCO/output_temp/"
@@ -81,6 +85,7 @@ class ValkyriePlatform(Platform):
         self.name = "valkyrie"
 
     def set_repository(self, repo_name):
+        self.repo_name = repo_name
         self.json_file_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORCoRE/csv/abs.json"
         self.repo_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name
         self.output_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORCoRE/output/"
