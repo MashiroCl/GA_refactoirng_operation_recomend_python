@@ -1,7 +1,6 @@
 import copy
 from typing import List
 from jmetal.core.solution import IntegerSolution
-# from code_ownership.CodeOwnership import CodeOwnership
 from encoding.IntegerEncoding import IntegerEncoding
 from qmood.metricCalculation import init_inline_class_info
 from qmood.Qmood import Qmood
@@ -108,10 +107,10 @@ class SearchROProblemRE(SearchROProblem):
 
         'calculate call relation'
         call_relation = self.call_graph.calc_call_relation(decoded_sequence)
+        print(call_relation)
         solution.objectives[1] = -0.2 * semantic_coherence - 0.8 * call_relation
 
         'calculate ownership on refactoring operations applied files'
-        # relationship = self.calc_relationship(decoded_sequence)
         collaboration = self.calc_collaboration(decoded_sequence)
         solution.objectives[2] = -1 * collaboration
 
