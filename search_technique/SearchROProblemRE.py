@@ -107,7 +107,6 @@ class SearchROProblemRE(SearchROProblem):
 
         'calculate call relation'
         call_relation = self.call_graph.calc_call_relation(decoded_sequence)
-        print(call_relation)
         solution.objectives[1] = -0.2 * semantic_coherence - 0.8 * call_relation
 
         'calculate ownership on refactoring operations applied files'
