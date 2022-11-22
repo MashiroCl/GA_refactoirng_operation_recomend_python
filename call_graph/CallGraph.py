@@ -92,9 +92,8 @@ class CallGraph:
     def calc_call_relation(self, decoded_sequences):
         res = 0
         for each in decoded_sequences:
-            print(each["class1"].getRelativeFilePath(self.repo_name))
-            res += self.call_relation(each["class1"].getRelativeFilePath(self.repo_name),
-                                      each["class2"].getRelativeFilePath(self.repo_name))
+            res += self.call_relation(each["class1"].getRelativeFilePath(self.repo_name).strip(),
+                                      each["class2"].getRelativeFilePath(self.repo_name).strip())
         'normalize'
         if len(decoded_sequences)!=0:
             res = res/len(decoded_sequences)
