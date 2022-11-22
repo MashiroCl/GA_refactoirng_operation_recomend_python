@@ -78,9 +78,7 @@ class jClass:
         '''
         return file path after repository name
         '''
-        return directory.trim_path(self.filePath,repo_name)
-        # return self.filePath.split("/src/")[1]
-        pass
+        return directory.trim_path(self.filePath, repo_name+"/")
 
     def getFilePath(self)->str:
         return self.filePath
