@@ -2,6 +2,7 @@ from typing import List
 from expertise.repository import Repository
 from expertise.javafile import File as JavaFile
 import utils.csv as csv_utils
+import utils.directory as directory
 import csv
 from datetime import date
 
@@ -74,7 +75,7 @@ def jaccard(path1: str, path2: str):
     p2_set = set(path2.split("/"))
     return len(p1_set.intersection(p2_set)) / len(p1_set.union(p2_set))
 
-
+@DeprecationWarning
 def trim_path(po: PersonalOwnership):
     if LOCAL_FILE_PATH in po.file_path:
         po.file_path = po.file_path.split(LOCAL_FILE_PATH)[1]
@@ -102,7 +103,7 @@ def get_repo_ownership_t(repo_path: str, output_path: str, mode: str = "a"):
             similar_files = search_similar_files(file, files)
             pos = get_file_ownership_t(file, similar_files)
             for po in pos:
-                trim_path(po)
+                po.file_path = directory.trim_path(po.file_path)
             csv_utils.ownership2csv(pos, f)
 
 
