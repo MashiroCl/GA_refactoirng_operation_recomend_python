@@ -16,8 +16,6 @@ class SearchROProblemRE(SearchROProblem):
     """
     Integer encoding problem which
     """
-    'static variable, record the call graph'
-    call_graph = None
 
     def __init__(self, abs_representation: List, platform: Platform):
         '''
@@ -76,7 +74,7 @@ class SearchROProblemRE(SearchROProblem):
         for each in decoded_sequences:
             owners = self.owners[each["class1"].getFilePath()] + self.owners[each["class2"].getFilePath()]
             score += collaboration.get_collaboration_score(self.collaboration_graph, owners)
-        return score
+        return score/len(decoded_sequences)
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
         abs_representation = copy.deepcopy(self.abs_representation)
