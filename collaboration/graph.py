@@ -4,7 +4,15 @@ from datetime import date
 
 LAMBDA = 0.8
 
-exclude_name_list = {"dependabot[bot]" }
+exclude_name_list = {"dependabot[bot]"}
+
+
+def status_coefficient(status):
+    if status == "merged":
+        return 1
+    if status == "open" or status == "closed":
+        return 0.5
+
 
 class Graph:
     '''
@@ -17,9 +25,10 @@ class Graph:
         self.deadline = date(2022, 12, 24)
 
     def build_from_csv(self, pr_csv: str):
-        def create_dict(s:str):
+        def create_dict(s: str):
             if s not in self.vertices.keys():
                 self.vertices[s] = dict()
+
         self_collaboration_score = 0
         with open(pr_csv) as f:
             reader = csv.reader(f)
@@ -38,6 +47,8 @@ class Graph:
                         continue
                     create_dict(commenter)
                     edge_weight = self.calc_edge(i, comments)
+                    # consider pull request status
+                    edge_weight = edge_weight * status_coefficient(row[1].strip())
                     self.update(proposer, commenter, edge_weight)
                     self_collaboration_score = max(self.vertices[proposer][commenter], self_collaboration_score)
             # set the collaboration score for each proposer and him/herself as the maximum collaboration score which
