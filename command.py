@@ -3,6 +3,11 @@ from expertise.ownership import get_repo_ownership_t, extract_owners
 from collaboration.collaboration import get_pr_history
 from jxplatform2.Jxplatform2 import extract_abs, extract_call_graph
 from utils.directory import mkdir
+from search_technique.Nsga3RE import Nsga3RE
+from search_technique.Nsga3NRE import Nsga3NRE
+from search_technique.NsgaiiRE import NsgaiiRE
+from search_technique.NsgaiiNRE import NsgaiiNRE
+from search_technique.RandomSearchRE import RandomSearchRE
 
 def command_line():
     parser = argparse.ArgumentParser(description="MORCoRE: Multi-objective refactoring recommendation considering review effort")
@@ -18,6 +23,10 @@ def command_extract():
     parser = argparse.ArgumentParser(description="Extract info for MORCoRE")
     parser.add_argument("-r", help="repo path")
     parser.add_argument("-u", help= "repo url")
+    parser.add_argument("-n", help="repo name")
+    parser.add_argument("-i", help= "maximum evaluations")
+    parser.add_argument("-p", help="platform")
+    parser.add_argument("-m", help= "mode")
     return parser.parse_args()
 
 
@@ -79,10 +88,37 @@ def extract(args):
     extract_collaboration(repo_url, csv_p)
     print(f"Finished extracting collaboration for {repo_p}")
 
-def search():
-    pass
+
+def search(args):
+    repo_name = args.n
+    max_evaluations = args.i
+    platform = args.p
+    root_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt"
+
+    for output_num in range(1,6):
+        MORCoRE_output = os.path.join(root_path,repo_name,"MORCoRE")
+        output_p = os.path.join(MORCoRE_output, f"output{output_num}/")
+        mkdir(output_p)
+
+    for output_num in range(1,6):
+        nsga3RE = Nsga3RE()
+        nsga3NRE = Nsga3NRE()
+        nsgaiiRE = NsgaiiRE()
+        nsgaiiNRE = NsgaiiNRE()
+        randomSearchRE = RandomSearchRE()
+
+        nsga3RE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
+        nsga3NRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
+        nsgaiiRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
+        nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
+        randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
 
 
 if __name__ == "__main__":
     args = command_extract()
-    extract(args)
+    # extraction mode
+    if args.m=='extract':
+        extract(args)
+    # search mode
+    elif args.m =='search':
+        search(args)
