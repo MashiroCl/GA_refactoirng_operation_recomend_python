@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append("../")
 import json
 from javamodel.jClass import jClass
@@ -38,6 +39,12 @@ class SearchTechnique:
         self.repo_name = sys.argv[1]
         self.max_evaluations = sys.argv[2]
         self.platform = sys.argv[3]
+        return self.repo_name, self.max_evaluations, self.platform
+
+    def load_args_by_parameter(self, repo_name, max_evaluations, platform):
+        self.repo_name = repo_name
+        self.max_evaluations = max_evaluations
+        self.platform = platform
         return self.repo_name, self.max_evaluations, self.platform
 
     def exclude_test_class(self, exclude: bool, java_classes):
@@ -96,6 +103,10 @@ class SearchTechnique:
         print('Problem: ' + self.problem.get_name())
         print('Computing time: ' + str(self.algorithm.total_computing_time))
 
+    def change_output_path(self, output_num):
+        self.output_path = self.output_path[:-1] + str(output_num) + "/"
+        return self
+
 
 class SearchTechniqueRE(SearchTechnique):
     def load(self):
@@ -109,10 +120,33 @@ class SearchTechniqueRE(SearchTechnique):
         self.problem = SearchROProblemRE(abs_representation, selected_platform)
         return self
 
+    def load_by_parameter(self, repo_name, max_evaluations, platform):
+        self.repo_name, self.max_evaluations, self.platform = self.load_args_by_parameter(repo_name, max_evaluations,
+                                                                                          platform)
+        selected_platform = self.select_platform(self.repo_name, self.platform)
+        self.output_path = selected_platform.output_path
+
+        abs_representation = self.load_repository(json_file=selected_platform.json_file_path,
+                                                  exclude_test=True, exclude_anonymous=True)
+
+        self.problem = SearchROProblemRE(abs_representation, selected_platform)
+        return self
+
 
 class SearchTechniqueNRE(SearchTechnique):
     def load(self):
         self.repo_name, self.max_evaluations, self.platform = self.load_args()
+        selected_platform = self.select_platform(self.repo_name, self.platform)
+        self.output_path = selected_platform.output_path
+
+        abs_representation = self.load_repository(json_file=selected_platform.json_file_path,
+                                                  exclude_test=True, exclude_anonymous=True)
+        self.problem = SearchROProblemNRE(abs_representation, selected_platform)
+        return self
+
+    def load_by_parameter(self, repo_name, max_evaluations, platform):
+        self.repo_name, self.max_evaluations, self.platform = self.load_args_by_parameter(repo_name, max_evaluations,
+                                                                                          platform)
         selected_platform = self.select_platform(self.repo_name, self.platform)
         self.output_path = selected_platform.output_path
 
