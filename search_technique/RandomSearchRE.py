@@ -1,6 +1,6 @@
 from jmetal.util.observer import BasicObserver, WriteFrontToFileObserver
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from SearchTechnique import SearchTechniqueRE
+from search_technique.SearchTechnique import SearchTechniqueRE
 from jmetal.algorithm.multiobjective import RandomSearch
 
 

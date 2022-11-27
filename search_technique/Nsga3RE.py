@@ -1,6 +1,5 @@
-import sys
-
-sys.path.append("../")
+# import sys
+# sys.path.append("../")
 from jmetal.operator import IntegerPolynomialMutation
 from jmetal.operator.crossover import IntegerSBXCrossover
 from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII, UniformReferenceDirectionFactory
