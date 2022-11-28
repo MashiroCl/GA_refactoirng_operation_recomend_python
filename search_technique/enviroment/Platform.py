@@ -102,3 +102,18 @@ class ValkyriePlatform(Platform):
         self.collaboration_csv_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORCoRE/csv/pullrequest.csv"
         self.ownership_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORCoRE/csv/owners.csv"
         self.call_graph_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt/" + repo_name + "/MORCoRE/csv/call.json"
+
+
+class ThorPlatform(Platform):
+    def __init__(self):
+        self.name = "thor"
+
+    def set_repository(self, repo_name):
+        self.repo_name = repo_name
+        root = "/home/salab/chenlei/project/MORCoRE/dataset/"
+        self.json_file_path = root + repo_name + "/csv/abs.json"
+        self.repo_path = root + repo_name
+        self.output_path = root + repo_name+"/"
+        self.collaboration_csv_path = root + repo_name + "/csv/pullrequest.csv"
+        self.ownership_path = root + repo_name + "/csv/owners.csv"
+        self.call_graph_path = root + repo_name + "/csv/call.json"

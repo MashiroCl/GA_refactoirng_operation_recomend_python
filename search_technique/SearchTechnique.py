@@ -30,6 +30,8 @@ class SearchTechnique:
             p = TitanPlatform()
         if platform == "valkyrie":
             p = ValkyriePlatform()
+        if platform == "thor":
+            p = ThorPlatform()
 
         p.set_repository(repo_name)
         return p
