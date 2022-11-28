@@ -1,7 +1,7 @@
 import os
 
 LOCAL_FILE_PATH = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
-TITAN_FILE_PATH = "/unknown/unknown/unknown"
+TITAN_FILE_PATH = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt"
 VALKYRIE_FILE_PATH = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt"
 
 
