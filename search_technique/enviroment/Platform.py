@@ -79,9 +79,9 @@ class TitanPlatform(Platform):
         # self.ownership_path = "/home/chenlei/MORCO/relationship/" + repo_name + "/owners.csv"
         # self.call_graph_path = "/home/chenlei/MORCO/relationship/" + repo_name + "/callgraph.json"
         root = "/home/chenlei/MORCoRE/dataset/"
-        self.repo_name = repo_name+"/"
+        self.repo_name = repo_name
         self.json_file_path = root + repo_name + "/csv/abs.json"
-        self.repo_path = root + repo_name+"/"
+        self.repo_path = root + repo_name
         self.output_path = root + repo_name+"/"
         self.collaboration_csv_path = root + repo_name + "/csv/pullrequest.csv"
         self.ownership_path = root + repo_name + "/csv/owners.csv"
