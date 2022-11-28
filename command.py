@@ -27,6 +27,7 @@ def command_extract():
     parser.add_argument("-i", help= "maximum evaluations")
     parser.add_argument("-p", help="platform")
     parser.add_argument("-m", help= "mode")
+    parser.add_argument("-d", help="output num")
     return parser.parse_args()
 
 
@@ -113,6 +114,35 @@ def search(args):
         nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
         randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
 
+def search_titan(args):
+    repo_name = args.n
+    max_evaluations = args.i
+    platform = args.p
+    output_num = args.d
+    root_path = "/home/chenlei/MORCoRE/dataset/"
+
+    for output_num in range(1,6):
+        MORCoRE_output = os.path.join(root_path, repo_name)
+        output_p = os.path.join(MORCoRE_output, f"output{output_num}/")
+        mkdir(output_p)
+
+    nsga3RE = Nsga3RE()
+    nsga3NRE = Nsga3NRE()
+    nsgaiiRE = NsgaiiRE()
+    nsgaiiNRE = NsgaiiNRE()
+    randomSearchRE = RandomSearchRE()
+
+    nsga3RE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+        output_num).search().write_result()
+    nsga3NRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+        output_num).search().write_result()
+    nsgaiiRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+        output_num).search().write_result()
+    nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+        output_num).search().write_result()
+    randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+        output_num).search().write_result()
+
 
 if __name__ == "__main__":
     args = command_extract()
@@ -122,3 +152,5 @@ if __name__ == "__main__":
     # search mode
     elif args.m =='search':
         search(args)
+    elif args.m =='search_titan':
+        search_titan(args)
