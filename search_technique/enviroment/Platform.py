@@ -109,11 +109,11 @@ class ThorPlatform(Platform):
         self.name = "thor"
 
     def set_repository(self, repo_name):
-        self.repo_name = repo_name
         root = "/home/salab/chenlei/project/MORCoRE/dataset/"
+        self.repo_name = repo_name
         self.json_file_path = root + repo_name + "/csv/abs.json"
         self.repo_path = root + repo_name
-        self.output_path = root + repo_name+"/"
+        self.output_path = root + repo_name+"/output/"
         self.collaboration_csv_path = root + repo_name + "/csv/pullrequest.csv"
         self.ownership_path = root + repo_name + "/csv/owners.csv"
         self.call_graph_path = root + repo_name + "/csv/call.json"
