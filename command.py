@@ -114,17 +114,11 @@ def search(args):
         nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
         randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
 
-def search_titan(args):
+def search_with_output_num(args):
     repo_name = args.n
     max_evaluations = args.i
     platform = args.p
     output_num = args.d
-    root_path = "/home/chenlei/MORCoRE/dataset/"
-
-    for num in range(1,6):
-        MORCoRE_output = os.path.join(root_path, repo_name)
-        output_p = os.path.join(MORCoRE_output, f"output{num}/")
-        mkdir(output_p)
 
     nsga3RE = Nsga3RE()
     nsga3NRE = Nsga3NRE()
@@ -144,6 +138,27 @@ def search_titan(args):
         output_num).search().write_result()
 
 
+def search_titan(args):
+    root_path = "/home/chenlei/MORCoRE/dataset/"
+    repo_name = args.n
+    for num in range(1,6):
+        MORCoRE_output = os.path.join(root_path, repo_name)
+        output_p = os.path.join(MORCoRE_output, f"output{num}/")
+        mkdir(output_p)
+
+    search_with_output_num(args)
+
+
+def search_thor(args):
+    root_path = "/home/salab/chenlei/project/MORCoRE/dataset/"
+    repo_name = args.n
+    for num in range(1,6):
+        MORCoRE_output = os.path.join(root_path, repo_name)
+        output_p = os.path.join(MORCoRE_output, f"output{num}/")
+        mkdir(output_p)
+
+    search_with_output_num(args)
+
 if __name__ == "__main__":
     args = command_extract()
     # extraction mode
@@ -154,3 +169,5 @@ if __name__ == "__main__":
         search(args)
     elif args.m =='search_titan':
         search_titan(args)
+    elif args.m == 'search_thor':
+        search_thor(args)
