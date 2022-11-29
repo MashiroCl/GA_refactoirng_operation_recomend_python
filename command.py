@@ -121,9 +121,9 @@ def search_titan(args):
     output_num = args.d
     root_path = "/home/chenlei/MORCoRE/dataset/"
 
-    for output_num in range(1,6):
+    for num in range(1,6):
         MORCoRE_output = os.path.join(root_path, repo_name)
-        output_p = os.path.join(MORCoRE_output, f"output{output_num}/")
+        output_p = os.path.join(MORCoRE_output, f"output{num}/")
         mkdir(output_p)
 
     nsga3RE = Nsga3RE()
