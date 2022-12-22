@@ -8,25 +8,25 @@ import os
 class Starter:
     def extract_codeOwnership(self, repo:str):
         repoPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/"+repo
-        csvPath = os.path.join(repoPath, "MORCOoutput", "ownership.csv")
+        csvPath = os.path.join(repoPath, "MORCOoutput", "ownership.csv_utils")
         commitOutputPath = os.path.join(repoPath, "MORCOoutput")
-        csvOutputPath = os.path.join(repoPath, "MORCOoutput", "csv")
+        csvOutputPath = os.path.join(repoPath, "MORCOoutput", "csv_utils")
         if not os.path.exists(csvOutputPath):
             os.makedirs(csvOutputPath)
-        csvName = "ownership.csv"
+        csvName = "ownership.csv_utils"
         localPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
-        Repository(repoPath).countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath).extract_owner_csv()
+        Repository(repoPath).cal_ownerships(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath).extract_owner_csv()
 
     def extract_pullRequest(self, repo, repoURL:str, output:str):
         "use the java script"
         # repo = "jeromq"
         # repoURL = "https://github.com/zeromq/jeromq"
-        # output = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "/MORCOoutput/csv/pullrequest.csv")
+        # output = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "/MORCOoutput/csv_utils/pullrequest.csv_utils")
 
 
     def build_developerGraph(self, repo:str):
         "Remember to set the start date and end date"
-        relationshipCsvPath = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "MORCOoutput/csv/pullrequest.csv")
+        relationshipCsvPath = os.path.join("/Users/leichen/ResearchAssistant/InteractiveRebase/data/", repo, "MORCOoutput/csv_utils/pullrequest.csv_utils")
         res = PullRequestService().loadPullRequest(relationshipCsvPath)
         developerGraph = DeveloperGraph(res)
         developerGraph.set_bd_line("2011-12-24","2022-12-24")

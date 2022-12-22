@@ -3,9 +3,15 @@ from DeveloperGraph import DeveloperGraph
 from PullRequestService import PullRequestService
 from code_ownership import CodeOwnership
 
-class CSVoperation:
+class Author:
+    def __init__(self):
+        self.name = ""
+        self.alias = set()
+        self.email = set()
+
+class AliasRemover:
     '''
-    conduct operation on csv to change author name (the same author use different name when submittinng commit)
+    conduct operation on csv_utils to change author name (the same author use different name when submittinng commit)
     '''
     def __init__(self,csvPath:str):
         self.csv = None
@@ -48,21 +54,21 @@ class CSVoperation:
 
 if __name__ == "__main__":
     '''
-    1. Use code in main function in CodeOwnership.py to extract a csv
-    2. Use code below to conduct operations on that csv
-    3. Use java code to extract pullrequest.csv
-    4. Build DeveloperGraph and extract info into a csv
+    1. Use code in main function in CodeOwnership.py to extract a csv_utils
+    2. Use code below to conduct operations on that csv_utils
+    3. Use java code to extract pullrequest.csv_utils
+    4. Build DeveloperGraph and extract info into a csv_utils
     
     '''
-    'Before GA, code csv about ownership should be generated' \
+    'Before GA, code csv_utils about ownership should be generated' \
     'This generation must be done before GA'
 
     'conduct operations if needed'
-    # ownershipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/ownership.csv"
-    # newCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/ownership.csv"
+    # ownershipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv_utils/ownership.csv_utils"
+    # newCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv_utils/ownership.csv_utils"
     # CSVoperation(ownershipCsvPath).replaceAuthorName("benjamin", "bennidi").rowMerge().write2csv(newCsvPath)
 
-    relationshipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv/pullrequest.csv"
+    relationshipCsvPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/mbassador/MORCOoutput/csv_utils/pullrequest.csv_utils"
     res = PullRequestService().loadPullRequest(relationshipCsvPath)
     developerGraph = DeveloperGraph(res).generate_vertices().build()
 

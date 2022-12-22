@@ -8,12 +8,12 @@ class MyTestCase(unittest.TestCase):
     r = code_ownership.Repository.Repository(path)
 
     def test_owner_extraction(self):
-        csvPath = os.path.join(self.path, "MORCoREoutput", "ownership.csv")
+        csvPath = os.path.join(self.path, "MORCoREoutput", "ownership.csv_utils")
         commitOutputPath = os.path.join(self.path, "MORCoREoutput")
-        csvOutputPath = os.path.join(self.path, "MORCoREoutput", "csv")
-        csvName = "ownership.csv"
+        csvOutputPath = os.path.join(self.path, "MORCoREoutput", "csv_utils")
+        csvName = "ownership.csv_utils"
         localPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
-        MyTestCase.r.countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath).extract_owner_csv()
+        MyTestCase.r.cal_ownerships(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath).extract_owner_csv()
 
 
 if __name__ == '__main__':

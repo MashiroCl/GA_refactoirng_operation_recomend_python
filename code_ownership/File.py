@@ -14,6 +14,9 @@ class File():
         self.commitNum = 0
         self.authorCommitDict = dict()
 
+    def __str__(self):
+        return self.path
+
     def logCommit(self, outputPath: str):
         '''
         git log on current java file and ouput a json format log
