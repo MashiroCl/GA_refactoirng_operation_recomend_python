@@ -21,7 +21,7 @@ class PullRequestService():
 
     def loadPullRequest(self,csv_path:str)->List[PullRequest]:
         '''
-        load pull request information from csv file
+        load pull request information from csv_utils file
         :param csv_path:
         :return:
         '''

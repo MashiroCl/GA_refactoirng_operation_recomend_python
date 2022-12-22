@@ -72,18 +72,19 @@ class SearchROProblem(IntegerProblem):
                 res.append(decoded_sequences[i])
         return res
 
-    def fill_inline_class_info(self, inline_class_info, decoded_sequences,
+    def fill_inline_class_info(self, init_inline_class_info, decoded_sequences,
                                class_with_one_child_list, class_with_one_child_zero_parent_list):
+        res = dict()
         for each in decoded_sequences:
             if each["ROType"] == RefactoringOperationEnum.INLINECLASS:
-                inline_class_info["DSC"] = inline_class_info.get("DSC", 0) - 1
+                res["DSC"] = init_inline_class_info.get("DSC", 0) - 1
                 if len(each["class1"].getSuperClass())>0:
                     'index 0 is modifier+#+classname e.g.1034#BaseListener '
                     if each["class1"].getSuperClass()[0] in class_with_one_child_list:
-                        inline_class_info["ANA"] = inline_class_info.get("ANA", 0)-1
+                        res["ANA"] = init_inline_class_info.get("ANA", 0)-1
                     if each["class1"].getSuperClass()[0] in class_with_one_child_zero_parent_list:
-                        inline_class_info["NOH"] = inline_class_info.get("ANA", 0)-1
-        return inline_class_info
+                        res["NOH"] = init_inline_class_info.get("NOH", 0)-1
+        return res
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
         pass

@@ -2,14 +2,14 @@ import unittest
 from semantic.NameExtractor import NameExtractor
 import sys
 sys.path.append("../")
-from search_technique.NSGAIIInteger import load_repository
+from search_technique.SearchTechnique import SearchTechnique
 
 class MyTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(MyTestCase, self).__init__(*args, **kwargs)
         self.nameExtractor = NameExtractor()
-        self.jsonFile = "../mbassador.json"
-        self.projectInfo = load_repository(jsonFile=self.jsonFile, exclude_test=True)
+        self.json_file = "../mbassador.json"
+        self.projectInfo = SearchTechnique().load_repository(json_file=self.json_file, exclude_test=True)
 
     def test_parse_camel_style_oneTwoThree(self):
         res = self.nameExtractor.parse_camel_style(name="oneTwoThree")
@@ -40,10 +40,10 @@ class MyTestCase(unittest.TestCase):
     def test_to_sequence(self):
         words = ["Bob", "has", "an", "apple", "Jane", "has", "an", "apple"]
         res = self.nameExtractor.to_sequence(words)
-        self.assertEqual(["Bob has an apple Jane has an apple"],res)
+        self.assertEqual("Bob has an apple Jane has an apple",res)
 
     def test_extract(self):
-        res = self.nameExtractor.extract(projectInfo=self.projectInfo)
+        res = self.nameExtractor.extract(abs_representation=self.projectInfo)
         self.assertEqual(
             ['subscription', 'id', 'listeners', 'dispatcher', 'context', 'on','subscription', 'subscription','by','priority','desc',
              'context', 'dispatcher', 'listeners', 'listener', 'listener', 'message','type', 'publication', 'message', 'o',
@@ -51,6 +51,6 @@ class MyTestCase(unittest.TestCase):
                          res['/mbassador/src/main/java/net/engio/mbassy/subscription/Subscription.java#Subscription'])
 
     def test_dict_names_to_dict_sequence(self):
-        res = self.nameExtractor.extract(projectInfo=self.projectInfo)
+        res = self.nameExtractor.extract(abs_representation=self.projectInfo)
         res = self.nameExtractor.dict_names_to_dict_sequence(res)
         self.assertEqual(['strong concurrent set value next'],res['/mbassador/src/main/java/net/engio/mbassy/common/StrongConcurrentSet.java#StrongConcurrentSet'])

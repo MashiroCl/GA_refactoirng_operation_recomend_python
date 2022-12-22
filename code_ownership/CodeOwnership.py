@@ -4,6 +4,7 @@ import os
 
 class CodeOwnership:
     '''
+    code ownership related calculations/ operations
     search author pair list according to decoded sequence
     calculate relationship according to author pair list and developer graph
     '''
@@ -16,7 +17,6 @@ class CodeOwnership:
         self.filepath_owner_map = {}
         with open(self.ownership_csv_path) as f:
             owners_lines = [each.split(",") for each in f.readlines()]
-            # each[0]:file path, each[2] owner name
             for each in owners_lines:
                 self.filepath_owner_map[each[0]] = each[2]
 
@@ -55,18 +55,18 @@ class CodeOwnership:
         for each in self.authorPairList:
             developerA = each[0]
             developerB = each[1]
-            relationship += self.fuzzy_compare(developerA, developerB, developerGraph)
+            relationship += self._fuzzy_compare(developerA, developerB, developerGraph)
         return relationship / (len(self.authorPairList) if len(self.authorPairList) != 0 else 1)
 
-    def name_process(self, name: str):
+    def _name_process(self, name: str):
         return name.strip().replace(" ", "").replace("-", "").lower()
 
-    def fuzzy_compare(self, devA, devB, developerGraph):
+    def _fuzzy_compare(self, devA, devB, developerGraph):
         '''
         check if devA and devB is in developerGraph or not
         '''
-        devA = self.name_process(devA)
-        devB = self.name_process(devB)
+        devA = self._name_process(devA)
+        devB = self._name_process(devB)
         # id devA and devB are the same person who has never appears in pull request (example in mbassador: benni & benni)
         if devA == devB:
             return 1
@@ -74,46 +74,6 @@ class CodeOwnership:
             if devB in developerGraph.vertices[devA].keys():
                 return developerGraph.vertices[devA][devB]
         return 0
-
-    @DeprecationWarning
-    def calculateOwnership(self, decodedBinarySequences):
-        '''
-        Warning: this method is no longer support, the calculation of ownership is useless
-        :param decodedBinarySequences:
-        :return:
-        '''
-        filePath = []
-        for decodedBinarySequence in decodedBinarySequences:
-            try:
-                filePath.append(decodedBinarySequence["class1"].getFilePath())
-                filePath.append(decodedBinarySequence["class2"].getFilePath())
-            except KeyError:
-                pass
-            except TypeError:
-                pass
-
-        'calculate highest code ownership'
-        authorCommitDict = self.repo.getAuthorCommitDict(filePath)
-        maxCommitNum = 0
-        totalCommit = set()
-        for eachAuthor in authorCommitDict:
-            curCommit = authorCommitDict[eachAuthor]
-            curCommitNum = len(curCommit)
-            if curCommitNum > maxCommitNum:
-                maxCommitNum = curCommitNum
-            totalCommit = totalCommit.union(curCommit)
-        totalCommitNum = len(totalCommit)
-        if totalCommitNum == 0:
-            totalCommitNum = 1
-        highestOwenership = maxCommitNum / totalCommitNum
-
-        commitersNum = 1
-        if len(authorCommitDict) != 0:
-            commitersNum = len(authorCommitDict)
-
-        numOfCommiters = 1 / commitersNum
-
-        return highestOwenership, numOfCommiters
 
 
 if __name__ == "__main__":
@@ -123,4 +83,4 @@ if __name__ == "__main__":
     csvOutputPath = os.path.join(repoPath, "MORCOoutput", "csv")
     csvName = "ownership.csv"
     localPath = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
-    Repository(repoPath).countAuthorCommit(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath)
+    Repository(repoPath).cal_ownerships(commitOutputPath).authorCommitDict2CSV(csvOutputPath, csvName, localPath)

@@ -3,11 +3,11 @@ import glob
 from os.path import join
 from typing import List
 from code_ownership.File import File
-from utils import create_folder
+from utils2 import create_folder
 
 CSV_HEAD = ["File Path", "File Name", "Author Name", "Ownership", "commits",
-            "total commits"]  # head line for ownership csv file
-OWNER_CSV_NAME = "owner.csv"  # output owner csv file name
+            "total commits"]  # head line for ownership csv_utils file
+OWNER_CSV_NAME = "owner.csv_utils"  # output owner csv_utils file name
 OWNERSHIP_THRESHOLD = 0.2  # threshold to decide whether choose 2nd highest ownership owner
 
 
@@ -45,7 +45,7 @@ class Repository:
     def get_java_files(self) -> List[File]:
         return self.files
 
-    def countAuthorCommit(self, outputPath: str):
+    def cal_ownerships(self, outputPath: str):
         '''
         for each file in the repository use git command to obtain commit and save results in outputPath,
         and calculate count of authors' appearance and ratio of it
@@ -58,7 +58,7 @@ class Repository:
 
     def authorCommitDict2CSV(self, csv_path: str, csv_name: str, localPath: str):
         '''
-        wirte extraction info of all files into a csv file
+        wirte extraction info of all files into a csv_utils file
         :param localPath: parent path for repo path
         :return:
         '''
@@ -66,6 +66,7 @@ class Repository:
         csv_path = join(csv_path, csv_name)
         result = []
         for eachFile in self.files:
+            print(eachFile)
             for eachAuthor in eachFile.authorCommitDict:
                 temp = []
                 'exclude path on my local computer'
@@ -94,7 +95,7 @@ class Repository:
     # Write ownerships to csvs
     def extract_owner_csv(self):
         '''
-        find the highest ownership developer in one java file and export them into another csv
+        find the highest ownership developer in one java file and export them into another csv_utils
         :param filePath:
         :return:
         '''
@@ -124,7 +125,6 @@ class Repository:
         candidates: ownerships of contributors to the file (candidates[0][0]) in the format of CSV_HEAD
         '''
         candidates.sort(key=lambda x: float(x[3]), reverse=True)
-        # print(candidates)
         if len(candidates) < 2:
             return [candidates[0]]
         elif float(candidates[0][3]) - float(candidates[1][3]) < OWNERSHIP_THRESHOLD:

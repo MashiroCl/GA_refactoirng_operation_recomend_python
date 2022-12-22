@@ -27,14 +27,14 @@ class SearchROProblemNRE(SearchROProblem):
         "No contraints"
         self.number_of_constraints = 0
         "number of chromosome"
-        self.number_of_refactorings = 20
+        self.number_of_refactorings = 5
 
         'Qmood: maximize    code ownership: maximize'
         self.obj_directions=[self.MAXIMIZE,
                              self.MAXIMIZE,
                              self.MAXIMIZE]
 
-        self.obj_labels=['Quality Gain','Relatioinship Score']
+        self.obj_labels=['Quality Gain','Semantic Coherence']
         self.abs_representation = abs_representation
         self.repo_path = platform.repo_path
         self.integer_encoding = IntegerEncoding()
@@ -63,17 +63,17 @@ class SearchROProblemNRE(SearchROProblem):
         self.integer_encoding.encoding(abs_representation)
 
         'Decode and execute'
-        decodedIntegerSequences = self.integer_encoding.decoding(solution.variables)
+        decoded_sequence = self.integer_encoding.decoding(solution.variables)
 
         "Execute corresponding refactoring operations"
-        executed = self.exec_RO(decodedIntegerSequences, abs_representation)
+        executed = self.exec_RO(decoded_sequence, abs_representation)
 
         "Filter out RO that hasn't passed preconditions"
-        decodedIntegerSequences = self.filter(executed=executed, decoded_sequences=decodedIntegerSequences)
+        decoded_sequence = self.filter(executed=executed, decoded_sequences=decoded_sequence)
 
         "Check whether Inline Class will change NOH, ANA, DSC"
         inline_class_info = self.fill_inline_class_info(self.inline_class_info,
-                                                        decodedIntegerSequences,
+                                                        decoded_sequence,
                                                        self.class_with_one_child_list,
                                                         self.class_with_one_child_zero_parent_list)
 
@@ -84,10 +84,10 @@ class SearchROProblemNRE(SearchROProblem):
         solution.objectives[0] = -1 * quality_gain
 
         'calculate semantic coherence and call relation on refactoring operations applied classes'
-        semantic_coherence = self.calc_sematic_coherence(decodedIntegerSequences)
+        semantic_coherence = self.calc_sematic_coherence(decoded_sequence)
 
         'calculate call relation'
-        call_relation = self.callGraph.calc_call_relation(decodedIntegerSequences)
+        call_relation = self.callGraph.calc_call_relation(decoded_sequence)
         solution.objectives[1] = -0.2 * semantic_coherence - 0.8*call_relation
 
         return solution

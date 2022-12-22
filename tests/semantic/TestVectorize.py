@@ -50,7 +50,7 @@ class MyTestCase(unittest.TestCase):
         nameExtractor = NameExtractor()
         jsonFile = "../mbassador.json"
         projectInfo = load_repository(jsonFile=jsonFile, exclude_test=True, exclude_anonymous=True)
-        names_dict = nameExtractor.extract(projectInfo=projectInfo)
+        names_dict = nameExtractor.extract(abs_representation=projectInfo)
         sequence_dict = nameExtractor.dict_names_to_dict_sequence(names_dict)
         for each in sequence_dict:
             if len(sequence_dict[each][0]) <3:

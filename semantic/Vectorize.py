@@ -1,9 +1,7 @@
 from abc import abstractmethod, ABC
-from typing import Generic, List, TypeVar
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from typing import List, TypeVar
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
-from jxplatform2.jClass import jClass
-from utils import readJson
 
 S = TypeVar("S")
 

@@ -1,12 +1,12 @@
 import sys
 
 sys.path.append("../")
-from jxplatform2.jClass import jClass
+import json
+from javamodel.jClass import jClass
 from search_technique.SearchROProblemRE import SearchROProblemRE
 from search_technique.SearchROProblemNRE import SearchROProblemNRE
 from search_technique.enviroment.Platform import *
 from jmetal.util.solution import get_non_dominated_solutions, print_function_values_to_file, print_variables_to_file
-from utils import readJson
 
 
 class SearchTechnique:
@@ -28,6 +28,11 @@ class SearchTechnique:
             p = LocalPlatform()
         if platform == "titan":
             p = TitanPlatform()
+        if platform == "valkyrie":
+            p = ValkyriePlatform()
+        if platform == "thor":
+            p = ThorPlatform()
+
         p.set_repository(repo_name)
         return p
 
@@ -36,6 +41,12 @@ class SearchTechnique:
         self.repo_name = sys.argv[1]
         self.max_evaluations = sys.argv[2]
         self.platform = sys.argv[3]
+        return self.repo_name, self.max_evaluations, self.platform
+
+    def load_args_by_parameter(self, repo_name, max_evaluations, platform):
+        self.repo_name = repo_name
+        self.max_evaluations = max_evaluations
+        self.platform = platform
         return self.repo_name, self.max_evaluations, self.platform
 
     def exclude_test_class(self, exclude: bool, java_classes):
@@ -70,7 +81,8 @@ class SearchTechnique:
 
     def load_repository(self, json_file: str, exclude_test: bool, exclude_anonymous: bool = False):
         # load repository class info
-        load = readJson(json_file)
+        with open(json_file) as f:
+            load = json.load(f)
         java_classes = self.json_2_jClass(load)
         java_classes = self.exclude_test_class(exclude=exclude_test, java_classes=java_classes)
         java_classes = self.exclude_anonymous_class(exclude=exclude_anonymous, java_classes=java_classes)
@@ -93,6 +105,10 @@ class SearchTechnique:
         print('Problem: ' + self.problem.get_name())
         print('Computing time: ' + str(self.algorithm.total_computing_time))
 
+    def change_output_path(self, output_num):
+        self.output_path = self.output_path[:-1] + str(output_num) + "/"
+        return self
+
 
 class SearchTechniqueRE(SearchTechnique):
     def load(self):
@@ -106,10 +122,33 @@ class SearchTechniqueRE(SearchTechnique):
         self.problem = SearchROProblemRE(abs_representation, selected_platform)
         return self
 
+    def load_by_parameter(self, repo_name, max_evaluations, platform):
+        self.repo_name, self.max_evaluations, self.platform = self.load_args_by_parameter(repo_name, max_evaluations,
+                                                                                          platform)
+        selected_platform = self.select_platform(self.repo_name, self.platform)
+        self.output_path = selected_platform.output_path
+
+        abs_representation = self.load_repository(json_file=selected_platform.json_file_path,
+                                                  exclude_test=True, exclude_anonymous=True)
+
+        self.problem = SearchROProblemRE(abs_representation, selected_platform)
+        return self
+
 
 class SearchTechniqueNRE(SearchTechnique):
     def load(self):
         self.repo_name, self.max_evaluations, self.platform = self.load_args()
+        selected_platform = self.select_platform(self.repo_name, self.platform)
+        self.output_path = selected_platform.output_path
+
+        abs_representation = self.load_repository(json_file=selected_platform.json_file_path,
+                                                  exclude_test=True, exclude_anonymous=True)
+        self.problem = SearchROProblemNRE(abs_representation, selected_platform)
+        return self
+
+    def load_by_parameter(self, repo_name, max_evaluations, platform):
+        self.repo_name, self.max_evaluations, self.platform = self.load_args_by_parameter(repo_name, max_evaluations,
+                                                                                          platform)
         selected_platform = self.select_platform(self.repo_name, self.platform)
         self.output_path = selected_platform.output_path
 

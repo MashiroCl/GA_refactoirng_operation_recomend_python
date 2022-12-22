@@ -1,6 +1,6 @@
 from jmetal.util.observer import BasicObserver, WriteFrontToFileObserver
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from SearchTechnique import SearchTechniqueRE
+from search_technique.SearchTechnique import SearchTechniqueRE
 from jmetal.algorithm.multiobjective import RandomSearch
 
 
@@ -20,8 +20,8 @@ class RandomSearchRE(SearchTechniqueRE):
             termination_criterion=StoppingByEvaluations(max_evaluations=int(self.max_evaluations))
         )
         self.algorithm.observable.register(observer=BasicObserver())
-        self.algorithm.observable.register(observer=WriteFrontToFileObserver(
-            output_directory=self.output_path + self.repo_name + "/front/" + self.name + "/"))
+        # self.algorithm.observable.register(observer=WriteFrontToFileObserver(
+        #     output_directory=self.output_path + self.repo_name + "/front/" + self.name + "/"))
         self.algorithm.run()
         return self
 
