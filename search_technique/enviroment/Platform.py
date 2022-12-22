@@ -58,12 +58,12 @@ class LocalPlatform(Platform):
 
     def set_repository(self, repo_name):
         self.repo_name = repo_name
-        self.json_file_path = "/Users/leichen/Desktop/StaticalAnalysis/" + repo_name + ".json"
+        self.json_file_path = "/Users/leichen/experiement_result/MORCoRE2/infos/" + repo_name + "/csv/abs.json"
         self.repo_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repo_name
         self.output_path = "/Users/leichen/Desktop/output/"
-        self.collaboration_csv_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repo_name + "/MORCOoutput/csv/pullrequest.csv"
-        self.ownership_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repo_name + "/MORCOoutput/csv/owners.csv"
-        self.call_graph_path = "/Users/leichen/ResearchAssistant/InteractiveRebase/data/" + repo_name + "/MORCOoutput/csv/callgraph.json"
+        self.collaboration_csv_path = "/Users/leichen/experiement_result/MORCoRE2/infos/" + repo_name + "/csv/pullrequest.csv"
+        self.ownership_path = "/Users/leichen/experiement_result/MORCoRE2/infos/" + repo_name + "/csv/owners.csv"
+        self.call_graph_path = "/Users/leichen/experiement_result/MORCoRE2/infos/" + repo_name + "/csv/call.json"
 
 
 class TitanPlatform(Platform):
