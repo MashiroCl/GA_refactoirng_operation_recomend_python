@@ -1,5 +1,5 @@
 import unittest
-from collaboration.collaboration import pullrequests2csv
+from collaboration.collaboration import get_pr_history, get_collaboration_score
 from collaboration.graph import Graph
 import collaboration.pullrequest as pullrequest
 import utils.csv as csv
@@ -28,7 +28,7 @@ class MyTestCase(unittest.TestCase):
             csv.pullrequest2csv([pr], f)
 
     def test_get_pullrequests(self):
-        pullrequests2csv("https://github.com/bennidi/mbassador", "./pullrequest.csv")
+        get_pr_history("https://github.com/bennidi/mbassador", "./pullrequest.csv")
 
     def test_graph(self):
         g = Graph()
@@ -77,6 +77,14 @@ class MyTestCase(unittest.TestCase):
                     print(a, b)
         res = json.dumps(d)
         print(res)
+
+    def test_get_collaboration_score_normal(self):
+        g = Graph()
+        g.vertices = {"A": {"B": 1.0, "C": 2.0, "D": 3.0}, "B": {"A": 1.0, "D": 4.0}, "C": {"A": 2.0, "D": 5.0},
+                      "D": {"A": 3.0, "B": 4.0, "C": 5.0,}}
+        res = get_collaboration_score(g, ["A", "B", "C", "D"])
+        self.assertEqual(res, 15.0)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -2,7 +2,7 @@ import unittest
 from expertise.javafile import File
 from expertise.repository import Repository
 from expertise.ownership import get_file_ownership, get_repo_ownership, \
-    jaccard, get_repo_ownership_t, search_similar_files, get_rev_file_ownership, extract_owners
+    jaccard, get_repo_ownership_t, search_similar_files, get_rev_file_ownership, extract_owners, get_path_owner_dict
 
 
 class MyTestCase(unittest.TestCase):
@@ -91,6 +91,12 @@ class MyTestCase(unittest.TestCase):
             os.mkdir(path)
         os.system("cd /Users/leichen/Desktop/output/mkdir && touch 123.txt")
 
+
+
+    def test_get_path_owner_dict(self):
+        owners_path = "/Users/leichen/experiement_result/MORCoRE2/RQ1/ActionBarSherlock/csv/owners.csv"
+        res = get_path_owner_dict(owners_path)
+        self.assertEqual(res['/ActionBarSherlock/actionbarsherlock/src/com/actionbarsherlock/internal/ActionBarSherlockNative.java'], ['JakeWharton', 'Alexandr Tereshchuk'])
 
 if __name__ == '__main__':
     unittest.main()
