@@ -9,12 +9,15 @@ from search_technique.NsgaiiRE import NsgaiiRE
 from search_technique.NsgaiiNRE import NsgaiiNRE
 from search_technique.RandomSearchRE import RandomSearchRE
 
+
 def command_line():
-    parser = argparse.ArgumentParser(description="MORCoRE: Multi-objective refactoring recommendation considering review effort")
-    parser.add_argument("-e", "--expertise", help = "extract expertise for <repository_path> and output in <csv_path>")
-    parser.add_argument("-i", "--input", help = "<repository_path>")
-    parser.add_argument("-o", "--output", help = "<csv_path>")
-    parser.add_argument("-c","--collaboration", help = "extract collaboration history for <repository_path> and output in <csv_path>")
+    parser = argparse.ArgumentParser(
+        description="MORCoRE: Multi-objective refactoring recommendation considering review effort")
+    parser.add_argument("-e", "--expertise", help="extract expertise for <repository_path> and output in <csv_path>")
+    parser.add_argument("-i", "--input", help="<repository_path>")
+    parser.add_argument("-o", "--output", help="<csv_path>")
+    parser.add_argument("-c", "--collaboration",
+                        help="extract collaboration history for <repository_path> and output in <csv_path>")
 
     return parser.parse_args()
 
@@ -22,12 +25,12 @@ def command_line():
 def command_extract():
     parser = argparse.ArgumentParser(description="Extract info for MORCoRE")
     parser.add_argument("-r", help="repo path")
-    parser.add_argument("-u", help= "repo url")
+    parser.add_argument("-u", help="repo url")
     parser.add_argument("-n", help="repo name")
-    parser.add_argument("-i", help= "maximum evaluations")
+    parser.add_argument("-i", help="maximum evaluations")
     parser.add_argument("-p", help="platform")
-    parser.add_argument("-m", help= "mode")
-    parser.add_argument("-d", help="output num")
+    parser.add_argument("-m", help="mode")
+    parser.add_argument("-d", help="output num", default=1)
     return parser.parse_args()
 
 
@@ -96,23 +99,29 @@ def search(args):
     platform = args.p
     root_path = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt"
 
-    for output_num in range(1,6):
-        MORCoRE_output = os.path.join(root_path,repo_name,"MORCoRE")
+    for output_num in range(1, 6):
+        MORCoRE_output = os.path.join(root_path, repo_name, "MORCoRE")
         output_p = os.path.join(MORCoRE_output, f"output{output_num}/")
         mkdir(output_p)
 
-    for output_num in range(1,6):
+    for output_num in range(1, 6):
         nsga3RE = Nsga3RE()
         nsga3NRE = Nsga3NRE()
         nsgaiiRE = NsgaiiRE()
         nsgaiiNRE = NsgaiiNRE()
         randomSearchRE = RandomSearchRE()
 
-        nsga3RE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
-        nsga3NRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
-        nsgaiiRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
-        nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
-        randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(output_num).search().write_result()
+        nsga3RE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+            output_num).search().write_result()
+        nsga3NRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+            output_num).search().write_result()
+        nsgaiiRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+            output_num).search().write_result()
+        nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+            output_num).search().write_result()
+        randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+            output_num).search().write_result()
+
 
 def search_with_output_num(args):
     repo_name = args.n
@@ -141,7 +150,7 @@ def search_with_output_num(args):
 def search_titan(args):
     root_path = "/home/chenlei/MORCoRE/dataset/"
     repo_name = args.n
-    for num in range(1,6):
+    for num in range(1, 6):
         MORCoRE_output = os.path.join(root_path, repo_name)
         output_p = os.path.join(MORCoRE_output, f"output{num}/")
         mkdir(output_p)
@@ -152,22 +161,39 @@ def search_titan(args):
 def search_thor(args):
     root_path = "/home/salab/chenlei/project/MORCoRE/dataset/"
     repo_name = args.n
-    for num in range(1,6):
+    for num in range(1, 6):
         MORCoRE_output = os.path.join(root_path, repo_name)
         output_p = os.path.join(MORCoRE_output, f"output{num}/")
         mkdir(output_p)
 
     search_with_output_num(args)
 
+
+def search_customize(args):
+    with open("config.txt") as f:
+        data = f.readlines()
+        root_path = data[0].strip()
+    repo_name = args.n
+    output_num = args.d+1
+    for num in range(1, output_num):
+        MORCoRE_output = os.path.join(root_path, repo_name)
+        output_p = os.path.join(MORCoRE_output, f"output{num}/")
+        mkdir(output_p)
+
+    search_with_output_num(args)
+
+
 if __name__ == "__main__":
     args = command_extract()
     # extraction mode
-    if args.m=='extract':
+    if args.m == 'extract':
         extract(args)
     # search mode
-    elif args.m =='search':
+    elif args.m == 'search':
         search(args)
-    elif args.m =='search_titan':
+    elif args.m == 'search_titan':
         search_titan(args)
     elif args.m == 'search_thor':
         search_thor(args)
+    elif args.m == 'search_customize':
+        search_customize(args)

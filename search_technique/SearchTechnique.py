@@ -21,7 +21,7 @@ class SearchTechnique:
 
     def select_platform(self, repo_name, platform) -> Platform:
         '''
-        select to run on local "local"  or on server "titan"
+        select to run on local "local"  or on server "titan" or "customize"
         '''
         p = Platform()
         if platform == "local":
@@ -32,6 +32,8 @@ class SearchTechnique:
             p = ValkyriePlatform()
         if platform == "thor":
             p = ThorPlatform()
+        if platform == "customize":
+            p = CustomizePlatform()
 
         p.set_repository(repo_name)
         return p

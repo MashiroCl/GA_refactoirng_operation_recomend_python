@@ -17,7 +17,11 @@ def trim_path(path: str, *args):
         path = path.split(VALKYRIE_FILE_PATH)[1]
     elif TITAN_FILE_PATH in path:
         path = path.split(TITAN_FILE_PATH)[1]
-
+    else:
+        with open("config.txt") as f:
+            data = f.readlines()[0].strip()
+            if data in path:
+                path = path.split(data[:-1])[1]
     if len(args)==1:
         path = path.split(args[0])[1]
 
