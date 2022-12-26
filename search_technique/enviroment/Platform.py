@@ -82,12 +82,10 @@ class TitanPlatform(Platform):
         self.repo_name = repo_name
         self.json_file_path = root + repo_name + "/csv/abs.json"
         self.repo_path = root + repo_name
-        self.output_path = root + repo_name+"/output/"
+        self.output_path = root + repo_name + "/output/"
         self.collaboration_csv_path = root + repo_name + "/csv/pullrequest.csv"
         self.ownership_path = root + repo_name + "/csv/owners.csv"
         self.call_graph_path = root + repo_name + "/csv/call.json"
-
-
 
 
 class ValkyriePlatform(Platform):
@@ -113,7 +111,26 @@ class ThorPlatform(Platform):
         self.repo_name = repo_name
         self.json_file_path = root + repo_name + "/csv/abs.json"
         self.repo_path = root + repo_name
-        self.output_path = root + repo_name+"/output/"
+        self.output_path = root + repo_name + "/output/"
         self.collaboration_csv_path = root + repo_name + "/csv/pullrequest.csv"
         self.ownership_path = root + repo_name + "/csv/owners.csv"
         self.call_graph_path = root + repo_name + "/csv/call.json"
+
+
+class CustomizePlatform(Platform):
+    def __init__(self):
+        self.name = "customize"
+
+    def set_repository(self, repo_name, root=""):
+        with open("config.txt") as f:
+            data = f.readlines()
+            root = data[0].strip()
+        if len(root) == 0:
+            raise Exception("Target repository dataset path not set")
+        self.repo_name = repo_name
+        self.json_file_path = root + repo_name + "/MORCoRE/csv/abs.json"
+        self.repo_path = root + repo_name
+        self.output_path = root + repo_name + "/MORCoRE/output/"
+        self.collaboration_csv_path = root + repo_name + "/MORCoRE/csv/pullrequest.csv"
+        self.ownership_path = root + repo_name + "/MORCoRE/csv/owners.csv"
+        self.call_graph_path = root + repo_name + "/MORCoRE/csv/call.json"
