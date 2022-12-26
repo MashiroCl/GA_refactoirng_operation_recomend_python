@@ -34,13 +34,13 @@ After you get the token, set it as an environment variable, and named the variab
 
 For MacOS:
 ```
-$ echo "export MORCoRE=<personal-access-token>" >> ~/.bash_profile
+$ echo "export MORCORE=<personal-access-token>" >> ~/.bash_profile
 $ source ~/.bash_profile
 ```
 
 For Linux:
 ```
-exportMORCoRE=<personal-access-token>
+export MORCORE=<personal-access-token>
 ```
 
 
@@ -53,8 +53,12 @@ Required: <repo_path>: cloned repository path <repo_url>: GitHub url for the rep
 $ python3 command.py -r <repo_path> -u <repo_url> -m extract
 ```
 
-2. Search refactoring sequences
+The extracted data are stored in `<repo_path>/MORCoRE/`
+
+2. Fill in `config.txt` with the parent directory of the target repository, e.g. `<repo_path>=/A/B/C/repo_name`, fill the `config.txt` with `/A/B/C/`
+
+3. Search refactoring sequences
 ```
-$ python3 command.py -n <repo_name> -i <max_evaluation_number> -p <platform_name> -m search
+$ python3 command.py -n <repo_name> -i <max_evaluation_number> -p customize -m search_customize
 ```
 
