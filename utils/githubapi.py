@@ -4,7 +4,7 @@ from time import time, sleep
 
 HEADERS = {
     'Accept': 'application/vnd.github+json',
-    'Authorization': 'Bearer ' + os.getenv("MAILMAPBUILDER"),
+    'Authorization': 'Bearer ' + os.getenv("MORCORE"),
 }
 
 
