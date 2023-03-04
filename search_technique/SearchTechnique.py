@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("../")
 import json
-from javamodel.jClass import JClass
+from javamodel.JClass import JClass
 from search_technique.SearchROProblemRE import SearchROProblemRE
 from search_technique.SearchROProblemNRE import SearchROProblemNRE
 from search_technique.enviroment.Platform import *
