@@ -1,5 +1,5 @@
 from typing import List
-from javamodel.jClass import jClass
+from javamodel.JClass import JClass
 from javamodel.jVariable import jVariable
 
 
@@ -29,22 +29,22 @@ class NameExtractor():
             res += self.parse_camel_style(each)
         return res
 
-    def extract_names(self, jclass: jClass):
+    def extract_names(self, jclass: JClass):
         return self.__extract_class_name(jclass), \
                self.__extract_method_names(jclass), \
                self.__extract_parameters_names(jclass), \
                self.__extract_field_names(jclass)
 
-    def __extract_class_name(self, jclass: jClass):
+    def __extract_class_name(self, jclass: JClass):
         return jclass.getClassName()
 
-    def __extract_method_names(self, jclass: jClass):
+    def __extract_method_names(self, jclass: JClass):
         return [jVariable(each).getName().replace('()', '') for each in jclass.getField()]
 
-    def __extract_parameters_names(self, jclass: jClass):
+    def __extract_parameters_names(self, jclass: JClass):
         return [each.getParameterName() for each in jclass.getMethod()]
 
-    def __extract_field_names(self, jclass: jClass):
+    def __extract_field_names(self, jclass: JClass):
         return [jVariable(each).getName() for each in jclass.getField()]
 
     def __assemble_names(self, class_name, method_names, parameters_names, field_names):
@@ -65,7 +65,7 @@ class NameExtractor():
     def to_sequence(self, words: List[str]):
         return " ".join(words)
 
-    def extract(self, abs_representation: List[jClass]) -> dict:
+    def extract(self, abs_representation: List[JClass]) -> dict:
         """
         projectInfo: list of jClass
 

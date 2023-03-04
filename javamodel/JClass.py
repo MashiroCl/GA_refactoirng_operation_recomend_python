@@ -1,7 +1,7 @@
 from javamodel.jMethod import jMethod
 import utils.directory as directory
 
-class jClass:
+class JClass:
     def __init__(self,load):
         self.load = load
         self.classInfo = self.load['className']
