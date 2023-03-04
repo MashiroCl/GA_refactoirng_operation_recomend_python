@@ -11,10 +11,14 @@ class CallGraph:
 
     def _build_call_graph(self):
         for each in self.json:
-            self.callgraph[each["class"]] = {"fieldAccessIn": each["fieldAccessIn"],
-                                             "fieldAccessOut": each["fieldAccessOut"],
+            # self.callgraph[each["class"]] = {"fieldAccessIn": each["fieldAccessIn"],
+            #                                  "fieldAccessOut": each["fieldAccessOut"],
+            #                                  "methodCallIn": each["methodCallIn"],
+            #                                  "methodCallOut": each["methodCallOut"]}
+            self.callgraph[each["class"]] = {"fieldAccess": each["fieldAccess"],
                                              "methodCallIn": each["methodCallIn"],
                                              "methodCallOut": each["methodCallOut"]}
+
 
     @staticmethod
     def count_share(lista, listb):
@@ -64,7 +68,7 @@ class CallGraph:
 
     def shared_field_in(self, class1, class2):
         '''
-        calculae shared-method call out between class1 and class2
+        calculae shared-field access in between class1 and class2
 
         '''
         mco1 = self.obtain_callees(class1, "fieldAccessIn")
@@ -73,19 +77,27 @@ class CallGraph:
 
     def shared_field_out(self, class1, class2):
         '''
-        calculae shared-method call out between class1 and class2
+        calculae shared-field access out between class1 and class2
 
         '''
         mco1 = self.obtain_callees(class1, "fieldAccessOut")
         mco2 = self.obtain_callees(class2, "fieldAccessOut")
         return CallGraph.count_share(mco1, mco2)
 
+    def shared_field(self, class1, class2):
+        '''
+        calculae shared-method call out between class1 and class2
+
+        '''
+        mco1 = self.obtain_callees(class1, "fieldAccess")
+        mco2 = self.obtain_callees(class2, "fieldAccess")
+        return CallGraph.count_share(mco1, mco2)
+
     def call_relation(self, class1, class2):
         '''
         call_relation = 0.1* field_access_in+0.1* field_access_out+0.4*method_call_in+0.4*method_call_out
         '''
-        return 0.1 * self.shared_field_in(class1, class2) \
-               + 0.1 * self.shared_field_out(class1, class2) \
+        return 0.2 * self.shared_field(class1, class2) \
                + 0.4 * self.shared_call_out(class1, class2) \
                + 0.4 * self.shared_call_in(class1, class2)
 
