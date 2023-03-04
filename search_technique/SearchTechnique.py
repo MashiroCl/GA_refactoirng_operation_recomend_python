@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("../")
 import json
-from javamodel.jClass import jClass
+from javamodel.jClass import JClass
 from search_technique.SearchROProblemRE import SearchROProblemRE
 from search_technique.SearchROProblemNRE import SearchROProblemNRE
 from search_technique.enviroment.Platform import *
@@ -78,7 +78,7 @@ class SearchTechnique:
     def json_2_jClass(self, json_list):
         res = []
         for each in json_list:
-            res.append(jClass(each))
+            res.append(JClass(each))
         return res
 
     def load_repository(self, json_file: str, exclude_test: bool, exclude_anonymous: bool = False):
