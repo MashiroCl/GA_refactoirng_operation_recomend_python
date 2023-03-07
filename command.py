@@ -7,6 +7,12 @@ from search_technique.Nsga3RE import Nsga3RE
 from search_technique.Nsga3NRE import Nsga3NRE
 from search_technique.NsgaiiRE import NsgaiiRE
 from search_technique.NsgaiiNRE import NsgaiiNRE
+from search_technique.spea2re import SPEA2RE
+from search_technique.spea2nre import SPEA2NRE
+from search_technique.ibeare import IBEARE
+from search_technique.ibeanre import IBEANRE
+from search_technique.mocellre import MOCellRE
+from search_technique.mocellnre import MOCellNRE
 from search_technique.RandomSearchRE import RandomSearchRE
 
 
@@ -129,22 +135,22 @@ def search_with_output_num(args):
     platform = args.p
     output_num = args.d
 
-    nsga3RE = Nsga3RE()
-    nsga3NRE = Nsga3NRE()
-    nsgaiiRE = NsgaiiRE()
-    nsgaiiNRE = NsgaiiNRE()
-    randomSearchRE = RandomSearchRE()
+    algorithms = [Nsga3RE(),
+                  Nsga3NRE(),
+                  NsgaiiRE(),
+                  NsgaiiNRE(),
+                  RandomSearchRE(),
+                  SPEA2RE(),
+                  SPEA2NRE(),
+                  IBEARE(),
+                  IBEANRE(),
+                  MOCellRE(),
+                  MOCellNRE()
+                  ]
 
-    nsga3RE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    nsga3NRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    nsgaiiRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
+    for algorithm in algorithms:
+        algorithm.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+            output_num).search().write_result()
 
 
 def search_titan(args):
@@ -174,7 +180,7 @@ def search_customize(args):
         data = f.readlines()
         root_path = data[0].strip()
     repo_name = args.n
-    output_num = args.d+1
+    output_num = args.d + 1
     for num in range(1, output_num):
         MORCoRE_output = os.path.join(root_path, repo_name)
         output_p = os.path.join(MORCoRE_output, f"output{num}/")
