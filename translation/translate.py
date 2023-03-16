@@ -65,6 +65,24 @@ def get_reviewers(refactoring, owners_p):
     return res
 
 
+def get_all_reviewers(refactoring, expertise_p):
+    """
+    get all developers who have ever contributed to the files being refactored by refactoring
+    expertise_p: file path for the ownership2.csv
+    """
+    res = []
+    with open(expertise_p) as f:
+        expertise_rows = f.readlines()
+    for expertise_row in expertise_rows:
+        infos = expertise_row.split(",")
+        if infos[0] == refactoring["class1"].getFilePath().strip():
+            res.append(infos[1:])
+        if infos[0] == refactoring["class2"].getFilePath().strip():
+            res.append(infos[1:])
+        if len(res) == 2:
+            break
+    return res
+
 def calc_quality_gain(abs, initial_objectives, user_defined_classes, inline_class_info):
     qmood_metrics_list = ["Effectiveness", "Extendibility", "Flexibility", "Functionality", "Resusability",
                           "Understandability"]
@@ -76,7 +94,7 @@ def calc_quality_gain(abs, initial_objectives, user_defined_classes, inline_clas
 def calc_semantic_coherence(repo, abs, decoded_sequence):
     platform = LocalPlatform()
     platform.set_repository(repo)
-    search_ro_problem_re= SearchROProblemRE(abs, platform)
+    search_ro_problem_re = SearchROProblemRE(abs, platform)
     # search_ro_problem.abs_representation = abs
     # search_ro_problem.classes_nameSequence_dict = search_ro_problem.extract_names_sequences()
     semantic_coherence = search_ro_problem_re.calc_sematic_coherence(decoded_sequence)
@@ -105,12 +123,14 @@ def decode_gene(genes, encoder):
     refactorings = encoder.decoding(genes)
     return refactorings
 
+
 def get_user_defined_and_inline_classes(abs):
     user_defined_classes = extract_user_defined_classes(abs)
     inline_class_info = init_inline_class_info()
     return user_defined_classes, inline_class_info
 
-def trans_decoded_gene(refactorings, abs, paths,repo =""):
+
+def trans_decoded_gene(refactorings, abs, paths, repo=""):
     res = []
     field_and_method = ['class1field', 'class1method', 'class2field', 'class2method']
     abs_temp = deepcopy(abs)
@@ -130,11 +150,11 @@ def trans_decoded_gene(refactorings, abs, paths,repo =""):
                 for i in field_and_method:
                     if not refactoring[i] is None:
                         res_dict["target"] = refactoring[i]
-                # res_dict["reviewers"] = get_reviewers(refactoring, paths["owners"])
+                res_dict["reviewers"] = get_reviewers(refactoring, paths["owners"])
                 # res_dict["semantic_coherence"] = calc_semantic_coherence(repo, abs, [refactoring])
-                # res_dict["qmood"] = calc_quality_gain(abs, initial_objectives, user_defined_classes, inline_class_info)
+                res_dict["qmood"] = calc_quality_gain(abs, initial_objectives, user_defined_classes, inline_class_info)
                 # refactoring, call_graph_path, ownership_path, repo_name
-                # res_dict["collaboration_score"] = calc_collaboration_score(paths["pr"], res_dict["reviewers"])
+                res_dict["collaboration_score"] = calc_collaboration_score(paths["pr"], res_dict["reviewers"])
                 res.append(res_dict)
     return res
 
@@ -244,6 +264,7 @@ def deduce_reviewers(fun_p, var_p, info_p):
         ref_sequence = trans_decoded_gene(refactorings, abs_temp, paths)
         res.append(ref_sequence["reviewer"])
     return res
+
 
 if __name__ == "__main__":
     # root = "/Users/leichen/experiement_result/MORCoRE2/1st_test_output/*"

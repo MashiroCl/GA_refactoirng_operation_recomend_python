@@ -75,6 +75,7 @@ def jaccard(path1: str, path2: str):
     p2_set = set(path2.split("/"))
     return len(p1_set.intersection(p2_set)) / len(p1_set.union(p2_set))
 
+
 @DeprecationWarning
 def trim_path(po: PersonalOwnership):
     if LOCAL_FILE_PATH in po.file_path:
@@ -102,6 +103,19 @@ def get_repo_ownership_t(repo_path: str, output_path: str, mode: str = "a"):
         for file in files:
             similar_files = search_similar_files(file, files)
             pos = get_file_ownership_t(file, similar_files)
+            for po in pos:
+                po.file_path = directory.trim_path(po.file_path)
+            csv_utils.ownership2csv(pos, f)
+
+
+def get_repo_ownership_t_without_similar_files(repo_path: str, output_path: str, mode: str = "a"):
+    files = Repository(repo_path).get_files()
+    # build git log json
+    for file in files:
+        file.commits2csv()
+    with open(output_path, mode, encoding="utf-8") as f:
+        for file in files:
+            pos = get_file_ownership_t(file, [file])
             for po in pos:
                 po.file_path = directory.trim_path(po.file_path)
             csv_utils.ownership2csv(pos, f)
@@ -162,4 +176,3 @@ def get_path_owner_dict(owners_path: str):
         for row in reader:
             res.setdefault(row[0], list()).append(row[1])
     return res
-

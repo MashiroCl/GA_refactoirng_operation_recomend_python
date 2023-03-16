@@ -1,5 +1,5 @@
 import argparse, os
-from expertise.ownership import get_repo_ownership_t, extract_owners
+from expertise.ownership import get_repo_ownership_t, extract_owners, get_repo_ownership_t_without_similar_files
 from collaboration.collaboration import get_pr_history
 from jxplatform2.Jxplatform2 import extract_abs, extract_call_graph
 from utils.directory import mkdir
@@ -51,8 +51,9 @@ def functions(args):
 def extract_expertise(repo_p, output_directory):
     ownership_p = output_directory + "ownerships.csv"
     owners_p = output_directory + "owners.csv"
-    # extract ownerships
-    get_repo_ownership_t(repo_p, ownership_p)
+    # extract ownerships consider similar files
+    # get_repo_ownership_t(repo_p, ownership_p)
+    get_repo_ownership_t_without_similar_files(repo_p, ownership_p)
     # extract owners
     with open(owners_p, "w") as f:
         extract_owners(ownership_p, f)
@@ -86,17 +87,17 @@ def extract(args):
     mkdir(csv_p)
     mkdir(output_p)
 
-    print(f"Extracting repository model for {repo_p}")
-    extract_repo_model(jxplatform, repo_p, csv_p)
-    print(f"Finished extracting repository model for {repo_p}")
+    # print(f"Extracting repository model for {repo_p}")
+    # extract_repo_model(jxplatform, repo_p, csv_p)
+    # print(f"Finished extracting repository model for {repo_p}")
 
     print(f"Extracting expertise for {repo_p}")
     extract_expertise(repo_p, csv_p)
     print(f"Finished extracting expertise for {repo_p}")
 
-    print(f"Extracting collaboration for {repo_p}")
-    extract_collaboration(repo_url, csv_p)
-    print(f"Finished extracting collaboration for {repo_p}")
+    # print(f"Extracting collaboration for {repo_p}")
+    # extract_collaboration(repo_url, csv_p)
+    # print(f"Finished extracting collaboration for {repo_p}")
 
 
 def search(args):
