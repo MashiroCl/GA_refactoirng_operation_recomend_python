@@ -1,5 +1,5 @@
 import argparse, os
-from expertise.ownership import get_repo_ownership_t, extract_owners
+from expertise.ownership import get_repo_ownership_t, extract_owners, get_repo_ownership_t_without_similar_files
 from collaboration.collaboration import get_pr_history
 from jxplatform2.Jxplatform2 import extract_abs, extract_call_graph
 from utils.directory import mkdir
@@ -7,6 +7,12 @@ from search_technique.Nsga3RE import Nsga3RE
 from search_technique.Nsga3NRE import Nsga3NRE
 from search_technique.NsgaiiRE import NsgaiiRE
 from search_technique.NsgaiiNRE import NsgaiiNRE
+from search_technique.spea2re import SPEA2RE
+from search_technique.spea2nre import SPEA2NRE
+from search_technique.ibeare import IBEARE
+from search_technique.ibeanre import IBEANRE
+from search_technique.mocellre import MOCellRE
+from search_technique.mocellnre import MOCellNRE
 from search_technique.RandomSearchRE import RandomSearchRE
 
 
@@ -45,8 +51,9 @@ def functions(args):
 def extract_expertise(repo_p, output_directory):
     ownership_p = output_directory + "ownerships.csv"
     owners_p = output_directory + "owners.csv"
-    # extract ownerships
-    get_repo_ownership_t(repo_p, ownership_p)
+    # extract ownerships consider similar files
+    # get_repo_ownership_t(repo_p, ownership_p)
+    get_repo_ownership_t_without_similar_files(repo_p, ownership_p)
     # extract owners
     with open(owners_p, "w") as f:
         extract_owners(ownership_p, f)
@@ -80,17 +87,17 @@ def extract(args):
     mkdir(csv_p)
     mkdir(output_p)
 
-    print(f"Extracting repository model for {repo_p}")
-    extract_repo_model(jxplatform, repo_p, csv_p)
-    print(f"Finished extracting repository model for {repo_p}")
+    # print(f"Extracting repository model for {repo_p}")
+    # extract_repo_model(jxplatform, repo_p, csv_p)
+    # print(f"Finished extracting repository model for {repo_p}")
 
     print(f"Extracting expertise for {repo_p}")
     extract_expertise(repo_p, csv_p)
     print(f"Finished extracting expertise for {repo_p}")
 
-    print(f"Extracting collaboration for {repo_p}")
-    extract_collaboration(repo_url, csv_p)
-    print(f"Finished extracting collaboration for {repo_p}")
+    # print(f"Extracting collaboration for {repo_p}")
+    # extract_collaboration(repo_url, csv_p)
+    # print(f"Finished extracting collaboration for {repo_p}")
 
 
 def search(args):
@@ -129,22 +136,22 @@ def search_with_output_num(args):
     platform = args.p
     output_num = args.d
 
-    nsga3RE = Nsga3RE()
-    nsga3NRE = Nsga3NRE()
-    nsgaiiRE = NsgaiiRE()
-    nsgaiiNRE = NsgaiiNRE()
-    randomSearchRE = RandomSearchRE()
+    algorithms = [Nsga3RE(),
+                  Nsga3NRE(),
+                  NsgaiiRE(),
+                  NsgaiiNRE(),
+                  RandomSearchRE(),
+                  SPEA2RE(),
+                  SPEA2NRE(),
+                  IBEARE(),
+                  IBEANRE(),
+                  MOCellRE(),
+                  MOCellNRE()
+                  ]
 
-    nsga3RE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    nsga3NRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    nsgaiiRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    nsgaiiNRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
-    randomSearchRE.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
-        output_num).search().write_result()
+    for algorithm in algorithms:
+        algorithm.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
+            output_num).search().write_result()
 
 
 def search_titan(args):
@@ -174,7 +181,7 @@ def search_customize(args):
         data = f.readlines()
         root_path = data[0].strip()
     repo_name = args.n
-    output_num = args.d+1
+    output_num = args.d + 1
     for num in range(1, output_num):
         MORCoRE_output = os.path.join(root_path, repo_name)
         output_p = os.path.join(MORCoRE_output, f"output{num}/")

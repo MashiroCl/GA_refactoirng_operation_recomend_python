@@ -22,14 +22,14 @@ def deduce_reviewers(aggregated_strs, repo_name, output_num, algo):
         paths = {}
         paths["owners"] = infos["owner"]
         paths["pr"] = infos["pr"]
-        ref_sequence = trans_decoded_gene(refactorings, abs_temp, paths)
+        ref_sequence = trans_decoded_gene(refactorings, abs_temp, paths, repo_name)
         # print(-row[2]*len(ref_sequence))
         for each in ref_sequence:
             # repository dagger
-            if {'swankjesse', 'cgruber', 'cgruber', 'swankjesse'} == set(each["reviewers"]) or \
-                set(each['reviewers']) == {'swankjesse'} or set(each['reviewers']) == {'cgruber'}:
-                print(each["collaboration_score"])
-            # res.append(each["reviewers"])
+            # if {'swankjesse', 'cgruber', 'cgruber', 'swankjesse'} == set(each["reviewers"]) or \
+            #     set(each['reviewers']) == {'swankjesse'} or set(each['reviewers']) == {'cgruber'}:
+            #     print(each["collaboration_score"])
+            res.append(each["reviewers"])
     return res
 
 def deduce_files(aggregated_strs, repo_name, output_num, algo):

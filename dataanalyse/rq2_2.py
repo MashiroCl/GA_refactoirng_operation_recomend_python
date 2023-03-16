@@ -13,6 +13,7 @@ from collaboration.collaboration import get_collaboration_score
 from collaboration.graph import Graph
 from copy import deepcopy
 import ast
+from collections import Counter
 
 class Patterns:
     def __init__(self, name):
@@ -215,7 +216,7 @@ if __name__ == "__main__":
     algo = ['Nsga3RE', 'Nsga3NRE', 'NsgaiiRE', 'NsgaiiNRE', 'RandomSearchRE']
     patternslist = []
     patternslist_nre = []
-    repos = ['dagger']
+    repos = ['guice']
     for repo in repos:
         reviewers_re = []
         reviewers_rs_re = []
@@ -229,10 +230,19 @@ if __name__ == "__main__":
         #         print(-1*each2[2])
         for output_num in range(1, 6):
             reviewers_re += deduce_reviewers(re, repo, output_num, algo[2])
-        # for output_num in range(1, 6):
-        #     reviewers_nre += deduce_reviewers(nre, repo, output_num, algo[3])
+        for output_num in range(1, 6):
+            reviewers_nre += deduce_reviewers(nre, repo, output_num, algo[3])
         # for output_num in range(1, 6):
         #     reviewers_rs_re += deduce_reviewers(rs_re, repo, output_num, algo[4])
+        # print("reviewers_re:", reviewers_re)
+        # print("*"*30)
+        # print("reviewers_nre", reviewers_nre)
+        c = Counter([j for sub in reviewers_nre for j in sub])
+        print(c)
+
+
+
+
 
         # reviewers patterns
         # patterns = Patterns(repo)
