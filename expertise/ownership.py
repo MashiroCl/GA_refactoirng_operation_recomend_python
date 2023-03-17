@@ -8,7 +8,7 @@ from datetime import date
 
 JACCARD_THRESHOLD = 0.8
 BASE_LINE = date(2008, 12, 24)
-DEAD_LINE = date(2022, 12, 24)
+DEAD_LINE = date(2024, 12, 24)
 
 LOCAL_FILE_PATH = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
 TITAN_FILE_PATH = "/unknown/unknown/unknown"
