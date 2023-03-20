@@ -8,6 +8,9 @@ HEADERS = {
 }
 
 
+def get_REPO_USER_from_github_url(url:str):
+    return url.split("https://github.com/")[1]
+
 def api_request(request_str: str) -> requests.Response:
     response = requests.get(request_str, headers=HEADERS)
     wait_api_rate_limit(response)
