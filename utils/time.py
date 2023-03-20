@@ -1,6 +1,5 @@
-from datetime import date
+from datetime import date, datetime
 import calendar
-
 
 abbr_to_num = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 
@@ -24,4 +23,8 @@ def format_prtime(t: str) -> str:
     if not t:
         return None
     t = t.split("T")[0].split("-")
-    return date(int(t[0]),int(t[1]),int(t[2])).__str__()
+    return date(int(t[0]), int(t[1]), int(t[2])).__str__()
+
+
+def to_datetime(t):
+    return datetime.strptime(t, "%Y-%m-%dT%H:%M:%SZ")
