@@ -88,6 +88,32 @@ def deduce_reviewers(aggregated_strs, repo_name, output_num, algo):
     return res
 
 
+def get_file_paths(aggregated_strs, repo_name, output_num, algo):
+    """
+    get file paths for refactorings
+    """
+    fun_p, var_p, infos = prepare_path(repo_name, data_root_path + repo_name + f"/output{output_num}/", f"FUN.{algo}",
+                                       f"VAR.{algo}")
+    st = SearchTechnique()
+    abs = st.load_repository(json_file=infos["abs"], exclude_test=True, exclude_anonymous=True)
+
+    file_paths = []
+    from copy import deepcopy
+    for row in aggregated_strs[output_num - 1]:
+        abs_temp = deepcopy(abs)
+        encoder = encode_abs(abs_temp)
+        gene = get_genes(row, fun_p, var_p)
+        refactorings = decode_gene(gene, encoder)
+        paths = {}
+        paths["owners"] = infos["owner"]
+        paths["pr"] = infos["pr"]
+        ref_sequence = trans_decoded_gene(refactorings, abs_temp, paths, repo_name)
+        for each in ref_sequence:
+            file_paths.append(each["class1path"])
+            file_paths.append(each["class2path"])
+    return file_paths
+
+
 if __name__ == "__main__":
     f1 = "FUN.Nsga3RE"
     f2 = "FUN.Nsga3NRE"
@@ -99,26 +125,32 @@ if __name__ == "__main__":
 
     repos = ['HikariCP', 'dagger', 'auto', 'UltimateRecyclerView', 'AndroidAsync',
              'ActionBarSherlock', 'mockito', 'guice', 'quasar', 'fresco']
-    # repos = ['HikariCP']
+    repos = ['mockito']
     for repo in repos:
         expertise_file = f"/Users/leichen/experiement_result/MORCoRE2/infos/{repo}/csv/ownerships.csv"
         reformat_by_file_name(expertise_file)
-        reviewers_re = []
-        reviewers_rs_re = []
-        reviewers_nre = []
         comment_network = build_comment_network(repo)
         re = aggregate_top_k_from_outputs(repo, f3, k)
         nre = aggregate_top_k_from_outputs(repo, f4, k)
-        for output_num in range(2, 3):
-            reviewers_nre += deduce_reviewers(nre, repo, output_num, algo[3])
-            reviewers = []
-            for each_ref in reviewers_nre:
-                left = [each.strip() for each in each_ref[0]]
-                right = [each.strip() for each in each_ref[1]]
-                reviewers.append(set(left))
-                reviewers.append(set(right))
-            common_reviewers = reviewers[0]
-            for i,each in enumerate(reviewers):
-                common_reviewers = common_reviewers.intersection(each)
-            print(f"repo: {repo}, common reviewers: {common_reviewers}")
 
+        # get common reviewers
+        # reviewers_re = []
+        # reviewers_rs_re = []
+        # reviewers_nre = []
+        # for output_num in range(2, 3):
+        #     reviewers_nre += deduce_reviewers(nre, repo, output_num, algo[3])
+        #     reviewers = []
+        #     for each_ref in reviewers_nre:
+        #         left = [each.strip() for each in each_ref[0]]
+        #         right = [each.strip() for each in each_ref[1]]
+        #         reviewers.append(set(left))
+        #         reviewers.append(set(right))
+        #     common_reviewers = reviewers[0]
+        #     for i,each in enumerate(reviewers):
+        #         common_reviewers = common_reviewers.intersection(each)
+        #     print(f"repo: {repo}, common reviewers: {common_reviewers}")
+
+        file_paths = []
+        for output_num in range(2, 3):
+            file_paths += get_file_paths(nre, repo, output_num, algo[3])
+        print(file_paths)
