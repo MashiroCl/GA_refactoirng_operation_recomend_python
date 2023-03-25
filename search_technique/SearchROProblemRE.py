@@ -8,8 +8,9 @@ from semantic.Vectorize import TF_IDF
 from search_technique.enviroment import Platform
 from search_technique.SearchROProblem import SearchROProblem, extract_user_defined_classes, \
     extract_class_with_one_child, extract_class_with_one_child_zero_parent_list
-import expertise.ownership as ownership
-import collaboration.collaboration as collaboration
+# import expertise.ownership as ownership
+# import collaboration.collaboration as collaboration
+import expertise.build_table as build_table
 
 
 class SearchROProblemRE(SearchROProblem):
@@ -39,7 +40,7 @@ class SearchROProblemRE(SearchROProblem):
                                self.MAXIMIZE,
                                self.MAXIMIZE]
 
-        self.obj_labels = ['Quality Gain', 'Semantic Coherence', 'Collaboration Score']
+        self.obj_labels = ['Quality Gain', 'Semantic Coherence', 'Review Availability']
         self.abs_representation = abs_representation
         self.repo_path = platform.repo_path
         self.integerEncoding = IntegerEncoding()
@@ -49,8 +50,11 @@ class SearchROProblemRE(SearchROProblem):
                             self.integerEncoding.classNum,
                             self.integerEncoding.classNum,
                             self.integerEncoding.N] * self.number_of_refactorings
-        self.collaboration_graph = platform.load_developer_graph()
-        self.owners = ownership.get_path_owner_dict(platform.ownership_path)
+        # self.collaboration_graph = platform.load_developer_graph()
+        # self.owners = ownership.get_path_owner_dict(platform.ownership_path)
+        self.workload_expertise = platform.load_workload_expertise()
+        self.threshold_workload = 2
+
         self.tf_idf = TF_IDF()
         self.classes_nameSequence_dict = self.extract_names_sequences()
         self.call_graph = platform.load_call_graph()
@@ -64,19 +68,25 @@ class SearchROProblemRE(SearchROProblem):
                                                                                 self.user_defined_classes,
                                                                                 self.inline_class_info)
 
-    # @DeprecationWarning
-    # def calc_relationship(self, decoded_sequencs):
-    #     return CodeOwnership(self.repo_path, self.ownership_path).findAuthorPairList(decoded_sequencs). \
-    #         calculateRelationship(self.collaboration_graph)
+    # def calc_collaboration(self, decoded_sequences):
+    #     score = 0
+    #     for each in decoded_sequences:
+    #         owners = self.owners[each["class1"].getFilePath()] + self.owners[each["class2"].getFilePath()]
+    #         score += collaboration.get_collaboration_score(self.collaboration_graph, owners)
+    #     if len(decoded_sequences) == 0:
+    #         return score
+    #     return score / len(decoded_sequences)
 
-    def calc_collaboration(self, decoded_sequences):
-        score = 0
+    def calc_expertise_workload(self, decoded_sequences):
+        file_paths = []
         for each in decoded_sequences:
-            owners = self.owners[each["class1"].getFilePath()] + self.owners[each["class2"].getFilePath()]
-            score += collaboration.get_collaboration_score(self.collaboration_graph, owners)
-        if len(decoded_sequences) == 0:
-            return score
-        return score / len(decoded_sequences)
+            file_paths.append(each["class1"].getFilePath())
+            file_paths.append(each["class2"].getFilePath())
+        reviewer_expertise = build_table.extract_reviewers_expertise(self.workload_expertise.expertise_table,
+                                                                     self.workload_expertise.workload_table,
+                                                                     file_paths,
+                                                                     self.threshold_workload)
+        return build_table.get_highest_expertise_reviewer(reviewer_expertise)[1]
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
         abs_representation = copy.deepcopy(self.abs_representation)
@@ -109,9 +119,13 @@ class SearchROProblemRE(SearchROProblem):
         call_relation = self.call_graph.calc_call_relation(decoded_sequence)
         solution.objectives[1] = -0.2 * semantic_coherence - 0.8 * call_relation
 
-        'calculate ownership on refactoring operations applied files'
-        collaboration = self.calc_collaboration(decoded_sequence)
-        solution.objectives[2] = -1 * collaboration
+        # 'calculate ownership on refactoring operations applied files'
+        # collaboration = self.calc_collaboration(decoded_sequence)
+        # solution.objectives[2] = -1 * collaboration
+
+        'calculate expertise_workload'
+        expertise = self.calc_expertise_workload(decoded_sequence)
+        solution.objectives[2] = -1 * expertise
 
         return solution
 
