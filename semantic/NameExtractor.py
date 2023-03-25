@@ -1,7 +1,7 @@
 from typing import List
 from javamodel.JClass import JClass
 from javamodel.jVariable import jVariable
-
+import re
 
 class NameExtractor():
     """
@@ -11,17 +11,20 @@ class NameExtractor():
     def __init__(self):
         pass
 
-    def parse_camel_style(self, name: str):
-        left, right = 0, 0
-        res = []
-        while left <= right and right < len(name):
-            if name[right].isupper() and right > 0:
-                res.append(name[left:right])
-                left = right
-            right += 1
-        if left < right:
-            res.append(name[left:right])
-        return res
+    # def parse_camel_style(self, name: str):
+    #     left, right = 0, 0
+    #     res = []
+    #     while left <= right and right < len(name):
+    #         if name[right].isupper() and right > 0:
+    #             res.append(name[left:right])
+    #             left = right
+    #         right += 1
+    #     if left < right:
+    #         res.append(name[left:right])
+    #     return res
+
+    def parse_camel_style(self, name:str):
+        return re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', name)).split()
 
     def parse_camel_style_list_words(self, names: List[str]):
         res = []
