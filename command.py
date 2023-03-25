@@ -100,9 +100,9 @@ def extract(args):
     mkdir(csv_p)
     mkdir(output_p)
 
-    # print(f"Extracting repository model for {repo_p}")
-    # extract_repo_model(jxplatform, repo_p, csv_p)
-    # print(f"Finished extracting repository model for {repo_p}")
+    print(f"Extracting repository model for {repo_p}")
+    extract_repo_model(jxplatform, repo_p, csv_p)
+    print(f"Finished extracting repository model for {repo_p}")
 
     print(f"Extracting expertise_workload model for {repo_p}")
     end_point = datetime.datetime(2023, 3, 18)
@@ -160,12 +160,12 @@ def search_with_output_num(args):
                 #   Nsga3NRE(),
                   NsgaiiRE(),
                   NsgaiiNRE(),
-                  # RandomSearchRE(),
-                  # SPEA2RE(),
+                  RandomSearchRE(),
+                  SPEA2RE(),
                   # SPEA2NRE(),
-                  # IBEARE(),
+                  IBEARE(),
                   # IBEANRE(),
-                  # MOCellRE(),
+                  MOCellRE(),
                   # MOCellNRE()
                   ]
 
@@ -175,7 +175,7 @@ def search_with_output_num(args):
 
 
 def search_titan(args):
-    root_path = "/home/chenlei/MORCoRE/dataset/"
+    root_path = "/home/chenlei/MORCoRA/dataset/"
     repo_name = args.n
     for num in range(1, 6):
         MORCoRE_output = os.path.join(root_path, repo_name)
@@ -186,7 +186,7 @@ def search_titan(args):
 
 
 def search_thor(args):
-    root_path = "/home/salab/chenlei/project/MORCoRE/dataset/"
+    root_path = "/home/salab/chenlei/project/MORCoRA/dataset/"
     repo_name = args.n
     for num in range(1, 6):
         MORCoRE_output = os.path.join(root_path, repo_name)
