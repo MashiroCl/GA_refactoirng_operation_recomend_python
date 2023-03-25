@@ -1,9 +1,10 @@
+import dataclasses
 from typing import List
 from expertise.repository import Repository
 from expertise.ownership import get_file_ownership_t, PersonalOwnership
 import utils.directory as directory
 import pandas as pd
-from workload.workload import filter_by_workload, load_workload, build_author_pair
+from workload.workload import filter_by_workload, build_author_pair
 
 
 def extract_personal_ownerships(repo_path: str) -> List[PersonalOwnership]:
@@ -66,29 +67,54 @@ def load_expertise_table(path: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-def extract_reviewers_expertise(expertise_table_path: str, workload_path: str, file_paths: List[str],
+def merge_columns(expertise_table: pd.DataFrame, file_paths: List[str]) -> pd.DataFrame:
+    """
+    file_paths are the index of columns, and those columns should be merged
+    for each row, calculate the sum of those columns, but only if none of the values are zero
+    """
+    df = expertise_table[file_paths]
+    # calculate sum of rows, but only if none of the values in that row are zero
+    row_sums = []
+    for i, row in df.iterrows():
+        if (row == 0).any():
+            row_sums.append(0)
+        else:
+            row_sums.append(row.sum())
+    df_row_sums = pd.DataFrame({'row_sums': row_sums})
+    return df_row_sums
+
+
+def extract_reviewers_expertise(expertise_table: pd.DataFrame, workload_table: dict, file_paths: List[str],
                                 threshold_workload: int = 2) -> dict:
     """
     Extract {reviewer:expertise} dict where reviewer have expertise on the file_paths where and having a workload
     smaller than threshold_workload
 
-    param expertise_table_path: csv file path for expertise table
-    param workload_path: json file path for workload
+    param expertise_table: dataframe for expertise table
+    param workload_table: workload table
     param file_paths: file paths where refactorings are applied on
     param threshold: workload threshold
     """
-    df = load_expertise_table(expertise_table_path)
-    merged = df[file_paths].sum(axis=1)
-    non_zero_index = df.index[merged != 0]
-    expertise = merged[non_zero_index]
-    reviewers = df.iloc[non_zero_index]['Unnamed: 0']
+    merged = merge_columns(expertise_table, file_paths)
+    if (merged["row_sums"] == 0).all():
+        return dict()
+    non_zero_index = expertise_table.index[merged["row_sums"] != 0]
+    expertise = merged.iloc[non_zero_index]["row_sums"]
+    reviewers = expertise_table.iloc[non_zero_index]['Unnamed: 0']
     reviewer_expertise = \
         pd.DataFrame({"reviewer": reviewers.tolist(), "expertise": expertise.tolist()}).set_index('reviewer')[
             'expertise'].to_dict()
-    res = filter_by_workload(threshold_workload, load_workload(workload_path), reviewer_expertise)
+    res = filter_by_workload(threshold_workload, workload_table, reviewer_expertise)
     return res
 
 
 def get_highest_expertise_reviewer(reviewers_expertise: dict) -> tuple:
+    if len(reviewers_expertise) == 0:
+        return "No appropriate expertise reviewer", 0
     return max(reviewers_expertise.items(), key=lambda x: x[1])
 
+
+@dataclasses.dataclass
+class WorkloadExpertise:
+    expertise_table: pd.DataFrame
+    workload_table: dict

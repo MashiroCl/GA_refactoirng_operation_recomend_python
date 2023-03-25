@@ -62,6 +62,7 @@ class Event:
 def build_author_pair(a1: str, a2: str):
     return a1 + "," + a2
 
+
 class Comment:
     def __init__(self, response):
         self.url = response.get("url", None)
@@ -72,19 +73,21 @@ def get_time_valid_issues(url, end_point, period) -> List[Event]:
     repo_user = get_REPO_USER_from_github_url(url)
     page_num = 1
     issues = list()
-    is_in_valid_period = True
-    while is_in_valid_period:
+    while True:
         request = f"https://api.github.com/repos/{repo_user}/issues?page={page_num}&state=all"
-        response = api_request(request)
-        for each in response.json():
-            e = Event(each)
-            if e.is_later_than_endpoint(end_point):
-                continue
-            if e.is_time_valid(end_point, period):
-                issues.append(e)
-            else:
-                is_in_valid_period = False
-                break
+        response = api_request(request).json()
+        if len(response) == 0:  # no issue on this page
+            break
+        for each in response:
+            try:
+                e = Event(each)
+                if e.is_later_than_endpoint(end_point):
+                    continue
+                if e.is_time_valid(end_point, period):
+                    issues.append(e)
+            except RuntimeError:
+                print("RuntimeError for event", each)
+                print("In response", response)
         page_num += 1
     return issues
 
@@ -93,19 +96,17 @@ def get_time_valid_pullrequest(url, end_point, period) -> List[Event]:
     repo_user = get_REPO_USER_from_github_url(url)
     page_num = 1
     pullrequests = list()
-    is_in_valid_period = True
-    while is_in_valid_period:
+    while True:
         request = f"https://api.github.com/repos/{repo_user}/pulls?page={page_num}&state=all"
         response = api_request(request).json()
+        if len(response) == 0:  # no pr on this page
+            break
         for each in response:
             e = Event(each)
             if e.is_later_than_endpoint(end_point):
                 continue
             if e.is_time_valid(end_point, period):
                 pullrequests.append(e)
-            else:
-                is_in_valid_period = False
-                break
         page_num += 1
     return pullrequests
 
@@ -126,6 +127,7 @@ def get_pullrequest_participants(url, end_point, period):
     participants = list()
     pullrequests = get_time_valid_pullrequest(url, end_point, period)
     for pullrequest in pullrequests:
+        print(pullrequest.url)
         comment_participants = set()  # count 1 if participated in single/multiple commetns
         comment_participants.add(pullrequest.proposer)  # pullrequest proposer
         for comment in pullrequest.comments:
@@ -143,13 +145,13 @@ def append_pair_workload(workload: Counter) -> dict:
     return workload
 
 
-def get_workload_dict(workload: Counter, all_reviewers):
+def get_workload_dict(workload: dict, all_reviewers):
     """
     build the workload table for all_reviewers
     """
     res = dict()
     for reviewer in all_reviewers:
-        if "," in reviewer:     # reviewer pair
+        if "," in reviewer:  # reviewer pair
             reviewers = reviewer.split(",")
             v = 2
             if reviewers[0] in workload.keys():
@@ -157,7 +159,7 @@ def get_workload_dict(workload: Counter, all_reviewers):
             if reviewers[1] in workload.keys():
                 v += workload[reviewers[1]]
             res[reviewer] = v
-        else:   # single reviewer
+        else:  # single reviewer
             v = 1
             if reviewer in workload.keys():
                 v += workload[reviewer]
