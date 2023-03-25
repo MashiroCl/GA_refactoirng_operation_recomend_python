@@ -83,9 +83,11 @@ def extract_workload_expertise(repo_path, repo_url, csv_p, end_point, period):
     workload = cal_workload(repo_url, end_point, period)
     store_workload(workload, csv_p + "temporary_workload.json")
     # Manually unifying the names
-    input(f"Please unify the names in workload table {csv_p + 'temporary_workload.json'}, after unification, press enter")
+    input(
+        f"Please unify the names in workload table {csv_p + 'temporary_workload.json'}, after unification, press enter")
     d = get_workload_dict(load_workload(csv_p + "temporary_workload.json"), reviewers)
     store_workload(d, csv_p + "workload_table.json")
+
 
 def extract(args):
     jxplatform = "jxplatform2/arExtractor.jar"
@@ -156,18 +158,18 @@ def search_with_output_num(args):
     output_num = args.d
 
     algorithms = [
-                # Nsga3RE(),
-                #   Nsga3NRE(),
-                  NsgaiiRE(),
-                  NsgaiiNRE(),
-                  RandomSearchRE(),
-                  SPEA2RE(),
-                  # SPEA2NRE(),
-                  IBEARE(),
-                  # IBEANRE(),
-                  MOCellRE(),
-                  # MOCellNRE()
-                  ]
+        # Nsga3RE(),
+        #   Nsga3NRE(),
+        NsgaiiRE(),
+        NsgaiiNRE(),
+        RandomSearchRE(),
+        SPEA2RE(),
+        # SPEA2NRE(),
+        IBEARE(),
+        # IBEANRE(),
+        MOCellRE(),
+        # MOCellNRE()
+    ]
 
     for algorithm in algorithms:
         algorithm.load_by_parameter(repo_name, max_evaluations, platform).change_output_path(
@@ -175,10 +177,10 @@ def search_with_output_num(args):
 
 
 def search_titan(args):
-    root_path = "/home/chenlei/MORCoRA/dataset/"
+    root_path = "/home/salab/chenlei/MORCoRA"
     repo_name = args.n
     for num in range(1, 6):
-        MORCoRE_output = os.path.join(root_path, repo_name)
+        MORCoRE_output = os.path.join(root_path, "result", repo_name)
         output_p = os.path.join(MORCoRE_output, f"output{num}/")
         mkdir(output_p)
 
@@ -186,10 +188,10 @@ def search_titan(args):
 
 
 def search_thor(args):
-    root_path = "/home/salab/chenlei/project/MORCoRA/dataset/"
+    root_path = "/home/salab/chenlei/project/MORCoRA"
     repo_name = args.n
     for num in range(1, 6):
-        MORCoRE_output = os.path.join(root_path, repo_name)
+        MORCoRE_output = os.path.join(root_path, "result", repo_name)
         output_p = os.path.join(MORCoRE_output, f"output{num}/")
         mkdir(output_p)
 

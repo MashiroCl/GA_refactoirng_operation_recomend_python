@@ -1,6 +1,7 @@
 import os
 
-LOCAL_FILE_PATH = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
+# LOCAL_FILE_PATH = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
+LOCAL_FILE_PATH = "/Users/leichen/data/MORCoRA"
 TITAN_FILE_PATH = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt"
 VALKYRIE_FILE_PATH = "/home/chenlei/projects/master_thesis/dataset/mailmapBuilt"
 
