@@ -85,7 +85,9 @@ class SearchROProblemRE(SearchROProblem):
         reviewer_expertise = build_table.extract_reviewers_expertise(self.workload_expertise.expertise_table,
                                                                      self.workload_expertise.workload_table,
                                                                      file_paths,
-                                                                     self.threshold_workload)
+                                                                     self.threshold_workload,
+                                                                     take_average=True)
+
         return build_table.get_highest_expertise_reviewer(reviewer_expertise)[1]
 
     def evaluate(self, solution: IntegerSolution) -> IntegerSolution:
