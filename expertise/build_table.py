@@ -1,7 +1,7 @@
 import dataclasses
 from typing import List
 from expertise.repository import Repository
-from expertise.ownership import get_file_ownership_t, PersonalOwnership, get_file_expertise_t
+from expertise.ownership import PersonalOwnership, get_file_expertise_t
 import utils.directory as directory
 import utils.gitlog as gitlog
 import pandas as pd

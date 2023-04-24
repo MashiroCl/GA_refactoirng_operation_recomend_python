@@ -3,8 +3,11 @@ from expertise.repository import Repository
 from expertise.javafile import File as JavaFile
 import utils.csv as csv_utils
 import utils.directory as directory
+import utils.gitlog as gitlog
 import csv
 from datetime import date
+import math
+
 
 JACCARD_THRESHOLD = 0.8
 BASE_LINE = date(2008, 12, 24)
@@ -48,6 +51,25 @@ def get_file_ownership_t(file: JavaFile, similar_files: List[JavaFile]) -> List[
     """
     authors = set([commit.author_name for commit in file.get_commits_from_json()])
     return [get_rev_file_ownership(file, each_author, similar_files) for each_author in authors]
+
+
+def get_file_expertise_t(file: JavaFile, latest_date) -> List[PersonalOwnership]:
+    """
+    calculate the expertises for authors in a file considering the commit time factor
+    """
+    authors = set([commit.author_name for commit in file.get_commits_from_json()])
+    return [get_personalOwnership_exponential_recency(file, each_author, latest_date) for each_author in authors]
+
+
+def get_personalOwnership_exponential_recency(file: JavaFile, reviewer: str, latest_commit_time) -> PersonalOwnership:
+    def time_factor(commit):
+        return math.pow(0.99, (latest_commit_time - commit.time).days)
+
+    ownership = 0
+    for commit in file.get_commits_from_json():
+        if commit.author_name == reviewer:
+            ownership += time_factor(commit)
+    return PersonalOwnership(file.path, reviewer, ownership)
 
 
 def get_rev_file_ownership(file: JavaFile, reviewer: str, similar_files: List[JavaFile]) -> PersonalOwnership:
@@ -116,6 +138,20 @@ def get_repo_ownership_t_without_similar_files(repo_path: str, output_path: str,
     with open(output_path, mode, encoding="utf-8") as f:
         for file in files:
             pos = get_file_ownership_t(file, [file])
+            for po in pos:
+                po.file_path = directory.trim_path(po.file_path)
+            csv_utils.ownership2csv(pos, f)
+
+
+def get_repo_expertise_t(repo_path: str, output_path: str, mode: str = "a"):
+    files = Repository(repo_path).get_files()
+    latest_date = gitlog.get_latest_commit_time(repo_path)
+    # build git log json
+    for file in files:
+        file.commits2csv()
+    with open(output_path, mode, encoding="utf-8") as f:
+        for file in files:
+            pos = get_file_expertise_t(file, latest_date)
             for po in pos:
                 po.file_path = directory.trim_path(po.file_path)
             csv_utils.ownership2csv(pos, f)
