@@ -98,7 +98,10 @@ def merge_columns_by_average(expertise_table: pd.DataFrame, file_paths: List[str
         if (row == 0).any():
             row_sums.append(0)
         else:
-            row_sums.append(row.sum()/(len(file_paths)/2))
+            ref_num = 1
+            if not len(file_paths)==0:
+                ref_num = len(file_paths)/2
+            row_sums.append(row.sum()/(ref_num))
     df_row_sums = pd.DataFrame({'row_sums': row_sums})
     return df_row_sums
 
