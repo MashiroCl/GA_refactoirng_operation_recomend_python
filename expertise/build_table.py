@@ -1,7 +1,7 @@
 import dataclasses
 from typing import List
 from expertise.repository import Repository
-from expertise.ownership import PersonalOwnership, get_file_expertise_t
+from expertise.ownership import PersonalOwnership, get_file_expertise_t, get_file_expertise_t_linear_recency
 import utils.directory as directory
 import utils.gitlog as gitlog
 import pandas as pd
@@ -13,13 +13,14 @@ def extract_personal_ownerships(repo_path: str) -> List[PersonalOwnership]:
     extract expertise for each contributor in each file
     """
     files = Repository(repo_path).get_files()
-    latest_date = gitlog.get_latest_commit_time(repo_path)
+    # latest_date = gitlog.get_latest_commit_time(repo_path)
     # build git log json
     for file in files:
         file.commits2csv()
     personal_ownerships = []
     for file in files:
-        personal_ownership_per_file = get_file_expertise_t(file, latest_date)
+        # personal_ownership_per_file = get_file_expertise_t(file, latest_date)
+        personal_ownership_per_file = get_file_expertise_t_linear_recency(file)
         for po in personal_ownership_per_file:
             po.file_path = directory.trim_path(po.file_path)
         personal_ownerships += personal_ownership_per_file

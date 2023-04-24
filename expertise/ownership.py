@@ -8,10 +8,10 @@ import csv
 from datetime import date
 import math
 
-
 JACCARD_THRESHOLD = 0.8
 BASE_LINE = date(2008, 12, 24)
 DEAD_LINE = date(2024, 12, 24)
+T_C = 10
 
 LOCAL_FILE_PATH = "/Users/leichen/ResearchAssistant/InteractiveRebase/data"
 TITAN_FILE_PATH = "/unknown/unknown/unknown"
@@ -61,6 +61,10 @@ def get_file_expertise_t(file: JavaFile, latest_date) -> List[PersonalOwnership]
     return [get_personalOwnership_exponential_recency(file, each_author, latest_date) for each_author in authors]
 
 
+def get_file_expertise_t_linear_recency(file: JavaFile) -> List[PersonalOwnership]:
+    authors = set([commit.author_name for commit in file.get_commits_from_json()])
+    return [get_personalOwnership_linear_recency(file, each_author) for each_author in authors]
+
 def get_personalOwnership_exponential_recency(file: JavaFile, reviewer: str, latest_commit_time) -> PersonalOwnership:
     def time_factor(commit):
         return math.pow(0.99, (latest_commit_time - commit.time).days)
@@ -69,6 +73,20 @@ def get_personalOwnership_exponential_recency(file: JavaFile, reviewer: str, lat
     for commit in file.get_commits_from_json():
         if commit.author_name == reviewer:
             ownership += time_factor(commit)
+    return PersonalOwnership(file.path, reviewer, ownership)
+
+
+def get_personalOwnership_linear_recency(file: JavaFile, reviewer: str) -> PersonalOwnership:
+    def time_factor(commit):
+        return (commit.time - BASE_LINE) / (DEAD_LINE - BASE_LINE)
+
+    ownership = 0
+    commits_contained = file.get_commits_from_json()
+    for commit in file.get_commits_from_json():
+        if commit.author_name == reviewer:
+            ownership += time_factor(commit)
+    if not len(commits_contained) == 0:
+        ownership = min(1.0, ownership / min(len(commits_contained), T_C))
     return PersonalOwnership(file.path, reviewer, ownership)
 
 
